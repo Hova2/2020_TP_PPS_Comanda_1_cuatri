@@ -1,0 +1,17 @@
+<ion-content [fullscreen]="true" class="bg-image no-scroll">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <!-- <ion-title size="large">Blank</ion-title> -->
+    </ion-toolbar>
+  </ion-header>
+  <div class="imagen-principal">
+    <img src="../../assets/icon.png" >
+  </div>
+
+  <div class="centrado">
+    <!-- <strong>Ready to create an app?</strong> -->
+    <!-- <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p> -->
+    <app-spinner *ngIf="spinner"></app-spinner> 
+    <app-login *ngIf="login"></app-login>
+  </div>
+</ion-content>

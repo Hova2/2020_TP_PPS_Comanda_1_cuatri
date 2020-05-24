@@ -1,0 +1,11 @@
+<div *ngIf="showSplash1" class="splash">
+  <img class="animation-target imagen" src="../../assets/icon.png" />
+</div>
+
+<div *ngIf="showSplash2" class="splash" >
+  <img class="animation-target2 imagen" src="../../assets/icon.png" />
+</div>
+
+<ion-app *ngIf="showApp">
+  <ion-router-outlet></ion-router-outlet>
+</ion-app>

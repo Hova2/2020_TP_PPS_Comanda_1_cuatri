@@ -1,0 +1,48 @@
+<hr><strong>Nombre de la app</strong>
+<hr>
+<ion-item class="redondeado">
+  <ion-label position="floating"><strong>Usuario</strong></ion-label>
+  <ion-input type="email" [(ngModel)]="email"></ion-input>
+</ion-item>
+<hr>
+<ion-item class="redondeado">
+  <ion-label position="floating"><strong>Clave</strong></ion-label>
+  <ion-input type="password" [(ngModel)]="password"></ion-input>
+</ion-item>
+<hr>
+
+
+<div text-center margin-top>
+  <ion-button (click)="login()" expand="block">
+    Iniciá sesión
+  </ion-button>
+
+  <ion-button expand="block" color="secondary" href="/register" routerDirection="forward">
+    Registrarse
+  </ion-button>
+</div>
+
+<ion-content>
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="arrow-forward-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="end">
+      <ion-fab-button (click)="completarUsuario('admin')" title="Admin">
+        <ion-icon name="person"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="completarUsuario('invitado')" title="Invitado">
+        <ion-icon name="people"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="completarUsuario('usuario')" title="Usuario">
+        <ion-icon name="people"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="completarUsuario('anonimo')" title="Anonimo">
+        <ion-icon name="people"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="completarUsuario('tester')" title="Tester">
+        <ion-icon name="people"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
