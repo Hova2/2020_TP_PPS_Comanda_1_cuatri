@@ -16,7 +16,6 @@
   <ion-button (click)="login()" expand="block">
     Iniciá sesión
   </ion-button>
-
   <ion-button expand="block" color="secondary" href="/register" routerDirection="forward">
     Registrarse
   </ion-button>
@@ -28,19 +27,22 @@
       <ion-icon name="arrow-forward-circle"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="end">
-      <ion-fab-button (click)="completarUsuario('admin')" title="Admin">
+      <ion-fab-button (click)="completarUsuario('socio')" title="Socio">
         <ion-icon name="person"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="completarUsuario('invitado')" title="Invitado">
+      <ion-fab-button (click)="completarUsuario('mozo')" title="Mozo">
         <ion-icon name="people"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="completarUsuario('usuario')" title="Usuario">
+      <ion-fab-button (click)="completarUsuario('cocinero')" title="Cocinero">
+        <ion-icon name="people"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="completarUsuario('bartender')" title="Bartender">
+        <ion-icon name="people"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="completarUsuario('cliente')" title="Cliente">
         <ion-icon name="people"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="completarUsuario('anonimo')" title="Anonimo">
-        <ion-icon name="people"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button (click)="completarUsuario('tester')" title="Tester">
         <ion-icon name="people"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
