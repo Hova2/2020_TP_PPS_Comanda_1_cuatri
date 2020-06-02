@@ -16,5 +16,4 @@ export class PrincipalPage implements OnInit {
   desloguearse(){
     this.authService.logout();
   }
-
 }

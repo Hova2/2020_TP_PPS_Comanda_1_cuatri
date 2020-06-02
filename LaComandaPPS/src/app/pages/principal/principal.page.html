@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-title>
     Pagina Principal
   </ion-title>
@@ -11,4 +11,75 @@
 
 <ion-content class="home" padding>
   <h3>Bienvenido, {{email}}!</h3>
-</ion-content>
+</ion-content> -->
+
+
+<!-- <ion-content class="home" padding> -->
+
+
+
+<!-- <ion-menu side="start" content-id="main-content">
+    <ion-header>
+      <ion-toolbar translucent>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content id="main-content">
+      <ion-list>        
+        <ion-item>
+          <ion-icon name="log-out" slot="start"></ion-icon>
+          <ion-label (click)="desloguearse()">Salir</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+
+  <div class="ion-page" id="main-content">
+    
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+    <ion-content class="ion-padding">
+
+    </ion-content>
+  </div> -->
+
+<ion-split-pane>
+  <ion-menu content-id="main-content">
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          Menu
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false">
+          <!-- Acá van los botones del menú -->
+          <ion-item (click)="desloguearse()">
+            <ion-icon name="log-out" slot="start"></ion-icon>
+            <ion-label>Salir</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="main-content">
+
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-content class="ion-padding">
+      <!-- Acá van los componentes -->
+    </ion-content>
+  </div>
+</ion-split-pane>
