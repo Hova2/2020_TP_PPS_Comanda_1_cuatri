@@ -9,6 +9,7 @@ import { PrincipalPageRoutingModule } from './principal-routing.module';
 import { PrincipalPage } from './principal.page';
 import { ComponentsModule } from 'src/app/componentes/components/components.module';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -19,4 +20,9 @@ import { ComponentsModule } from 'src/app/componentes/components/components.modu
   ],
   declarations: [PrincipalPage]
 })
-export class PrincipalPageModule {}
+export class PrincipalPageModule {
+
+
+}
+
+
