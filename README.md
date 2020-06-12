@@ -1,9 +1,17 @@
-<h1>2020 - 1 cuatrimestre - PPS -- La Comanda</h1>
+<strong>Sprint 1: 30/05/2020 - 06/06/2020</strong>
 
-Para registrar el <strong>grupo completo</strong> con todos sus integrantes: https://forms.gle/yaGSdKiuaoR4iMWJ9
+Ariel Briñoli: Creación del logo y animaciones.
+Trevor Fernández: Pantalla de login.
+Juan Ignacio Guglielmone: Preparación del entorno de desarrollo, metodología de git y creación del proyecto.
 
-<br>
+<strong>Sprint 2: 06/06/2020 - 13/06/2020</strong>
 
-Grupos:<br>
-<h4>Máximo 3 integrantes</h4>
-<h4>Mínimo 2 integrantes</h4>
+Ariel Briñoli: Registro de usuario.
+Trevor Fernandez: Navegación (Menu). Carta de pedido del cliente.
+Juan Ignacio Guglielmone: Notificaciones Push (Continua).
+
+<strong>Sprint 3: 13/06/2020 - 20/06/2020</strong>
+
+Ariel Briñoli: Registro de usuario anónimo.
+Trevor Fernández: Cambio de fondo de pantalla. Alta de productos.
+Juan Ignacio Guglielmone: Notificaciones Email. Notificaciones Push.
