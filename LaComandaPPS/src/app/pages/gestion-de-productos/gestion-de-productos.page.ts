@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Producto } from 'src/app/clases/producto';
 import { Usuario } from 'src/app/clases/usuario';
 import { Rol } from 'src/app/enum/rol.enum';
+import { Estados } from 'src/app/enum/estados.enum';
 import { QuienElabora } from 'src/app/enum/quien-elabora.enum';
 import { ServicioToastService } from 'src/app/servicios/servicio-toast.service';
 import { ColoresToast } from 'src/app/enum/colores-toast.enum';
@@ -14,7 +15,6 @@ import { ProductoService } from 'src/app/servicios/producto.service';
   styleUrls: ['./gestion-de-productos.page.scss'],
 })
 export class GestionDeProductosPage implements OnInit {
-
   imagen1 = null;
   imagen2 = null;
   imagen3 = null;
@@ -22,28 +22,32 @@ export class GestionDeProductosPage implements OnInit {
   private todo: FormGroup;
 
   private usuarioActivo: Usuario = {
-    id: "id",
-    nombre: "raul",
+    id: 'id',
+    dni: 0,
+    nombre: 'raul',
     apellido: '',
     password: '',
     email: '',
     rol: Rol.cocinero,
     imagen: '',
     eliminado: false,
-    estado: 'habilitado'
-  }      
+    estado: Estados.habilitado,
+  };
 
-  constructor(private formBuilder: FormBuilder, private toast: ServicioToastService, private ps: ProductoService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private toast: ServicioToastService,
+    private ps: ProductoService
+  ) {
     this.todo = this.formBuilder.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
       tiempoDeElaboracion: ['', Validators.required],
-      precio: ['', Validators.required]
+      precio: ['', Validators.required],
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   logForm() {
     let producto: Producto;
@@ -51,7 +55,7 @@ export class GestionDeProductosPage implements OnInit {
 
     //arreglo = this.traerTipoComida();
     let elaborador = this.traerQuienElabora();
-    
+
     arreglo.push(this.imagen1, this.imagen2, this.imagen3);
 
     producto = Producto.crear(
@@ -64,24 +68,23 @@ export class GestionDeProductosPage implements OnInit {
       this.todo.value.tiempoDeElaboracion
     );
 
-    this.ps.persistirProducto(producto, arreglo).then(valor => {
+    this.ps.persistirProducto(producto, arreglo).then((valor) => {
       if (valor) {
         this.cancelar();
-        this.toast.mostrarToast("Alta exitosa", ColoresToast.success);
-      }else{
-        this.toast.mostrarToast("Error", ColoresToast.danger);
+        this.toast.mostrarToast('Alta exitosa', ColoresToast.success);
+      } else {
+        this.toast.mostrarToast('Error', ColoresToast.danger);
       }
     });
   }
 
-  traerQuienElabora(){
-    if(this.usuarioActivo.rol === "cocinero"){
+  traerQuienElabora() {
+    if (this.usuarioActivo.rol === 'cocinero') {
       return QuienElabora.cocinero;
-    }else if(this.usuarioActivo.rol === "bartender"){
+    } else if (this.usuarioActivo.rol === 'bartender') {
       return QuienElabora.bartender;
     }
   }
-
 
   sacarFoto(imagen: string) {
     console.log(imagen);
@@ -90,5 +93,4 @@ export class GestionDeProductosPage implements OnInit {
   public cancelar(): void {
     this.todo.reset();
   }
-
 }

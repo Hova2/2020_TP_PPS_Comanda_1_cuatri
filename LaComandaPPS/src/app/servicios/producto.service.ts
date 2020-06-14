@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Producto } from '../clases/producto';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore/public_api';
-import { AngularFireFunctions } from '@angular/fire/functions/functions';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import { TipoComida } from '../enum/tipo-comida.enum';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
