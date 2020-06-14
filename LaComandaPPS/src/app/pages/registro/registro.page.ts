@@ -62,7 +62,6 @@ export class RegistroPage implements OnInit {
     this.qr.EscanearDNI().then((barcodeData) => {
       const codigoEscaneado = barcodeData.text.split('@', 6);
 
-      
 
       if( isNaN((Number(codigoEscaneado[1]))) ){
 
@@ -78,12 +77,10 @@ export class RegistroPage implements OnInit {
         this.registerForm.get('dni').setValue(codigoEscaneado[1]);
 
       }
-      
     });
   }
 
 
-  
 
 
   borrarCampos() {

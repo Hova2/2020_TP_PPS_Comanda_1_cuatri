@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   private email: string = null;
   private password: string = null;
 
-  constructor(private authService: AuthService, 
+  constructor(private authService: AuthService,
     private toastr: ServicioToastService,
     private router:Router) { }
 
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.logueoConEmail(this.email, this.password)
       .then(() => {
-        this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);        
+        this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);
       })
       .catch(() => {
         this.toastr.mostrarToast('Usuario o contraseña incorrectos', ColoresToast.danger);

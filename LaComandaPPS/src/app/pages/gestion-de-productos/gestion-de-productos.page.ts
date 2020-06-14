@@ -55,7 +55,6 @@ export class GestionDeProductosPage implements OnInit {
 
     //arreglo = this.traerTipoComida();
     let elaborador = this.traerQuienElabora();
-
     arreglo.push(this.imagen1, this.imagen2, this.imagen3);
 
     producto = Producto.crear(

@@ -58,5 +58,4 @@ export class PrincipalPage implements OnInit {
         break;
     }
   }
-  
 }

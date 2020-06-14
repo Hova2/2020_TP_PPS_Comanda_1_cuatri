@@ -34,8 +34,8 @@ import { File } from '@ionic-native/file/ngx';
     AppRoutingModule,
     ComponentsModule,
     FormsModule,
-    
-    
+
+
   ],
   providers: [
     StatusBar,

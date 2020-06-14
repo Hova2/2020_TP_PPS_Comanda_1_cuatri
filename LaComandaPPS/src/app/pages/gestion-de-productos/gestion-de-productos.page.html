@@ -28,29 +28,29 @@
     <ion-item>
       <ion-label>Imagenes</ion-label>
       <ion-card (click)="sacarFoto('imagen1')">
-        <img src="../../../assets/imagenes/imagenSubirProducto.png" />        
+        <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
       <ion-card (click)="sacarFoto('imagen2')">
-        <img src="../../../assets/imagenes/imagenSubirProducto.png" />        
+        <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
       <ion-card (click)="sacarFoto('imagen3')">
-        <img src="../../../assets/imagenes/imagenSubirProducto.png" />        
+        <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
     </ion-item>
 
     <ion-button type="submit" [disabled]="!todo.valid" expand="full" color="success">Submit</ion-button>
-    
+
     <ion-button type="reset" expand="full" color="danger">Reset</ion-button>
-    
+
   </form>
 
 
   <!-- <ion-list lines="full" class="ion-no-margin ion-no-padding">
-    
+
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
       <ion-input type="text" formControlName="nombre"></ion-input>
-    </ion-item>    
+    </ion-item>
 
     <ion-item>
       <ion-label position="floating">Descripción</ion-label>
