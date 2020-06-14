@@ -17,6 +17,9 @@ import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestor
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,14 +32,20 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    FormsModule,
+    
+    
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AngularFireAuth,
     AngularFirestore,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    BarcodeScanner,
+    Camera,
+    File,
   ],
   bootstrap: [AppComponent]
 })

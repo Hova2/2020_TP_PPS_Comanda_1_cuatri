@@ -1,6 +1,5 @@
-import { Perfiles } from '../enum/perfiles.enum';
-import { Sexos } from '../enum/sexos.enum';
 import { Rol } from '../enum/rol.enum';
+import { Estados } from '../enum/estados.enum';
 
 export class Usuario {
 
@@ -8,11 +7,27 @@ export class Usuario {
     nombre: string;
     apellido: string;
     password: string;
+    dni: number;
     email: string;
     rol: Rol;
     imagen: string;
     eliminado: boolean;
-    estado: string;
+    estado: Estados;
+
+    public static RegistroCliente(nombre: string, apellido: string,  email: string, password: string, dni:number, foto: string): Usuario
+    {
+        let user = new Usuario();
+        user.nombre = nombre;
+        user.apellido = apellido;
+        user.password = password;
+        user.email = email;
+        user.dni = dni;
+        user.rol = Rol.cliente;
+        user.eliminado = false;
+        user.estado = Estados.paraAprobar;
+        user.imagen = foto;//'assets/usuario.png'
+        return user;
+    }
 
     constructor() {
         this.nombre = '';
@@ -22,6 +37,6 @@ export class Usuario {
         this.rol = Rol.socio;
         this.imagen = '';
         this.eliminado = false;
-        this.estado = 'habilitado';
+        this.estado = Estados.habilitado;
     }
 }

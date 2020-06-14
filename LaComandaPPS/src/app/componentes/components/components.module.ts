@@ -5,24 +5,22 @@ import { LoginComponent } from '../login/login.component';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { PopoverComponent } from '../popover/popover.component';
-
+import { ScannerQRComponent } from '../scanner-qr/scanner-qr.component';
 
 @NgModule({
   declarations: [
     SpinnerComponent,
     LoginComponent,
-    PopoverComponent
+    PopoverComponent,
+    ScannerQRComponent,
   ],
-  imports: [
-    CommonModule,FormsModule, IonicModule
-  ],
+  imports: [CommonModule, FormsModule, IonicModule],
   exports: [
     SpinnerComponent,
     LoginComponent,
-    PopoverComponent
+    PopoverComponent,
+    ScannerQRComponent,
   ],
-  entryComponents: [
-    PopoverComponent
-]
+  entryComponents: [PopoverComponent],
 })
-export class ComponentsModule { }
+export class ComponentsModule {}

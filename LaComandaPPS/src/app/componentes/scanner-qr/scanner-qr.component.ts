@@ -22,6 +22,7 @@ export class ScannerQRComponent implements OnInit {
     this.barcodeScanner.scan().then(
       barcodeData => {
         this.codigoEscaneado = barcodeData.text;
+        alert(this.codigoEscaneado);
         this.devolucionCodigo.emit(this.codigoEscaneado);
       }
     );

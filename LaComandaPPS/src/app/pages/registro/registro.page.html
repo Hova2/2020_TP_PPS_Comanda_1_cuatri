@@ -1,0 +1,84 @@
+<ion-content>
+  <br />
+  <ion-avatar class="ion-margin-start">
+    <img src="{{fotocliente}}" />
+
+    <!-- "./assets/usuario.png"> -->
+  </ion-avatar>
+
+  <hr />
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating"><strong>NOMBRE</strong></ion-label>
+      <ion-input
+        type="text"
+        formControlName="name"
+        placeholder="Escriba su nombre aqui"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><strong>APELLIDO</strong></ion-label>
+      <ion-input
+        type="text"
+        formControlName="lastname"
+        placeholder="Escriba su apellido aqui"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><strong>EMAIL</strong></ion-label>
+      <ion-input
+        type="text"
+        formControlName="email"
+        placeholder="Escriba su correo electrónico aqui"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><strong>D.N.I</strong></ion-label>
+      <ion-input
+        type="text"
+        formControlName="dni"
+        placeholder="Escriba su documento aqui"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><strong>CONTRASEÑA</strong></ion-label>
+      <ion-input
+        type="password"
+        formControlName="password"
+        placeholder="Escriba su contraseña aqui"
+      ></ion-input>
+    </ion-item>
+
+    <br />
+
+    <button
+      class="botonRegistro"
+      [disabled]="!registerForm.valid"
+      type="submit"
+    >
+      REGISTRARSE
+    </button>
+
+    <br />
+  </form>
+
+  <ion-button class="mitad" (click)="escanearCodigo()" color="secondary"
+    ><ion-icon name="qr-code"></ion-icon>ESCANEAR DNI</ion-button
+  >
+
+  <ion-button class="mitad" (click)="sacarFotoCLiente()" color="tertiary"
+    ><ion-icon name="camera"></ion-icon>SUBIR FOTO</ion-button
+  >
+
+  <ion-button class="mitad" (click)="borrarCampos()" color="danger"
+    ><ion-icon name="trash-bin"></ion-icon>LIMPIAR CAMPOS</ion-button
+  >
+
+  <ion-button class="mitad" (click)="volver()" color="warning"
+    ><ion-icon name="return-up-back"></ion-icon>VOLVER</ion-button
+  >
+</ion-content>

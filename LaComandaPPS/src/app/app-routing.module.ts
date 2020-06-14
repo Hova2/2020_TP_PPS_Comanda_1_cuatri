@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuardGuard } from './servicios/auth-guard.guard';
+
 
 const routes: Routes = [
-  //{ path: '', redirectTo: 'redireccionar', pathMatch: 'full' },
-  { path: '', redirectTo: 'principal', pathMatch: 'full' },
+ { path: '', redirectTo: 'redireccionar', pathMatch: 'full' },
+  //{ path: '', redirectTo: 'principal', pathMatch: 'full' },
   {
     path: '',
     loadChildren: () => import('./pages/redireccionar/redireccionar.module').then( m => m.RedireccionarPageModule)
@@ -16,11 +16,16 @@ const routes: Routes = [
   },
   {
     path: 'principal',
-    loadChildren: () => import('./pages/principal/principal.module').then( m => m.PrincipalPageModule),    
+    loadChildren: () => import('./pages/principal/principal.module').then( m => m.PrincipalPageModule),
     //canActivate: [AuthGuardGuard]
-  }
+  },
+  {
+    path: 'registro',
+    loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
+  },
 
-  
+
+
 
 ];
 

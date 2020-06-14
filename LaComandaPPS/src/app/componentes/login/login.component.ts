@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
-import { ToastController } from '@ionic/angular';
 import { ServicioToastService } from 'src/app/servicios/servicio-toast.service';
 import { ColoresToast } from 'src/app/enum/colores-toast.enum';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,9 @@ export class LoginComponent implements OnInit {
   private email: string = null;
   private password: string = null;
 
-  constructor(private authService: AuthService, private toastr: ServicioToastService) { }
+  constructor(private authService: AuthService, 
+    private toastr: ServicioToastService,
+    private router:Router) { }
 
   ngOnInit() { }
 
@@ -56,6 +59,12 @@ export class LoginComponent implements OnInit {
       });
   }
 
+  public register() {
+
+    //this.toastr.mostrarToast('Registro de nuevo usuario', ColoresToast.tertiary);
+    this.router.navigate(['/registro']);
+
+  }
 
 
 }
