@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-title>Gestión de productos</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="todo" (ngSubmit)="logForm()">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea type="text" formControlName="descripcion"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Tiempo estimado de elaboración</ion-label>
+      <ion-input type="number" formControlName="tiempoDeElaboracion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Precio</ion-label>
+      <ion-input type="number" formControlName="precio"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Imagenes</ion-label>
+      <ion-card (click)="sacarFoto('imagen1')">
+        <img src="../../../assets/imagenes/imagenSubirProducto.png" />        
+      </ion-card>
+      <ion-card (click)="sacarFoto('imagen2')">
+        <img src="../../../assets/imagenes/imagenSubirProducto.png" />        
+      </ion-card>
+      <ion-card (click)="sacarFoto('imagen3')">
+        <img src="../../../assets/imagenes/imagenSubirProducto.png" />        
+      </ion-card>
+    </ion-item>
+
+    <ion-button type="submit" [disabled]="!todo.valid" expand="full" color="success">Submit</ion-button>
+    
+    <ion-button type="reset" expand="full" color="danger">Reset</ion-button>
+    
+  </form>
+
+
+  <!-- <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+    </ion-item>    
+
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea type="text" formControlName="descripcion"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Tiempo estimado de elaboración</ion-label>
+      <ion-input type="number" formControlName="tiempoDeElaboracion"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Precio</ion-label>
+      <ion-input type="number" formControlName="precio"></ion-input>
+    </ion-item>
+  </ion-list> -->
+
+
+</ion-content>

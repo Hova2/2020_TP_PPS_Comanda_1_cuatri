@@ -1,0 +1,31 @@
+<div>
+  <ion-grid>
+    <ion-row *ngFor="let prod of pedido">
+      <ion-col size="9">
+        {{ prod.nombre }}
+      </ion-col>
+      <ion-col size="3">
+        {{ prod.precio }}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+      </ion-col>
+      <ion-col size="4">
+        Total
+      </ion-col>
+      <ion-col size="4">
+        $ precio total
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-button (click)="cerrarPopover(null)" expand="full" color="medium">Seguir pidiendo</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-button (click)="cerrarPopover(false)" expand="full" color="danger">Borrar productos</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-button (click)="cerrarPopover(true)" expand="full" color="success">Confirmar pedido</ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

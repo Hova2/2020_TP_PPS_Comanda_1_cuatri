@@ -47,9 +47,19 @@
     </ion-content>
   </div> -->
 
-<ion-split-pane>
-  <ion-menu content-id="main-content">
+  <!-- <ion-header>
+    <ion-list *ngFor="let p of paginas">
+      <ion-button [routerLink]="p.url">
+       {{ p.title }}
+            </ion-button>
+    </ion-list>
+  </ion-header> -->
+  
 
+
+
+<ion-split-pane contentId="main-content">
+  <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar>
         <ion-title>
@@ -62,6 +72,37 @@
       <ion-list>
         <ion-menu-toggle auto-hide="false">
           <!-- Acá van los botones del menú -->
+
+          <ion-item (click)="redireccion('escanear-qr')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'escanear-qr'">
+            <ion-label>Escanear QR</ion-label>
+          </ion-item>
+          <ion-item (click)="redireccion('consultas')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'consultas'">
+            <ion-label>Consultas</ion-label>
+          </ion-item>
+          <ion-item (click)="redireccion('autorizaciones')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'autorizaciones'">
+            <ion-label>Autorizaciones</ion-label>
+          </ion-item>
+          <ion-item (click)="redireccion('gestionDeMesas')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'gestionDeMesas'">
+            <ion-label>Gestión de mesas</ion-label>
+          </ion-item>
+          <ion-item (click)="redireccion('listadoDePedidos')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'listadoDePedidos'">
+            <ion-label>Listado de pedidos</ion-label>
+          </ion-item>
+          <ion-item (click)="redireccion('miEncuesta')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'miEncuesta'">
+            <ion-label>Realizar encuesta</ion-label>
+          </ion-item>
+          <ion-item (click)="redireccion('miPedido')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'miPedido'">
+            <ion-label>Realizar pedido</ion-label>
+          </ion-item>
+          <ion-item (click)="redireccion('misTareas')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'misTareas'">
+            <ion-label>Mis tareas</ion-label>
+          </ion-item>
+          <ion-item (click)="redireccion('verEncuestas')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'verEncuestas'">
+            <ion-label>Ver encuestas</ion-label>
+          </ion-item>
+          <ion-item (click)="redireccion('gestionDeProductos')" routerDirection="root" [class.item-activo]="paginaSeleccionada === 'gestionDeProductos'">
+            <ion-label>Gestion de productos</ion-label>
+          </ion-item>
           <ion-item (click)="desloguearse()">
             <ion-icon name="log-out" slot="start"></ion-icon>
             <ion-label>Salir</ion-label>
@@ -71,7 +112,11 @@
     </ion-content>
   </ion-menu>
 
-  <div class="ion-page" id="main-content">
+
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  <!-- <div class="ion-page" id="main-content">
 
     <ion-toolbar>
       <ion-buttons slot="start">
@@ -79,7 +124,6 @@
       </ion-buttons>
     </ion-toolbar>
     <ion-content class="ion-padding">
-      <!-- Acá van los componentes -->
     </ion-content>
-  </div>
+  </div> -->
 </ion-split-pane>
