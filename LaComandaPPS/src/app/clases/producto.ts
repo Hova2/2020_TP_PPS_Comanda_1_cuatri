@@ -4,45 +4,41 @@ import { EstadoProducto } from '../enum/estado-producto.enum';
 import { QuienElabora } from '../enum/quien-elabora.enum';
 
 export class Producto {
-    productoID: string;
+    id: string;
     nombre: string;
-    imagen: Array<any>;
+    tiempoPromedioDeElaboracion: number;
+    descripcion: string;
     precio: number;
-    tipoComida?: TipoComida[];
+    imagenes: Array<any>;
     estado: EstadoProducto;
     quienElabora: QuienElabora;
-    empleado?: Usuario;
-    descripcion: string;
-    tiempoPromedioDeElaboracion: number;
+
 
     constructor() {
-        this.productoID = '';
-        this.nombre = '';
-        this.imagen = null;
+        this.id = '';
+        this.nombre = '';        
+        this.tiempoPromedioDeElaboracion = 0;
+        this.descripcion = '';
         this.precio = 0;
-        this.tipoComida = null;
+        this.imagenes = null;
         this.estado = EstadoProducto.pendiente;
         this.quienElabora = null;
-        this.descripcion = '';
-        this.tiempoPromedioDeElaboracion = 0;
     }
 
     public static crear(
         productoID: string,
         nombre: string,
-        imagen: Array<any>,
+        imagenes: Array<any>,
         precio: number,
-        //tipoComida: TipoComida[],
         quienElabora: QuienElabora,
         descripcion: string,
         tiempoPromedioDeElaboracion: number
     ) {
         const nuevoProducto = new Producto();
-        nuevoProducto.productoID = productoID;
+        nuevoProducto.id = productoID;
         nuevoProducto.nombre = nombre;
-        nuevoProducto.imagen = imagen;
+        nuevoProducto.imagenes = imagenes;
         nuevoProducto.precio = precio;
-        //nuevoProducto.tipoComida = tipoComida;
         nuevoProducto.quienElabora = quienElabora;
         nuevoProducto.descripcion = descripcion;
         nuevoProducto.tiempoPromedioDeElaboracion = tiempoPromedioDeElaboracion

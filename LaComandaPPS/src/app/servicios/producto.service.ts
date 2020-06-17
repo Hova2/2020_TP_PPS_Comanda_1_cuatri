@@ -58,11 +58,10 @@ export class ProductoService {
     listadoObservable.subscribe(productos => {
       productos.forEach(producto => {
         const tmp = new Producto();
-        tmp.productoID = producto.productoID;
+        tmp.id = producto.id;
         tmp.descripcion = producto.description;
-        tmp.tipoComida = producto.tipoComida;
         tmp.nombre = producto.nombre;
-        tmp.imagen = producto.imagen;
+        tmp.imagenes = producto.imagenes;
         tmp.precio = parseInt(producto.precio);
         tmp.estado = producto.estado;
         tmp.quienElabora = producto.quienElabora;
@@ -97,11 +96,10 @@ export class ProductoService {
 
   updateProd(producto: Producto, foto: File): Promise<boolean> {
     return this.productos
-      .doc(producto.productoID)
+      .doc(producto.id)
       .update({
         nombre: producto.nombre,
         precio: producto.precio,
-        tipoComida: producto.tipoComida,
         description: producto.descripcion,
         quienElabora: producto.quienElabora
       })
@@ -120,19 +118,19 @@ export class ProductoService {
 
   public traerProductoPorId(id: string): Promise<Producto> {
     const docRef = this.af.collection('productos', ref =>
-      ref.where('productoID', '==', id)
+      ref.where('id', '==', id)
     );
     return docRef
       .get()
       .toPromise()
       .then(doc => {
         const producto = doc.docs[0].data() as Producto;
-        producto.productoID = doc.docs[0].id;
+        producto.id = doc.docs[0].id;
         return producto;
       });
   }
 
-  public esUnTipoDeComida(producto: Producto, tipo: string): boolean {
-    return producto.tipoComida.includes(tipo as TipoComida);
-  }
+  // public esUnTipoDeComida(producto: Producto, tipo: string): boolean {
+  //   return producto.tipoComida.includes(tipo as TipoComida);
+  // }
 }
