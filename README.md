@@ -1,3 +1,4 @@
+
 <strong>Sprint 1: 30/05/2020 - 06/06/2020</strong>
 
 Ariel Briñoli: Creación del logo y animaciones. <br>
@@ -15,6 +16,12 @@ Juan Ignacio Guglielmone: Notificaciones Push (Continua).
 
 <strong>Sprint 3: 13/06/2020 - 20/06/2020</strong>
 
-Ariel Briñoli: Registro de usuario anónimo. <br>
+Ariel Briñoli: Registro de usuario anónimo (Continua). <br>
 Trevor Fernández: Cambio de fondo de pantalla. Alta de productos. <br>
 Juan Ignacio Guglielmone: Notificaciones Email. Notificaciones Push.
+
+<strong>Sprint 4: 21/06/2020 - 27/06/2020</strong>
+
+Ariel Briñoli: Registro de usuario anónimo, ABM Mesa. <br>
+Trevor Fernández: Chat con el mozo. <br>
+Juan Ignacio Guglielmone: Ingreso al local y solicitud de mesa.
