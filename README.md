@@ -16,7 +16,7 @@ Juan Ignacio Guglielmone: Notificaciones Push (Continua).
 
 <strong>Sprint 3: 13/06/2020 - 20/06/2020</strong>
 
-![Pantalla de Login](gs://tpfinalpps-3f07f.appspot.com/imagenesReadme/pantallaLogin.jpg)
+![Pantalla Login](https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imagenesReadme%2FpantallaLogin.jpg?alt=media&token=afbd9857-d5ab-4e13-b073-309008a2cd5c)
 
 Ariel Briñoli: Registro de usuario anónimo (Continua). <br>
 Trevor Fernández: Cambio de fondo de pantalla. Alta de productos. <br>
