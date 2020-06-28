@@ -1,16 +1,22 @@
- <hr><strong> <br> <br> <br></strong>
-<hr>
-<ion-item class="redondeado">
-  <ion-label position="floating"><strong>Usuario</strong></ion-label>
-  <ion-input type="email" [(ngModel)]="email"></ion-input>
-</ion-item>
-<hr>
-<ion-item class="redondeado">
-  <ion-label position="floating"><strong>Clave</strong></ion-label>
-  <ion-input type="password" [(ngModel)]="password"></ion-input>
-</ion-item>
-<hr>
-
+<hr />
+<strong>
+  <br />
+  <br />
+  <br
+/></strong>
+<form [formGroup]="formulario">
+  <hr />
+  <ion-item class="redondeado">
+    <ion-label position="floating"><strong>Usuario</strong></ion-label>
+    <ion-input formControlName="usuario" type="email"></ion-input>
+  </ion-item>
+  <hr />
+  <ion-item class="redondeado">
+    <ion-label position="floating"><strong>Clave</strong></ion-label>
+    <ion-input formControlName="clave" type="password"></ion-input>
+  </ion-item>
+  <hr />
+</form>
 
 <div text-center margin-top>
   <ion-button (click)="login()" color="primary" expand="block">
@@ -39,7 +45,7 @@
       <ion-fab-button (click)="completarUsuario('cocinero')" title="Cocinero">
         <ion-icon name="people"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="completarUsuario('bartender')" title="Bartender">
+      <ion-fab-button (click)="completarUsuario('metre')" title="Metre">
         <ion-icon name="people"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="completarUsuario('cliente')" title="Cliente">

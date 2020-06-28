@@ -63,7 +63,7 @@ export class RegistroPage implements OnInit {
   }
 
   escanearCodigo() {
-    this.qr.EscanearDNI().then((barcodeData) => {
+    this.qr.escanear().then((barcodeData) => {
       const codigoEscaneado = barcodeData.text.split('@', 6);
 
 

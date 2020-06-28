@@ -12,4 +12,6 @@ export class CommonHelper {
         return firstPart + ' ' + secondPart;
     }
 
+
+
 }

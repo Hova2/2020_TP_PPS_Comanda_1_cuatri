@@ -1,62 +1,88 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { CommonHelper } from '../clases/common-helper';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/internal/operators/map';
 import { Mesa } from '../clases/mesa';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/firestore';
 import { ServicioToastService } from './servicio-toast.service';
+import { CommonHelper } from '../clases/common-helper';
 import { ColoresToast } from '../enum/colores-toast.enum';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MesaService {
-
   public coleccionMesas: AngularFirestoreCollection;
 
-  constructor(private dbmesas: AngularFirestore,
-    private toast: ServicioToastService) { 
-    this.coleccionMesas = this.dbmesas.collection<Mesa>('mesas');
+  constructor(
+    private af: AngularFirestore,
+    private toast: ServicioToastService
+  ) {
+    this.coleccionMesas = this.af.collection<Mesa>('mesas');
   }
 
-
   public addMesa(mesa: Mesa): void {
-    this.dbmesas
+    this.af
       .collection('mesas')
       .add(CommonHelper.ConvertToObject(mesa))
       .then((doc) => {
-        this.dbmesas.collection('mesas').doc(doc.id).update({ id: doc.id });
-        this.toast.mostrarToast("Se dió de alta la mesa con éxito",ColoresToast.success);
+        this.af.collection('mesas').doc(doc.id).update({ id: doc.id });
+        this.toast.mostrarToast(
+          'Se dió de alta la mesa con éxito',
+          ColoresToast.success
+        );
       });
   }
 
-
   public traerTodasLasMesas(): Observable<any[]> {
     return this.coleccionMesas.snapshotChanges().pipe(
-        map(actions => {
-            return actions.map(action => {
-                const datos = action.payload.doc.data() as Mesa;
-                const id = action.payload.doc.id;
-                return { id, ...datos };
-            });
-        })
+      map((actions) => {
+        return actions.map((action) => {
+          const datos = action.payload.doc.data() as Mesa;
+          const id = action.payload.doc.id;
+          return { id, ...datos };
+        });
+      })
     );
-}
+  }
 
-public updateMesa(m: Mesa): void {
-      
-      this.coleccionMesas.doc(m.id)
-      
+  public updateMesa(m: Mesa): void {
+    this.coleccionMesas
+      .doc(m.id)
+
       .update({
         numero: m.numero,
         cantidadDePersonas: m.cantidadDePersonas,
         estadoMesa: m.estadoMesa,
-        tipo: m.tipo
-      }).then(() => {this.toast.mostrarToast("Se actualizó la mesa con éxito",ColoresToast.success)});
-        
-    }
+        tipo: m.tipo,
+      })
+      .then(() => {
+        this.toast.mostrarToast(
+          'Se actualizó la mesa con éxito',
+          ColoresToast.success
+        );
+      });
+  }
 
-
-
-
+  public listarDisponibles(): Observable<any[]> {
+    return this.af
+      .collection('mesas')
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions
+            .map((action) => {
+              const datos = action.payload.doc.data() as Mesa;
+              const id = action.payload.doc.id;
+              console.log(datos.estadoMesa.toString());
+              return { id, ...datos };
+            })
+            .filter((mesa) => {
+              return mesa.estadoMesa.toString() === 'Disponible';
+            });
+        })
+      );
+  }
 }

@@ -9,14 +9,17 @@ import { timer } from 'rxjs';
   styleUrls: ['./redireccionar.page.scss'],
 })
 export class RedireccionarPage implements OnInit {
-
   public spinner: boolean = true;
   public login: boolean = false;
 
-  constructor(private authService: AuthService, private router:Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+
+  ) {
+  }
 
   ngOnInit() {
-
     /*this.authService.GetCurrentUser().then(user => {
 			this.router.navigate(['/splash']);
 		})
@@ -24,13 +27,10 @@ export class RedireccionarPage implements OnInit {
 			this.router.navigate(['/login']);
     });*/
 
-
     //esto es un contador de prueba
     timer(3000).subscribe(() => {
       this.spinner = false;
       this.login = true;
     });
-    
   }
-
 }

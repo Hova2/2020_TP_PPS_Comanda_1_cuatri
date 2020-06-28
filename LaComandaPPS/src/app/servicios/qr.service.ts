@@ -13,7 +13,7 @@ export class QrService {
 
   constructor(private barcodeScanner: BarcodeScanner) {}
 
-  public EscanearDNI(): Promise<BarcodeScanResult> {
+  public escanear(): Promise<BarcodeScanResult> {
     return this.barcodeScanner.scan({ formats: 'QR_CODE,PDF_417' });
   }
 }

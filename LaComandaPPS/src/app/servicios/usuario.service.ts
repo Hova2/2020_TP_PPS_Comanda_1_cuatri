@@ -4,9 +4,9 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
-import { AngularFireFunctions } from '@angular/fire/functions/functions';
 import { CommonHelper } from '../clases/common-helper';
 import { CamaraService } from './camara.service';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -38,45 +38,55 @@ export class UsuarioService {
       });
   }
 
-
   updateUser(u: Usuario): void {
-      let idAnonimo = "RHaWE2czNq1gKh2p56s7";
-        if (u.imagen === 'ori') {
+    let idAnonimo = 'RHaWE2czNq1gKh2p56s7';
+    if (u.imagen === 'ori') {
+      this.db
+        .collection('usuarios')
+        .doc(idAnonimo)
 
-          this.db.collection('usuarios').doc(idAnonimo)
-
-          .update({
-            imagen:
-              'https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imagenesClientes%2Fusuario.png?alt=media&token=217855c5-40ab-4d0f-9b8b-a3b4293082a3',
-            nombre: u.nombre,
-
-          }).then(() => {console.log("anonimo sin foto")});
-        } else {
-          this.cs.subirFoto(u.imagen).then((url) => {
-            this.db.collection('usuarios').doc(idAnonimo).update({
-              imagen: url,
-              nombre: u.nombre
-            });
-          });
-        }
+        .update({
+          imagen:
+            'https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imagenesClientes%2Fusuario.png?alt=media&token=217855c5-40ab-4d0f-9b8b-a3b4293082a3',
+          nombre: u.nombre,
+        })
+        .then(() => {
+          console.log('anonimo sin foto');
+        });
+    } else {
+      this.cs.subirFoto(u.imagen).then((url) => {
+        this.db.collection('usuarios').doc(idAnonimo).update({
+          imagen: url,
+          nombre: u.nombre,
+        });
+      });
+    }
   }
 
-
   public traerTodosLosMozos(): Promise<Usuario[]> {
-    const docs = this.db.collection('usuarios', ref =>
+    const docs = this.db.collection('usuarios', (ref) =>
       ref.where('rol', '==', 'mozo')
     );
     return docs
       .get()
       .toPromise()
-      .then(doc => {
+      .then((doc) => {
         const mozos: Usuario[] = [];
-        doc.docs.forEach(usuario => {
+        doc.docs.forEach((usuario) => {
           const mozo = usuario.data() as Usuario;
           mozo.id = usuario.id;
           mozos.push(mozo);
         });
         return mozos;
       });
+  }
+
+  public buscarUsuario(
+    email: string
+  ): Promise<firebase.firestore.DocumentData> {
+    return this.db
+      .collection<Usuario>('usuarios', (ref) => ref.where('email', '==', email))
+      .get()
+      .toPromise();
   }
 }

@@ -16,11 +16,9 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     FormsModule,
     IonicModule,
-    RedireccionarPageRoutingModule,   
-    ComponentsModule             
+    RedireccionarPageRoutingModule,
+    ComponentsModule,
   ],
-  declarations: [
-    RedireccionarPage,
-  ],
+  declarations: [RedireccionarPage],
 })
 export class RedireccionarPageModule {}

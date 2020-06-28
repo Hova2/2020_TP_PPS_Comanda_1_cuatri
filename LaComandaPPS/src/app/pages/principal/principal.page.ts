@@ -9,15 +9,23 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
   styleUrls: ['./principal.page.scss'],
 })
 export class PrincipalPage implements OnInit {
-
-
   paginaSeleccionada = '';
+  rol: string;
 
-  constructor(private authService: AuthService, private router: Router, private backgroundMode: BackgroundMode) {
-  }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private backgroundMode: BackgroundMode
+  ) {}
 
   ngOnInit() {
     this.backgroundMode.enable();
+    this.authService.datosUsuarioLoguado().then((doc) => {
+      this.rol = doc.data().rol;
+      if (this.rol === 'metre') {
+        this.paginaSeleccionada = 'lista-de-espera';
+      }
+    });
   }
 
   desloguearse() {
@@ -27,6 +35,9 @@ export class PrincipalPage implements OnInit {
   redireccion(parametro: string) {
     this.paginaSeleccionada = parametro;
     switch (parametro) {
+      case 'lista-de-espera':
+        this.router.navigateByUrl('/principal/lista-de-espera');
+        break;
       case 'escanear-qr':
         this.router.navigateByUrl('/principal/escanear-qr');
         break;
