@@ -25,7 +25,7 @@ export class RegistroPage implements OnInit {
   public spinner: boolean = true;
   public datosDNI: string[];
   public fotocliente: string = 'assets/usuario.png';
-  public imagenOriginal: string;
+ // public imagenOriginal: string;
   public $rutaFoto: Observable<string>;
 
   constructor(

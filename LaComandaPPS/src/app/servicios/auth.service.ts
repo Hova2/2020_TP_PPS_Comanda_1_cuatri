@@ -41,4 +41,20 @@ export class AuthService {
 				.catch(error => console.log(reject(error)))
     	});
 	}
+
+
+	public logueoConEmailAnonimo(usr: Usuario) {
+		let email = usr.email;
+		let pwd = usr.password;
+		return new Promise((resolve, reject) => {
+			this.afsAuth.signInWithEmailAndPassword(email, pwd)
+				.then(userData => {					
+						resolve(userData);
+            console.log('Login success', userData);
+            this.router.navigate(['/principal']);						
+				})
+				.catch(error => reject(error));
+		});
+	}
+
 }

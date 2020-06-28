@@ -23,6 +23,14 @@ const routes: Routes = [
     path: 'registro',
     loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
   },
+  {
+    path: 'anonimo',
+    loadChildren: () => import('./pages/anonimo/anonimo.module').then( m => m.AnonimoPageModule)
+  },
+  {
+    path: 'abmmesas',
+    loadChildren: () => import('./pages/abmmesas/abmmesas.module').then( m => m.ABMmesasPageModule)
+  },
 
 
 

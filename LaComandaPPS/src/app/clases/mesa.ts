@@ -8,7 +8,7 @@ export class Mesa {
     cantidadDePersonas: number;
     tipo: TipoMesa;
     estadoMesa: EstadoMesa;
-    imagen: string;
+    idCliente: string;
 
     constructor() {
         this.id = '';
@@ -16,16 +16,15 @@ export class Mesa {
         this.cantidadDePersonas = 0;
         this.tipo = null;
         this.estadoMesa = null;
-        this.imagen = '';
+        this.idCliente = null;
     }
 
-    public static crear(
+    public static altaMesa(
         id: string,
         numero: string,
         cantidadDePersonas: number,
         tipo: TipoMesa,
         estadoMesa: EstadoMesa,
-        imagen: string
     ) {
         const nuevaMesa = new Mesa();
         nuevaMesa.id = id;
@@ -33,7 +32,7 @@ export class Mesa {
         nuevaMesa.cantidadDePersonas = cantidadDePersonas;
         nuevaMesa.tipo = tipo;
         nuevaMesa.estadoMesa = estadoMesa;
-        nuevaMesa.imagen = imagen
+        nuevaMesa.idCliente = null; 
         return nuevaMesa;
     }
     

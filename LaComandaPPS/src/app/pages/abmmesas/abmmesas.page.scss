@@ -1,0 +1,102 @@
+.botonRegistro {
+
+    color: white;
+    background-color: limegreen;
+    border-radius: 10px;
+    width: 70%;
+    height: 20%;
+    font-size: 35px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-left: 15%;
+    margin-bottom: 5%;
+
+  }
+
+  .titulo {
+
+    display: block;
+    text-align: center;
+    --background: translucent;
+    background-color: lightblue;
+    margin: auto;
+    font-size: 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+
+  .titulo2 {
+
+    //display: block;
+    text-align: center;
+    --background: translucent;
+    //background-color: lightblue;
+    color: rebeccapurple;
+    margin: auto;
+    font-size: 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+
+.im {
+    width: 200px;//50%;
+    height: 200px; //50%;
+    border-radius: 25px;
+    margin-left: 90px;
+    margin-right: 80px;
+
+}
+
+.mitad {
+    width: 48%;
+    height: 50px;
+    margin-left: 4px;
+    margin-right: 2px;
+    //padding-left: 0vh;
+    //padding-right: 0vh;
+  }
+
+  ion-checkbox {
+
+--background: pink;
+--border-radius: 25px;
+--size: 30px;
+--border-color: black;	
+--border-color-checked: black;
+
+  }
+
+
+  .labelSelect {
+
+    //text-align: left;
+    --background: translucent;
+    //background-color: lightblue;
+    //margin: auto;
+    font-size: 15px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+  }
+
+  .selectMesas{
+    margin: auto;
+    font-size: 15px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: red;
+  }
+
+  .radio {
+    font-size: 15px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: rebeccapurple;
+  }
+
+  .labelSelect2 {
+
+    //text-align: left;
+    --background: translucent;
+    //background-color: lightblue;
+    //margin: auto;
+    font-size: 15px;
+    margin-left: 4%;
+    margin-right: 10%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+  }

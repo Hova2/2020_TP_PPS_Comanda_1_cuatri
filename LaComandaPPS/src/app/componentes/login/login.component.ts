@@ -66,5 +66,17 @@ export class LoginComponent implements OnInit {
 
   }
 
+  public anonimo() {
+
+    this.router.navigate(['/anonimo']);
+
+  }
+
+  public mesa() {
+
+    this.router.navigate(['/abmmesas']);
+
+  }
+
 
 }

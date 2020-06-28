@@ -15,31 +15,7 @@ export class MiPedidoPage implements OnInit {
 
   pedido = new Array<Producto>();
 
-  productos: Producto[] = [
-    {
-      productoID: 'IDProd1',
-      nombre: 'nombreProd1',
-      imagen: ['../../../assets/imagenes/comida1.jpg', '../../../assets/imagenes/comida2.jpg', '../../../assets/imagenes/comida3.jpg'],
-      precio: 11,
-      tipoComida: [TipoComida.comida, TipoComida.vegano],
-      estado: EstadoProducto.pendiente,
-      quienElabora: QuienElabora.cocinero,
-      descripcion: 'descripcionProd1',
-      tiempoPromedioDeElaboracion: 1
-    },
-    {
-      productoID: 'IDProd2',
-      nombre: 'nombreProd2',
-      imagen: ['../../../assets/imagenes/comida4.jpg', '../../../assets/imagenes/comida5.jpg', '../../../assets/imagenes/comida6.jpg'],
-      precio: 22,
-      tipoComida: [TipoComida.bebida, TipoComida.alcohol],
-      estado: EstadoProducto.pendiente,
-      quienElabora: QuienElabora.bartender,
-      descripcion: 'descripcionProd2',
-      tiempoPromedioDeElaboracion: 2
-    }
-  ];
-
+ 
   sliderConfig = {
     spaceBetween: 10,
     centeredSlides: true,
