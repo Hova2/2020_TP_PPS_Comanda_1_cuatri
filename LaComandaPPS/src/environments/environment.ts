@@ -3,20 +3,21 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
 };
 
-/*export const FirebaseConfig = { // esta es la config tpfinal
-  apiKey: "AIzaSyCPozTBrjTp2-Lp9MusJWWir96y1HxJhLY",
-  authDomain: "tpfinalpps-3f07f.firebaseapp.com",
-  databaseURL: "https://tpfinalpps-3f07f.firebaseio.com",
-  projectId: "tpfinalpps-3f07f",
-  storageBucket: "tpfinalpps-3f07f.appspot.com",
-  messagingSenderId: "175151321703",
-  appId: "1:175151321703:web:cd655d69ab8b3ea8a17ac2"
-};*/
+export const FirebaseConfig = {
+  // esta es la config tpfinal
+  apiKey: 'AIzaSyCPozTBrjTp2-Lp9MusJWWir96y1HxJhLY',
+  authDomain: 'tpfinalpps-3f07f.firebaseapp.com',
+  databaseURL: 'https://tpfinalpps-3f07f.firebaseio.com',
+  projectId: 'tpfinalpps-3f07f',
+  storageBucket: 'tpfinalpps-3f07f.appspot.com',
+  messagingSenderId: '175151321703',
+  appId: '1:175151321703:web:cd655d69ab8b3ea8a17ac2',
+};
 
-export const FirebaseConfig = { //esta es la config de prueba
+/* export const FirebaseConfig = { //esta es la config de prueba
   apiKey: "AIzaSyAtVj59qe9-ALmsZJN5t1a1-7zosD58A8k",
   authDomain: "miprimerchat-f6aec.firebaseapp.com",
   databaseURL: "https://miprimerchat-f6aec.firebaseio.com",
@@ -24,9 +25,7 @@ export const FirebaseConfig = { //esta es la config de prueba
   storageBucket: "miprimerchat-f6aec.appspot.com",
   messagingSenderId: "637583324093",
   appId: "1:637583324093:web:4bcc7d8a861485b0"
-};
-
-
+};*/
 
 /*
  * For easier debugging in development mode, you can import the following file
