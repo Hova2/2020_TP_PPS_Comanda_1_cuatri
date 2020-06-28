@@ -1,0 +1,41 @@
+ion-badge {
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 100%;
+}
+
+.category-block {
+    margin-bottom: 4px;
+}
+
+.category-banner {
+    border-left: 8px solid var(--ion-color-secondary);
+    background: var(--ion-color-light);
+    height: 40px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+ion-slides {
+border-color: black;
+height:  50%;
+}
+
+.ionCardCliente{
+    height: 100%;
+    width: 100%;
+}
+
+.ionCardMozo{
+    position: relative;
+    align-self: center;
+    height: 50%;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.labelClass{
+    font-size: 20px;
+}

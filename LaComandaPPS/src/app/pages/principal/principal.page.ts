@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Router } from '@angular/router';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @Component({
   selector: 'app-principal',
@@ -10,13 +11,13 @@ import { Router } from '@angular/router';
 export class PrincipalPage implements OnInit {
 
 
-
   paginaSeleccionada = '';
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private backgroundMode: BackgroundMode) {
   }
 
   ngOnInit() {
+    this.backgroundMode.enable();
   }
 
   desloguearse() {
@@ -53,7 +54,7 @@ export class PrincipalPage implements OnInit {
       case 'verEncuestas':
         this.router.navigateByUrl('/principal/ver-encuestas');
         break;
-        case 'gestionDeProductos':
+      case 'gestionDeProductos':
         this.router.navigateByUrl('/principal/gestion-de-productos');
         break;
     }

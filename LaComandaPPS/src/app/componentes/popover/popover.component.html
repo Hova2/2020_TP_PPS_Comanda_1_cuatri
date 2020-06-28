@@ -1,6 +1,6 @@
 <div>
   <ion-grid>
-    <ion-row *ngFor="let prod of pedido">
+    <ion-row *ngFor="let prod of pedido.productos">
       <ion-col size="9">
         {{ prod.nombre }}
       </ion-col>
@@ -15,7 +15,7 @@
         Total
       </ion-col>
       <ion-col size="4">
-        $ precio total
+        {{ pedido.total }}
       </ion-col>
     </ion-row>
     <ion-row>

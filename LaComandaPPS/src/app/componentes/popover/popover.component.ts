@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavParams } from '@ionic/angular';
 import { Producto } from 'src/app/clases/producto';
+import { Pedido } from 'src/app/clases/pedido';
 
 @Component({
   selector: 'app-popover',
@@ -9,7 +10,7 @@ import { Producto } from 'src/app/clases/producto';
 })
 export class PopoverComponent implements OnInit {
 
-  pedido: Producto[];
+  pedido: Pedido;
 
   constructor(private popoverController: PopoverController, private navParams: NavParams) {
     this.pedido = this.navParams.get('pedido');

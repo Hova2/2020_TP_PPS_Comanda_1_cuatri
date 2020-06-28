@@ -9,18 +9,22 @@ export class Producto {
     tiempoPromedioDeElaboracion: number;
     descripcion: string;
     precio: number;
-    imagenes: Array<any>;
+    imagen1: string;
+    imagen2: string;
+    imagen3: string;
     estado: EstadoProducto;
     quienElabora: QuienElabora;
 
 
     constructor() {
         this.id = '';
-        this.nombre = '';        
+        this.nombre = '';
         this.tiempoPromedioDeElaboracion = 0;
         this.descripcion = '';
         this.precio = 0;
-        this.imagenes = null;
+        this.imagen1 = '';
+        this.imagen2 = '';
+        this.imagen3 = '';
         this.estado = EstadoProducto.pendiente;
         this.quienElabora = null;
     }
@@ -28,7 +32,9 @@ export class Producto {
     public static crear(
         productoID: string,
         nombre: string,
-        imagenes: Array<any>,
+        imagen1: string,
+        imagen2: string,
+        imagen3: string,
         precio: number,
         quienElabora: QuienElabora,
         descripcion: string,
@@ -37,7 +43,9 @@ export class Producto {
         const nuevoProducto = new Producto();
         nuevoProducto.id = productoID;
         nuevoProducto.nombre = nombre;
-        nuevoProducto.imagenes = imagenes;
+        nuevoProducto.imagen1 = imagen1;
+        nuevoProducto.imagen2 = imagen2;
+        nuevoProducto.imagen3 = imagen3;
         nuevoProducto.precio = precio;
         nuevoProducto.quienElabora = quienElabora;
         nuevoProducto.descripcion = descripcion;

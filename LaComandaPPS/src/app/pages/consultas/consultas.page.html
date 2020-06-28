@@ -2,11 +2,76 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <ion-title>Consultas</ion-title>
+      <ion-title>Mis Consultas</ion-title>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
+<ion-content>
+  <hr>
+  <hr>
+  <hr>
+
+  <h2 align="center">Historial de consultas de {{usuarioActivo.nombre}}</h2>
+
+  <hr>
+  <hr>
+  <!-- <ion-slides [options]="sliderConfig" *ngIf="this.usuarioActivo.rol == 'cliente'"> -->
+    <!-- estos son si es cliente -->
+    <!-- <ion-slide [hidden]="hayConsultasCliente">
+      <ion-card align-items-center>
+        <h3>Usted no tiene consultas</h3>
+      </ion-card>
+    </ion-slide>
+    <ion-slide *ngFor="let mensaje of mensajes | async">
+      <ion-card align-items-center class="ionCardCliente">
+        <h4>Pregunta</h4>
+        {{mensaje.pregunta}}
+        <h4>Respuesta</h4>
+        {{mensaje.respuesta}}
+      </ion-card>
+    </ion-slide>
+  </ion-slides> -->
+  <form [formGroup]="formSelect" >
+  <ion-select (ionChange)="cargarMensaje()" [value]="null" formControlName="select">
+    <ion-select-option [value]="null"></ion-select-option>
+    <ion-select-option *ngFor="let mensaje of mensajes | async" [value]="mensaje.id">
+      {{mensaje.mesa}} -
+      {{mensaje.fecha | date:'d/M/yy, h:mm a'}}
+    </ion-select-option>
+  </ion-select>
+</form>
+
+  <ion-card class="ionCardMozo" [hidden]="hayConsultasCliente">
+    <h3>Usted no tiene consultas</h3>
+  </ion-card>
+
+  <ion-card align-items-center *ngIf="this.mensajeSeleccionado == null" class="ionCardMozo" [hidden]="!hayConsultasCliente">
+    <h3>Seleccione un mensaje</h3>
+  </ion-card>
+
+  <ion-card align-items-center *ngIf="this.mensajeSeleccionado != null" class="ionCardMozo" [hidden]="!hayConsultasCliente">
+    <ion-label *ngIf="this.usuarioActivo.rol == 'mozo'" class="labelClass">Mesa: {{mensajeSeleccionado.mesa}}</ion-label>    
+    <h4>Fecha: {{mensajeSeleccionado.fecha | date:'d/M/yy, h:mm a'}}</h4>
+    <h4><strong>Pregunta: {{mensajeSeleccionado.pregunta}}</strong></h4> 
+    <ion-label *ngIf="this.usuarioActivo.rol == 'cliente'" class="labelClass">Respuesta: {{mensajeSeleccionado.respuesta}}</ion-label>
+
+  </ion-card>
+  <hr>
+  <hr>
 </ion-content>
+<ion-footer>
+  <form [formGroup]="form" (ngSubmit)="logForm()">
+    <ion-item>
+      <ion-label position="floating" *ngIf="this.usuarioActivo.rol == 'cliente'">Escriba aquí una nueva consulta</ion-label>
+      <ion-label position="floating" *ngIf="this.usuarioActivo.rol == 'mozo'">Escriba aquí su respuesta</ion-label>
+      <ion-textarea type="text" formControlName="pregunta"></ion-textarea>
+    </ion-item>
+
+    <ion-button type="submit" [disabled]="!form.valid" color="success" expand="full">Enviar</ion-button>
+    <ion-button (click)="cancelar()" color="primary" expand="full">Cancelar</ion-button>
+
+  </form>
+
+</ion-footer>

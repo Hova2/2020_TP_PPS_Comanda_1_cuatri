@@ -22,7 +22,6 @@ export class Mensaje {
         nombreUsuario: string,
         nombreMozo: string,
         pregunta: string,
-        respuesta: string,
         mesa: string
     ) {
 
@@ -32,7 +31,7 @@ export class Mensaje {
         nuevoMensaje.nombreUsuario = nombreUsuario;
         nuevoMensaje.nombreMozo = nombreMozo;
         nuevoMensaje.pregunta = pregunta;
-        nuevoMensaje.respuesta = respuesta;
+        nuevoMensaje.respuesta = null;
         nuevoMensaje.mesa = mesa;
         nuevoMensaje.fecha = Date.now();
 

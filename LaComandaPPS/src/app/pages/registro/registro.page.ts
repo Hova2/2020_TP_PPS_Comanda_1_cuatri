@@ -13,6 +13,7 @@ import { QrService } from 'src/app/servicios/qr.service';
 import { Router } from '@angular/router';
 import { CamaraService } from 'src/app/servicios/camara.service';
 import { Observable } from 'rxjs/internal/Observable';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 
 @Component({
@@ -33,12 +34,15 @@ export class RegistroPage implements OnInit {
     private toastr: ServicioToastService,
     private qr: QrService,
     private camaraS: CamaraService,
-    private router: Router
+    private router: Router,
+    private backgroundMode: BackgroundMode
   ) {
     this.$rutaFoto = null;
   }
 
   ngOnInit() {
+    
+    this.backgroundMode.enable();
     timer(3000).subscribe(() => {
       this.spinner = false;
     });
@@ -79,9 +83,6 @@ export class RegistroPage implements OnInit {
       }
     });
   }
-
-
-
 
   borrarCampos() {
     this.registerForm.get('name').setValue('');

@@ -27,46 +27,52 @@
     </ion-item>
     <ion-item>
       <ion-label>Imagenes</ion-label>
-      <ion-card (click)="sacarFoto('imagen1')">
+      <ion-card (click)="sacarFoto('imagen1')" *ngIf="imagen1tmp == null" class="imagen">
         <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
-      <ion-card (click)="sacarFoto('imagen2')">
+      <ion-card (click)="sacarFoto('imagen1')" *ngIf="imagen1tmp != null" class="imagen">
+        <img [src]="imagen1tmp" />
+      </ion-card>
+
+      <ion-card (click)="sacarFoto('imagen2')" *ngIf="imagen2tmp == null" class="imagen">
         <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
-      <ion-card (click)="sacarFoto('imagen3')">
+      <ion-card (click)="sacarFoto('imagen2')" *ngIf="imagen2tmp != null" class="imagen">
+        <img [src]="imagen2tmp" />
+      </ion-card>
+
+      <ion-card (click)="sacarFoto('imagen3')" *ngIf="imagen3tmp == null" class="imagen">
         <img src="../../../assets/imagenes/imagenSubirProducto.png" />
+      </ion-card>
+      <ion-card (click)="sacarFoto('imagen3')" *ngIf="imagen3tmp != null" class="imagen">
+        <img [src]="imagen3tmp" />
       </ion-card>
     </ion-item>
 
-    <ion-button type="submit" [disabled]="!todo.valid" expand="full" color="success">Submit</ion-button>
+    <ion-button type="submit" [disabled]="!todo.valid" color="success" expand="full">Guardar</ion-button>
+    <ion-button type="reset" color="primary" expand="full">Limpiar</ion-button>
+    <ion-button (click)="borrarProducto()" color="danger" expand="full" [disabled]="!hayProductoSeleccionado">Borrar</ion-button>
 
-    <ion-button type="reset" expand="full" color="danger">Reset</ion-button>
-
+    <ion-item>
+      <ion-label>Seleccione para editar</ion-label>
+      <ion-select (ionChange)="productoSeleccionado()" [value]="null" formControlName="select">
+        <ion-select-option [value]="null"></ion-select-option>
+        <ion-select-option *ngFor="let producto of productos | async" [value]="producto.id">{{producto.nombre}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
   </form>
 
+  <!-- <ion-grid>
+  <ion-item>
+    <ion-label>Seleccione para editar</ion-label>
+    <ion-select (ionChange)="productoSeleccionado($event)" [value]="null">
+      <ion-select-option [value]="null"></ion-select-option>
+      <ion-select-option *ngFor="let producto of productos | async" [value]="producto.id">{{producto.nombre}}</ion-select-option>
+    </ion-select>
+  </ion-item>  
+</ion-grid> -->
 
-  <!-- <ion-list lines="full" class="ion-no-margin ion-no-padding">
-
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" formControlName="nombre"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Descripción</ion-label>
-      <ion-textarea type="text" formControlName="descripcion"></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Tiempo estimado de elaboración</ion-label>
-      <ion-input type="number" formControlName="tiempoDeElaboracion"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Precio</ion-label>
-      <ion-input type="number" formControlName="precio"></ion-input>
-    </ion-item>
-  </ion-list> -->
 
 
 </ion-content>

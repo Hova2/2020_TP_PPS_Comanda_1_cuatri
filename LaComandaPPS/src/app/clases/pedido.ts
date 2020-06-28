@@ -39,6 +39,12 @@ export class Pedido {
         return pedido;
     }
 
+    public static crearDesdeMozo(): Pedido {
+        const pedido = new Pedido();
+        pedido.estado = EstadoPedido.pendiente;
+        return pedido;
+    }
+
     private static generarCodigoID(): string {
         let codigo = '';
         const ahora = new Date();

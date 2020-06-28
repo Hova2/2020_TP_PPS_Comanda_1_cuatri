@@ -20,6 +20,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,6 +47,7 @@ import { File } from '@ionic-native/file/ngx';
     BarcodeScanner,
     Camera,
     File,
+    BackgroundMode
   ],
   bootstrap: [AppComponent]
 })
