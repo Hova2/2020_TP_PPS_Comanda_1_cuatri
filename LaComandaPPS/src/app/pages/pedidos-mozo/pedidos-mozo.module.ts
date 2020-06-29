@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AutorizacionesPageRoutingModule } from './autorizaciones-routing.module';
+import { PedidosMozoPageRoutingModule } from './pedidos-mozo-routing.module';
 
-import { AutorizacionesPage } from './autorizaciones.page';
+import { PedidosMozoPage } from './pedidos-mozo.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AutorizacionesPageRoutingModule
+    PedidosMozoPageRoutingModule
   ],
-  declarations: [AutorizacionesPage]
+  declarations: [PedidosMozoPage]
 })
-export class AutorizacionesPageModule {}
+export class PedidosMozoPageModule {}

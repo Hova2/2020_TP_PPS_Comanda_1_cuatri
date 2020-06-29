@@ -10,6 +10,40 @@
       <ion-list>
         <ion-menu-toggle auto-hide="false">
           <ion-item
+            (click)="redireccion('pedido')"
+            routerDirection="root"
+            [class.item-activo]="paginaSeleccionada === 'pedido'"
+            [class.ion-hide]="rol !== 'cliente'"
+          >
+            <ion-label>Pedido</ion-label>
+          </ion-item>
+          <ion-item
+            (click)="redireccion('escanearqr')"
+            routerDirection="root"
+            [class.item-activo]="paginaSeleccionada === 'escanearqr'"
+            [class.ion-hide]="rol !== 'cliente'"
+          >
+            <ion-label>Ver estado del pedido</ion-label>
+          </ion-item>
+          <ion-item
+            (click)="redireccion('consultas')"
+            routerDirection="root"
+            [class.item-activo]="paginaSeleccionada === 'consultas'"
+            [class.ion-hide]="rol !== 'cliente'"
+            [class.ion-hide]="rol !== 'mozo'"
+          >
+            <ion-label>Consultar al mozo</ion-label>
+          </ion-item>
+          <ion-item
+            (click)="redireccion('pedidosmozo')"
+            routerDirection="root"
+            [class.item-activo]="paginaSeleccionada === 'pedidosmozo'"
+            [class.ion-hide]="rol !== 'mozo'"
+          >
+            <ion-label>Lista de pedidos</ion-label>
+          </ion-item>
+
+          <ion-item
             (click)="redireccion('lista-de-espera')"
             routerDirection="root"
             [class.item-activo]="paginaSeleccionada === 'lista-de-espera'"
@@ -18,74 +52,39 @@
             <ion-label>Lista de espera</ion-label>
           </ion-item>
           <ion-item
-            (click)="redireccion('escanear-qr')"
+            (click)="redireccion('pedidosempleado')"
             routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'escanear-qr'"
+            [class.item-activo]="paginaSeleccionada === 'pedidosempleado'"
+            [class.ion-hide]="rol !== 'cocinero'"
+            [class.ion-hide]="rol !== 'bartender'"
           >
-            <ion-label>Escanear QR</ion-label>
+            <ion-label>Lista de pedidos</ion-label>
           </ion-item>
           <ion-item
-            (click)="redireccion('consultas')"
+            (click)="redireccion('gestionproductos')"
             routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'consultas'"
+            [class.item-activo]="paginaSeleccionada === 'gestionproductos'"
+            [class.ion-hide]="rol !== 'cocinero'"
+            [class.ion-hide]="rol !== 'bartender'"
           >
-            <ion-label>Consultas</ion-label>
+            <ion-label>Gestionar productos</ion-label>
+          </ion-item>
+
+          <ion-item
+            (click)="redireccion('autorizarusuario')"
+            routerDirection="root"
+            [class.item-activo]="paginaSeleccionada === 'autorizarusuario'"
+            [class.ion-hide]="rol !== 'socio'"
+          >
+            <ion-label>Autorizar registro</ion-label>
           </ion-item>
           <ion-item
-            (click)="redireccion('autorizaciones')"
+            (click)="redireccion('gestionmesas')"
             routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'autorizaciones'"
+            [class.item-activo]="paginaSeleccionada === 'gestionmesas'"
+            [class.ion-hide]="rol !== 'socio'"
           >
-            <ion-label>Autorizaciones</ion-label>
-          </ion-item>
-          <ion-item
-            (click)="redireccion('gestionDeMesas')"
-            routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'gestionDeMesas'"
-          >
-            <ion-label>Gestión de mesas</ion-label>
-          </ion-item>
-          <ion-item
-            (click)="redireccion('listadoDePedidos')"
-            routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'listadoDePedidos'"
-          >
-            <ion-label>Listado de pedidos</ion-label>
-          </ion-item>
-          <ion-item
-            (click)="redireccion('miEncuesta')"
-            routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'miEncuesta'"
-          >
-            <ion-label>Realizar encuesta</ion-label>
-          </ion-item>
-          <ion-item
-            (click)="redireccion('miPedido')"
-            routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'miPedido'"
-          >
-            <ion-label>Realizar pedido</ion-label>
-          </ion-item>
-          <ion-item
-            (click)="redireccion('misTareas')"
-            routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'misTareas'"
-          >
-            <ion-label>Mis tareas</ion-label>
-          </ion-item>
-          <ion-item
-            (click)="redireccion('verEncuestas')"
-            routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'verEncuestas'"
-          >
-            <ion-label>Ver encuestas</ion-label>
-          </ion-item>
-          <ion-item
-            (click)="redireccion('gestionDeProductos')"
-            routerDirection="root"
-            [class.item-activo]="paginaSeleccionada === 'gestionDeProductos'"
-          >
-            <ion-label>Gestion de productos</ion-label>
+            <ion-label>Gestionar mesas</ion-label>
           </ion-item>
           <ion-item (click)="desloguearse()">
             <ion-icon name="log-out" slot="start"></ion-icon>

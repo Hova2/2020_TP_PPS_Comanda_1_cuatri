@@ -22,8 +22,23 @@ export class PrincipalPage implements OnInit {
     this.backgroundMode.enable();
     this.authService.datosUsuarioLoguado().then((doc) => {
       this.rol = doc.data().rol;
-      if (this.rol === 'metre') {
-        this.paginaSeleccionada = 'lista-de-espera';
+      switch (this.rol) {
+        case 'metre':
+          this.paginaSeleccionada = 'lista-de-espera';
+          break;
+        case 'cocinero':
+        case 'bartender':
+          this.paginaSeleccionada = 'pedidosempleado';
+          break;
+        case 'mozo':
+          this.paginaSeleccionada = 'pedidosmozo';
+          break;
+        case 'socio':
+          this.paginaSeleccionada = 'autorizarusuario';
+          break;
+        case 'cliente':
+          this.paginaSeleccionada = 'pedido';
+          break;
       }
     });
   }
@@ -38,35 +53,29 @@ export class PrincipalPage implements OnInit {
       case 'lista-de-espera':
         this.router.navigateByUrl('/principal/lista-de-espera');
         break;
-      case 'escanear-qr':
+      case 'pedidosempleado':
+        this.router.navigateByUrl('/principal/pedidos-empleado');
+        break;
+      case 'pedidosmozo':
+        this.router.navigateByUrl('/principal/pedidos-mozo');
+        break;
+      case 'autorizarusuario':
+        this.router.navigateByUrl('/principal/autorizacion-usuario');
+        break;
+      case 'pedido':
+        this.router.navigateByUrl('/principal/mi-pedido');
+        break;
+      case 'escanearqr':
         this.router.navigateByUrl('/principal/escanear-qr');
         break;
       case 'consultas':
         this.router.navigateByUrl('/principal/consultas');
         break;
-      case 'autorizaciones':
-        this.router.navigateByUrl('/principal/autorizaciones');
-        break;
-      case 'gestionDeMesas':
-        this.router.navigateByUrl('/principal/gestion-de-mesas');
-        break;
-      case 'listadoDePedidos':
-        this.router.navigateByUrl('/principal/listado-de-pedidos');
-        break;
-      case 'miEncuesta':
-        this.router.navigateByUrl('/principal/mi-encuesta');
-        break;
-      case 'miPedido':
-        this.router.navigateByUrl('/principal/mi-pedido');
-        break;
-      case 'misTareas':
-        this.router.navigateByUrl('/principal/mis-tareas');
-        break;
-      case 'verEncuestas':
-        this.router.navigateByUrl('/principal/ver-encuestas');
-        break;
-      case 'gestionDeProductos':
+      case 'gestionproductos':
         this.router.navigateByUrl('/principal/gestion-de-productos');
+        break;
+      case 'gestionmesas':
+        this.router.navigateByUrl('/principal/abmmesas');
         break;
     }
   }

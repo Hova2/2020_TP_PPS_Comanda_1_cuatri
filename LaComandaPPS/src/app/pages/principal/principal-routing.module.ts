@@ -39,13 +39,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'autorizaciones',
-        loadChildren: () =>
-          import('../autorizaciones/autorizaciones.module').then(
-            (m) => m.AutorizacionesPageModule
-          ),
-      },
-      {
         path: 'listado-de-pedidos',
         loadChildren: () =>
           import('../listado-de-pedidos/listado-de-pedidos.module').then(
@@ -85,6 +78,34 @@ const routes: Routes = [
         loadChildren: () =>
           import('../lista-de-espera/lista-de-espera.module').then(
             (m) => m.ListaDeEsperaPageModule
+          ),
+      },
+      {
+        path: 'pedidos-empleado',
+        loadChildren: () =>
+          import('../pedidos-empleado/pedidos-empleado.module').then(
+            (m) => m.PedidosEmpleadoPageModule
+          ),
+      },
+      {
+        path: 'pedidos-mozo',
+        loadChildren: () =>
+          import('../pedidos-mozo/pedidos-mozo.module').then(
+            (m) => m.PedidosMozoPageModule
+          ),
+      },
+      {
+        path: 'autorizacion-usuario',
+        loadChildren: () =>
+          import('../autorizacion-usuario/autorizacion-usuario.module').then(
+            (m) => m.AutorizacionUsuarioPageModule
+          ),
+      },
+      {
+        path: 'abmmesas',
+        loadChildren: () =>
+          import('../abmmesas/abmmesas.module').then(
+            (m) => m.ABMmesasPageModule
           ),
       },
     ],

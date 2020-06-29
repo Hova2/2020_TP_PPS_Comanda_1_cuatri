@@ -79,8 +79,46 @@ export class LoginComponent implements OnInit {
           case 'metre':
             this.router.navigate(['/principal/lista-de-espera']);
             break;
+          case 'cocinero':
+          case 'bartender':
+            this.router.navigate(['/principal/pedidos-empleado']);
+            break;
+          case 'mozo':
+            this.router.navigate(['/principal/pedidos-mozo']);
+            break;
+          case 'socio':
+            this.router.navigate(['/principal/autorizacion-usuario']);
+            break;
           default:
-            this.router.navigate(['/principal']);
+            this.router.navigate(['']);
+            break;
+        }
+        this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);
+      })
+      .catch((error) => {
+        console.log(error);
+        this.toastr.mostrarToast(
+          'Usuario o contraseña incorrectos',
+          ColoresToast.danger
+        );
+      });
+  }
+
+  public loginSinMetre() {
+    this.toastr.mostrarToast('mensaje', ColoresToast.success);
+
+    this.authService
+      .logueoConEmail(
+        this.formulario.controls.usuario.value,
+        this.formulario.controls.clave.value
+      )
+      .then(async (datosUsuario) => {
+        const docUsuario = await this.authService.datosUsuarioLoguado();
+        const rol = docUsuario.data().rol;
+        this.initializeApp();
+        switch (rol) {
+          case 'cliente':
+            this.router.navigate(['/principal/mi-pedido']);
             break;
         }
         this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);
