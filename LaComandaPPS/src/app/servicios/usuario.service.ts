@@ -89,4 +89,19 @@ export class UsuarioService {
       .get()
       .toPromise();
   }
+
+  public traerUsuarioLoguado(
+    email: string): Promise<Usuario> {
+    const docRef = this.db.collection('productos', ref =>
+      ref.where('email', '==', email)
+    );
+    return docRef
+      .get()
+      .toPromise()
+      .then(doc => {
+        const usuario = doc.docs[0].data() as Usuario;
+        usuario.id = doc.docs[0].id;
+        return usuario;
+      });
+    }
 }

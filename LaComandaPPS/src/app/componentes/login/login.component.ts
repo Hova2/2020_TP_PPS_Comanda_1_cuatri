@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    this.toastr.mostrarToast('mensaje', ColoresToast.success);
+    this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);
 
     this.authService
       .logueoConEmail(
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
   }
 
   public loginSinMetre() {
-    this.toastr.mostrarToast('mensaje', ColoresToast.success);
+    this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);
 
     this.authService
       .logueoConEmail(

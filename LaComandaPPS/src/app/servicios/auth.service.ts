@@ -76,7 +76,8 @@ export class AuthService {
     const docUsuario = await this.userService.buscarUsuario(
       usuarioLogueado.email
     );
-
     return docUsuario.docs[0];
   }
+
+  
 }

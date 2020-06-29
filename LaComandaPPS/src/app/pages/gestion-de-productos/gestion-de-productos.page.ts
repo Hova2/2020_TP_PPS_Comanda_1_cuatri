@@ -12,6 +12,7 @@ import { CamaraService } from 'src/app/servicios/camara.service';
 import { Observable } from 'rxjs';
 import { ArchivoService } from 'src/app/servicios/archivo.service';
 import { EstadoProducto } from 'src/app/enum/estado-producto.enum';
+import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
   selector: 'app-gestion-de-productos',
@@ -32,18 +33,20 @@ export class GestionDeProductosPage implements OnInit {
 
   private todo: FormGroup;
 
-  private usuarioActivo: Usuario = {
-    id: 'id',
-    dni: 0,
-    nombre: 'raul',
-    apellido: '',
-    password: '',
-    email: '',
-    rol: Rol.cocinero,
-    imagen: '',
-    eliminado: false,
-    estado: Estados.habilitado,
-  };
+  // private usuarioActivo: Usuario = {
+  //   id: 'id',
+  //   dni: 0,
+  //   nombre: 'raul',
+  //   apellido: '',
+  //   password: '',
+  //   email: '',
+  //   rol: Rol.bartender,
+  //   imagen: '',
+  //   eliminado: false,
+  //   estado: Estados.habilitado,
+  // };
+
+  private usuarioActivo: Usuario;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,6 +54,7 @@ export class GestionDeProductosPage implements OnInit {
     private ps: ProductoService,
     private cs: CamaraService,
     private as: ArchivoService,
+    private authService: AuthService
   ) {
     this.todo = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -59,121 +63,136 @@ export class GestionDeProductosPage implements OnInit {
       precio: ['', Validators.required],
       select: [null]
     });
-
   }
 
   ngOnInit() {
 
     //this.productos = this.ps.traerProductos();
 
+    // this.authService.traerUsuarioLogueado().then(usuario =>{
+    //   this.usuarioActivo = usuario;
+    // })   
+
     this.productos = this.ps.traerProductosActivos();
 
     setTimeout(() => {
-      
-     this.productos.subscribe(productos =>{
-       productos.forEach(unProd =>{
-         console.log(unProd.nombre);
-       })
-     })
+
+      this.productos.subscribe(productos => {
+        productos.forEach(unProd => {
+          console.log(unProd.nombre);
+        })
+      })
     }, 3000);
-   }
+  }
 
   logForm() {
-    if(this.hayProductoSeleccionado === null){
+    if (this.hayProductoSeleccionado === null) {
       this.altaProducto();
     }
-    else{
+    else {
       console.log("no hay seleccionado");
       this.editarProducto();
     }
   }
 
-  altaProducto(){
+  altaProducto() {
     let producto: Producto;
-    let elaborador = this.traerQuienElabora();
+    let elaborador;
 
-    if (this.imagen1 === null) {      
-     this.imagen1 = '../../../assets/imagenes/imagenSubirProducto.png';
-    }
-    if (this.imagen2 === null) {
-      this.imagen2 = '../../../assets/imagenes/imagenSubirProducto.png';
-    }
-    if (this.imagen3 === null) {
-      this.imagen3 = '../../../assets/imagenes/imagenSubirProducto.png';
-    }
+    this.traerQuienElabora().then(elabora => {
+      elaborador = elabora;
+    }).then(() => {
 
-    producto = Producto.crear(
-      '',
-      this.todo.value.nombre,
-      this.imagen1,
-      this.imagen2,
-      this.imagen3,
-      Number.parseFloat(this.todo.value.precio),
-      elaborador,
-      this.todo.value.descripcion,
-      this.todo.value.tiempoDeElaboracion
-    );
-    this.ps.persistirProducto(producto).then((valor) => {
-      if (valor) {
-        this.cancelar();
-        this.toast.mostrarToast('Alta exitosa', ColoresToast.success);
-      } else {
-        this.toast.mostrarToast('Error', ColoresToast.danger);
+      if (this.imagen1 === null) {
+        this.imagen1 = '../../../assets/imagenes/imagenSubirProducto.png';
       }
+      if (this.imagen2 === null) {
+        this.imagen2 = '../../../assets/imagenes/imagenSubirProducto.png';
+      }
+      if (this.imagen3 === null) {
+        this.imagen3 = '../../../assets/imagenes/imagenSubirProducto.png';
+      }
+
+      producto = Producto.crear(
+        '',
+        this.todo.value.nombre,
+        this.imagen1,
+        this.imagen2,
+        this.imagen3,
+        Number.parseFloat(this.todo.value.precio),
+        elaborador,
+        this.todo.value.descripcion,
+        this.todo.value.tiempoDeElaboracion
+      );
+
+      console.log(producto.quienElabora);
+
+       this.ps.persistirProducto(producto).then((valor) => {
+         if (valor) {
+           this.cancelar();
+           this.toast.mostrarToast('Alta exitosa', ColoresToast.success);
+         } else {
+           this.toast.mostrarToast('Error', ColoresToast.danger);
+         }
+       });
+
     });
   }
 
-  editarProducto(){
+  editarProducto() {
 
-    let cambio:boolean = false;
+    let cambio: boolean = false;
 
-    if(this.hayProductoSeleccionado.nombre != this.todo.value.nombre){
-      this.ps.updateNombre(this.hayProductoSeleccionado.id, this.todo.value.nombre); 
-      cambio = true;     
+    if (this.hayProductoSeleccionado.nombre != this.todo.value.nombre) {
+      this.ps.updateNombre(this.hayProductoSeleccionado.id, this.todo.value.nombre);
+      cambio = true;
     }
-    if(this.hayProductoSeleccionado.precio != this.todo.value.precio){
+    if (this.hayProductoSeleccionado.precio != this.todo.value.precio) {
       this.ps.updatePrecio(this.hayProductoSeleccionado.id, this.todo.value.precio);
-      cambio = true; 
+      cambio = true;
     }
-    if(this.hayProductoSeleccionado.descripcion != this.todo.value.descripcion){
-      this.ps.updateDescripcion(this.hayProductoSeleccionado.id, this.todo.value.descripcion); 
-      cambio = true;      
+    if (this.hayProductoSeleccionado.descripcion != this.todo.value.descripcion) {
+      this.ps.updateDescripcion(this.hayProductoSeleccionado.id, this.todo.value.descripcion);
+      cambio = true;
     }
-    if(this.hayProductoSeleccionado.tiempoPromedioDeElaboracion != this.todo.value.tiempoDeElaboracion){
-      this.ps.updateTiempoDeElab(this.hayProductoSeleccionado.id, this.todo.value.tiempoDeElaboracion);   
-      cambio = true;    
+    if (this.hayProductoSeleccionado.tiempoPromedioDeElaboracion != this.todo.value.tiempoDeElaboracion) {
+      this.ps.updateTiempoDeElab(this.hayProductoSeleccionado.id, this.todo.value.tiempoDeElaboracion);
+      cambio = true;
     }
-    if(this.hayProductoSeleccionado.imagen1 != this.imagen1tmp){
+    if (this.hayProductoSeleccionado.imagen1 != this.imagen1tmp) {
       this.as.makeFileIntoBlob(this.imagen1).then(blobInfo => {
         this.ps.subirFotoProducto(blobInfo, this.hayProductoSeleccionado.id, "imagen1");
-      });  
-      cambio = true; 
+      });
+      cambio = true;
     }
-    if(this.hayProductoSeleccionado.imagen2 != this.imagen2tmp){
+    if (this.hayProductoSeleccionado.imagen2 != this.imagen2tmp) {
       this.as.makeFileIntoBlob(this.imagen2).then(blobInfo => {
         this.ps.subirFotoProducto(blobInfo, this.hayProductoSeleccionado.id, "imagen2");
-      });  
-      cambio = true; 
+      });
+      cambio = true;
     }
-    if(this.hayProductoSeleccionado.imagen3 != this.imagen3tmp){
+    if (this.hayProductoSeleccionado.imagen3 != this.imagen3tmp) {
       this.as.makeFileIntoBlob(this.imagen3).then(blobInfo => {
         this.ps.subirFotoProducto(blobInfo, this.hayProductoSeleccionado.id, "imagen3");
-      });  
-      cambio = true;     
-    }    
+      });
+      cambio = true;
+    }
 
     setTimeout(() => {
-      if(cambio){
+      if (cambio) {
         this.toast.mostrarToast("Cambios realizados", ColoresToast.success);
       }
       this.cancelar();
     }, 2000);
   }
 
-  traerQuienElabora() {
-    if (this.usuarioActivo.rol === 'cocinero') {
+  async traerQuienElabora() {
+
+    const docUsuario = await this.authService.datosUsuarioLoguado();
+    const rol = docUsuario.data().rol;
+    if (rol === 'cocinero') {
       return QuienElabora.cocinero;
-    } else if (this.usuarioActivo.rol === 'bartender') {
+    } else if (rol === 'bartender') {
       return QuienElabora.bartender;
     }
   }
@@ -219,14 +238,14 @@ export class GestionDeProductosPage implements OnInit {
     this.hayProductoSeleccionado = null;
   }
 
-  public productoSeleccionado(){ 
+  public productoSeleccionado() {
     setTimeout(() => {
 
-      if(this.todo.value.select != null){      
+      if (this.todo.value.select != null) {
 
-      let parametro = this.todo.value.select;
-        
-        this.ps.traerProductoPorId(parametro).then(producto =>{
+        let parametro = this.todo.value.select;
+
+        this.ps.traerProductoPorId(parametro).then(producto => {
           this.hayProductoSeleccionado = producto;
           this.todo.controls.nombre.setValue(producto.nombre);
           this.todo.controls.descripcion.setValue(producto.descripcion);
@@ -240,7 +259,7 @@ export class GestionDeProductosPage implements OnInit {
     }, 500);
   }
 
-  borrarProducto(){
+  borrarProducto() {
     this.ps.updateState(this.hayProductoSeleccionado.id, EstadoProducto.deshabilitado);
     setTimeout(() => {
       this.cancelar();
