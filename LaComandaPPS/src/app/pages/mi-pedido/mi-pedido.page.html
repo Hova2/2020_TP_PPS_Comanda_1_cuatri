@@ -3,10 +3,15 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Realizar Pedido ($ {{ pedido.total }}) </ion-title>
+    <ion-title *ngIf="pedido === null">Realizar Pedido </ion-title>
+    <ion-title *ngIf="pedido !== null"
+      >Realizar Pedido ($ {{ pedido.total }})
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="mostrarPedido()">
-        <ion-badge *ngIf="pedido.productos.length > 0">{{pedido.productos.length}}</ion-badge>
+        <ion-badge *ngIf="pedido !== null && pedido.productos.length > 0"
+          >{{pedido.productos.length}}</ion-badge
+        >
         <!-- <ion-badge>{{ pedido.length }}</ion-badge> -->
         <ion-icon name="cart" slot="icon-only"></ion-icon>
       </ion-button>
@@ -19,16 +24,12 @@
     <ion-row>
       <ion-col align-center>
         <ion-label>
-          <font>
-            
-          </font>
+          <font> </font>
         </ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col [hidden]="esCliente">
-
-      </ion-col>
+      <ion-col [hidden]="esCliente"> </ion-col>
     </ion-row>
   </ion-grid>
 
@@ -41,21 +42,22 @@
     </ion-row>
     <ion-slides [options]="sliderConfig">
       <ion-slide>
-        <img [src]="prod.imagen1">
+        <img [src]="prod.imagen1" />
       </ion-slide>
       <ion-slide>
-        <img [src]="prod.imagen2">
+        <img [src]="prod.imagen2" />
       </ion-slide>
       <ion-slide>
-        <img [src]="prod.imagen3">
+        <img [src]="prod.imagen3" />
       </ion-slide>
     </ion-slides>
     <ion-row>
       {{prod.descripcion}}
     </ion-row>
     <ion-row expand="full">
-      <ion-button expand="full" (click)="agregarProductoAPedido(prod)">Agregar al pedido</ion-button>
+      <ion-button expand="full" (click)="agregarProductoAPedido(prod)"
+        >Agregar al pedido</ion-button
+      >
     </ion-row>
   </div>
-
 </ion-content>

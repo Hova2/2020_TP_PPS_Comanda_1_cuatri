@@ -1,3 +1,69 @@
-<p>
-  estado-pedido works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Productos del pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-list *ngFor="let prod of pedido.productos | filtrarProducto: rol">
+      <ion-row
+        ><ion-col size="12">
+          <ion-label>Nombre: {{ prod.nombre }}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row
+        ><ion-col size="12">
+          <ion-label>Descripcion: {{ prod.descripcion }}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row
+        ><ion-col size="12">
+          <ion-slides [options]="sliderConfig">
+            <ion-slide>
+              <img class="imagen" [src]="prod.imagen1" />
+            </ion-slide>
+            <ion-slide>
+              <img class="imagen" [src]="prod.imagen2" />
+            </ion-slide>
+            <ion-slide>
+              <img class="imagen" [src]="prod.imagen3" />
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+      <ion-row
+        ><ion-col size="12">
+          <ion-button
+            expand="full"
+            color="primary"
+            [disabled]="prod.estado !== 'pendiente'"
+            (click)="comenzarAPreparar(prod)"
+            [class.ion-hide]="rol === 'mozo'"
+            >Preparar</ion-button
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row
+        ><ion-col size="12">
+          <ion-button
+            expand="full"
+            color="primary"
+            [disabled]="prod.estado !== 'preparandose'"
+            (click)="listoParaServir(prod)"
+            [class.ion-hide]="rol === 'mozo'"
+            >Listo</ion-button
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row
+        ><ion-col size="12">
+          <ion-item-divider> </ion-item-divider>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="full" color="danger" (click)="salir()">Salir</ion-button>
+</ion-footer>

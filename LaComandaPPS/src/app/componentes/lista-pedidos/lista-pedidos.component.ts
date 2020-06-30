@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Pedido } from 'src/app/clases/pedido';
+import { PedidoService } from 'src/app/servicios/pedido.service';
+import { AuthService } from 'src/app/servicios/auth.service';
+import { EstadoPedido } from 'src/app/enum/estado-pedido.enum';
+import { ModalController } from '@ionic/angular';
+import { EstadoPedidoComponent } from '../estado-pedido/estado-pedido.component';
 
 @Component({
   selector: 'app-lista-pedidos',
@@ -6,9 +13,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lista-pedidos.component.scss'],
 })
 export class ListaPedidosComponent implements OnInit {
+  public listaPedidos: Observable<Pedido[]>;
+  public rol: string;
 
-  constructor() { }
+  constructor(
+    private ps: PedidoService,
+    private as: AuthService,
+    public modcon: ModalController
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.as.datosUsuarioLoguado().then((docUsuario) => {
+      this.rol = docUsuario.data().rol;
+      switch (this.rol) {
+        case 'mozo':
+          this.listaPedidos = this.ps.listarPedidosMozo(docUsuario.id);
+          break;
+        case 'cocinero':
+        case 'bartender':
+          this.listaPedidos = this.ps.listarPedidosQuienPrepara(this.rol);
+          break;
+      }
+    });
+  }
 
+  public mozoCancelar(pedido: Pedido) {
+    pedido.estado = EstadoPedido.cancelado;
+    this.ps.actualizar(pedido);
+  }
+
+  public mozoAprueba(pedido: Pedido) {
+    pedido.estado = EstadoPedido.pendiente;
+    this.ps.actualizar(pedido);
+  }
+
+  public async verPedido(pedido: Pedido) {
+    const modal = await this.modcon.create({
+      component: EstadoPedidoComponent,
+      showBackdrop: true,
+      componentProps: { pedido: pedido },
+    });
+    await modal.present();
+  }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavParams } from '@ionic/angular';
-import { Producto } from 'src/app/clases/producto';
 import { Pedido } from 'src/app/clases/pedido';
 
 @Component({
@@ -18,7 +17,7 @@ export class PopoverComponent implements OnInit {
 
   ngOnInit() {}
 
-  cerrarPopover(valor){    
+  cerrarPopover(valor){
     console.log(valor);
     this.popoverController.dismiss(
       valor

@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { PedidosMozoPageRoutingModule } from './pedidos-mozo-routing.module';
 
 import { PedidosMozoPage } from './pedidos-mozo.page';
+import { ComponentesModule } from 'src/app/modules/componentes/componentes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PedidosMozoPageRoutingModule
+    PedidosMozoPageRoutingModule,
+    ComponentesModule
   ],
-  declarations: [PedidosMozoPage]
+  declarations: [PedidosMozoPage],
 })
 export class PedidosMozoPageModule {}

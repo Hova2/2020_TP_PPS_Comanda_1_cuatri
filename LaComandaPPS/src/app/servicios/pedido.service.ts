@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/firestore';
 import { Pedido } from '../clases/pedido';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -7,16 +10,15 @@ import { QuienElabora } from '../enum/quien-elabora.enum';
 import { EstadoPedido } from '../enum/estado-pedido.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PedidoService {
-
   constructor(private af: AngularFirestore) {}
 
   public calcularTotal(pedido: Pedido): number {
     let total: number;
     total = 0;
-    pedido.productos.forEach(producto => {
+    pedido.productos.forEach((producto) => {
       total += producto.precio;
     });
 
@@ -43,38 +45,35 @@ export class PedidoService {
     return esValido;
   }
 
-  public agregarPedido(pedido: Pedido): void {
-    this.af.collection('pedidos').add(JSON.parse(JSON.stringify(pedido)));
+  public async agregarPedido(pedido: Pedido): Promise<string> {
+    const docRef = await this.af
+      .collection('pedidos')
+      .add(JSON.parse(JSON.stringify(pedido)));
+    return docRef.id;
   }
 
   public actualizarEstado(estado: EstadoPedido, pedidoID: string): void {
-    this.traerPorID(pedidoID).then(pedido => {
+    this.traerPorID(pedidoID).then((pedido) => {
       pedido.estado = estado;
-      this.af
-        .collection('pedidos')
-        .doc(pedido.id)
-        .update(pedido);
+      this.af.collection('pedidos').doc(pedido.id).update(pedido);
     });
   }
 
   public actualizarEncuesta(pedidoID: string): void {
-    this.traerPorID(pedidoID).then(pedido => {
+    this.traerPorID(pedidoID).then((pedido) => {
       pedido.encuestaCompleta = true;
-      this.af
-        .collection('pedidos')
-        .doc(pedido.id)
-        .update(pedido);
+      this.af.collection('pedidos').doc(pedido.id).update(pedido);
     });
   }
 
   public traerPorID(pedidoID: string): Promise<Pedido> {
-    const docs = this.af.collection('pedidos', ref =>
+    const docs = this.af.collection('pedidos', (ref) =>
       ref.where('pedidoID', '==', pedidoID)
     );
     return docs
       .get()
       .toPromise()
-      .then(doc => {
+      .then((doc) => {
         return new Promise((resolve, reject) => {
           if (doc.docs[0]) {
             const pedido = doc.docs[0].data() as Pedido;
@@ -88,19 +87,19 @@ export class PedidoService {
   }
 
   public traerTodosLosPedidosPorTiempo(): AngularFirestoreCollection<Pedido> {
-    return this.af.collection('pedidos', ref =>
+    return this.af.collection('pedidos', (ref) =>
       ref.where('completo', '==', false)
     );
   }
 
   public traerTodosLosPedidosCompletadosEnUnArreglo(): Promise<Pedido[]> {
     return this.af
-      .collection('pedidos', ref => ref.where('completo', '==', true))
+      .collection('pedidos', (ref) => ref.where('completo', '==', true))
       .get()
       .toPromise()
-      .then(doc => {
+      .then((doc) => {
         const pedidos: Pedido[] = [];
-        doc.docs.forEach(pedido => {
+        doc.docs.forEach((pedido) => {
           pedidos.push(pedido.data() as Pedido);
         });
 
@@ -109,7 +108,7 @@ export class PedidoService {
   }
 
   public traerTodosLosPedidosDeLosMozosPorTiempo(email: string) {
-    return this.af.collection('pedidos', ref =>
+    return this.af.collection('pedidos', (ref) =>
       ref.where('empleado.email', '==', email).where('completo', '==', false)
     );
   }
@@ -117,15 +116,15 @@ export class PedidoService {
   public traerTodosPorQuienElabora(
     quienElabora: QuienElabora
   ): Observable<Pedido[]> {
-    const docs = this.af.collection('pedidos', ref =>
+    const docs = this.af.collection('pedidos', (ref) =>
       ref.where('completo', '==', false).orderBy('horaAlta', 'desc')
     ) as AngularFirestoreCollection<Pedido>;
     return docs.valueChanges().pipe(
-      map(pedidos => {
-        return pedidos.filter(pedido => {
+      map((pedidos) => {
+        return pedidos.filter((pedido) => {
           pedido = Object.assign(new Pedido(), pedido);
           let tieneRol = false;
-          pedido['productos'].forEach(producto => {
+          pedido['productos'].forEach((producto) => {
             if (producto.quienElabora === quienElabora) {
               tieneRol = true;
             }
@@ -140,7 +139,7 @@ export class PedidoService {
 
   public actualizar(pedido: Pedido): Promise<boolean> {
     return this.traerPorID(pedido.pedidoID)
-      .then(pedi => {
+      .then((pedi) => {
         this.af
           .collection('pedidos')
           .doc(pedi.id)
@@ -160,10 +159,12 @@ export class PedidoService {
 
   public traerProductosPedidos(): Observable<Map<string, number>> {
     return this.af
-      .collection<Pedido>('pedidos', ref => ref.where('estado', '==', 'pagado'))
+      .collection<Pedido>('pedidos', (ref) =>
+        ref.where('estado', '==', 'pagado')
+      )
       .valueChanges()
       .pipe(
-        map(pedidos => {
+        map((pedidos) => {
           /*const salida = new Map<string, number>();
           pedidos.forEach(pedido => {
             pedido.productos.forEach(producto => {
@@ -178,8 +179,8 @@ export class PedidoService {
 
           const salida = new Map<string, number>();
           const tmp = new Map<string, number>();
-          pedidos.forEach(pedido => {
-            pedido.productos.forEach(producto => {
+          pedidos.forEach((pedido) => {
+            pedido.productos.forEach((producto) => {
               if (tmp.has(producto.nombre)) {
                 tmp.set(producto.nombre, tmp.get(producto.nombre) + 1);
               } else {
@@ -200,7 +201,7 @@ export class PedidoService {
 
   public traerTop3ProductosMasVendidos(): Observable<Map<string, number>> {
     return this.traerProductosPedidos().pipe(
-      map(productos => {
+      map((productos) => {
         const salida = new Map<string, number>();
         salida.set([...productos.keys()][0], [...productos.values()][0]);
         salida.set([...productos.keys()][1], [...productos.values()][1]);
@@ -212,11 +213,20 @@ export class PedidoService {
 
   public traerTop3ProductosMenosVendidos(): Observable<Map<string, number>> {
     return this.traerProductosPedidos().pipe(
-      map(productos => {
+      map((productos) => {
         const salida = new Map<string, number>();
-        salida.set([...productos.keys()][productos.size - 1], [...productos.values()][productos.size - 1]);
-        salida.set([...productos.keys()][productos.size - 2], [...productos.values()][productos.size - 2]);
-        salida.set([...productos.keys()][productos.size - 3], [...productos.values()][productos.size - 3]);
+        salida.set(
+          [...productos.keys()][productos.size - 1],
+          [...productos.values()][productos.size - 1]
+        );
+        salida.set(
+          [...productos.keys()][productos.size - 2],
+          [...productos.values()][productos.size - 2]
+        );
+        salida.set(
+          [...productos.keys()][productos.size - 3],
+          [...productos.values()][productos.size - 3]
+        );
         return salida;
       })
     );
@@ -224,13 +234,15 @@ export class PedidoService {
 
   public traerMesasPedidosCont(): Observable<Map<string, number>> {
     return this.af
-      .collection<Pedido>('pedidos', ref => ref.where('estado', '==', 'pagado'))
+      .collection<Pedido>('pedidos', (ref) =>
+        ref.where('estado', '==', 'pagado')
+      )
       .valueChanges()
       .pipe(
-        map(pedidos => {
+        map((pedidos) => {
           const salida = new Map<string, number>();
           const tmp = new Map<string, number>();
-          pedidos.forEach(pedido => {
+          pedidos.forEach((pedido) => {
             if (tmp.has(pedido.mesaID)) {
               tmp.set(pedido.mesaID, tmp.get(pedido.mesaID) + 1);
             } else {
@@ -250,7 +262,7 @@ export class PedidoService {
 
   public traerMesaMasUsada(): Observable<Map<string, number>> {
     return this.traerMesasPedidosCont().pipe(
-      map(mesas => {
+      map((mesas) => {
         return new Map<string, number>().set(
           [...mesas.keys()][0],
           [...mesas.values()][0]
@@ -261,7 +273,7 @@ export class PedidoService {
 
   public traerMesaMenosUsada(): Observable<Map<string, number>> {
     return this.traerMesasPedidosCont().pipe(
-      map(mesas => {
+      map((mesas) => {
         return new Map<string, number>().set(
           [...mesas.keys()][mesas.size - 1],
           [...mesas.values()][mesas.size - 1]
@@ -272,13 +284,15 @@ export class PedidoService {
 
   public traerMesasPedidosAcum(): Observable<Map<string, number>> {
     return this.af
-      .collection<Pedido>('pedidos', ref => ref.where('estado', '==', 'pagado'))
+      .collection<Pedido>('pedidos', (ref) =>
+        ref.where('estado', '==', 'pagado')
+      )
       .valueChanges()
       .pipe(
-        map(pedidos => {
+        map((pedidos) => {
           const salida = new Map<string, number>();
           const tmp = new Map<string, number>();
-          pedidos.forEach(pedido => {
+          pedidos.forEach((pedido) => {
             if (tmp.has(pedido.mesaID)) {
               tmp.set(pedido.mesaID, tmp.get(pedido.mesaID) + pedido.total);
             } else {
@@ -298,7 +312,7 @@ export class PedidoService {
 
   public traerMesaMasRecaudo(): Observable<Map<string, number>> {
     return this.traerMesasPedidosAcum().pipe(
-      map(mesas => {
+      map((mesas) => {
         return new Map<string, number>().set(
           [...mesas.keys()][0],
           [...mesas.values()][0]
@@ -309,7 +323,7 @@ export class PedidoService {
 
   public traerMesaMenosRecaudo(): Observable<Map<string, number>> {
     return this.traerMesasPedidosAcum().pipe(
-      map(mesas => {
+      map((mesas) => {
         return new Map<string, number>().set(
           [...mesas.keys()][mesas.size - 1],
           [...mesas.values()][mesas.size - 1]
@@ -320,13 +334,15 @@ export class PedidoService {
 
   public traerMesasPedidosTotal(): Observable<Map<number, string>> {
     return this.af
-      .collection<Pedido>('pedidos', ref => ref.where('estado', '==', 'pagado'))
+      .collection<Pedido>('pedidos', (ref) =>
+        ref.where('estado', '==', 'pagado')
+      )
       .valueChanges()
       .pipe(
-        map(pedidos => {
+        map((pedidos) => {
           const salida = new Map<number, string>();
           const tmp = new Map<number, string>();
-          pedidos.forEach(pedido => {
+          pedidos.forEach((pedido) => {
             tmp.set(pedido.total, pedido.mesaID);
           });
           for (const [clave, valor] of [...tmp.entries()].sort(
@@ -342,7 +358,7 @@ export class PedidoService {
 
   public traerMesaMayorFactura(): Observable<Map<number, string>> {
     return this.traerMesasPedidosTotal().pipe(
-      map(mesas => {
+      map((mesas) => {
         return new Map<number, string>().set(
           [...mesas.keys()][0],
           [...mesas.values()][0]
@@ -353,7 +369,7 @@ export class PedidoService {
 
   public traerMesaMenorFactura(): Observable<Map<number, string>> {
     return this.traerMesasPedidosTotal().pipe(
-      map(mesas => {
+      map((mesas) => {
         return new Map<number, string>().set(
           [...mesas.keys()][mesas.size - 1],
           [...mesas.values()][mesas.size - 1]
@@ -367,9 +383,9 @@ export class PedidoService {
       .collection('pedidos')
       .get()
       .toPromise()
-      .then(doc => {
+      .then((doc) => {
         const orders: Pedido[] = [];
-        doc.docs.forEach(el => {
+        doc.docs.forEach((el) => {
           const ela = el.data() as Pedido;
           if (ela['tiempoRetraso'] != null) {
             orders.push(ela);
@@ -384,9 +400,9 @@ export class PedidoService {
       .collection('pedidos')
       .get()
       .toPromise()
-      .then(doc => {
+      .then((doc) => {
         const orders: Pedido[] = [];
-        doc.docs.forEach(el => {
+        doc.docs.forEach((el) => {
           const ela = el.data() as Pedido;
           if (ela['estado'] === 'cancelado') {
             orders.push(ela);
@@ -409,4 +425,57 @@ export class PedidoService {
   //     return true;
   //   });
   // }
+
+  public actualizarPedidoConIdPedido(idPedido: string) {
+    this.af.collection('pedidos').doc(idPedido).update({ id: idPedido });
+  }
+
+  public listarPedidosMozo(idMozo: string): Observable<Pedido[]> {
+    return this.af
+      .collection<Pedido>('pedidos')
+      .snapshotChanges()
+      .pipe(
+        map((docPedidos) => {
+          return docPedidos
+            .filter((doc) => {
+              const docDatos = doc.payload.doc.data();
+              return (
+                docDatos.empleado.id === idMozo &&
+                docDatos.estado !== 'cancelado'
+              );
+            })
+            .map((doc) => {
+              return doc.payload.doc.data() as Pedido;
+            });
+        })
+      );
+  }
+
+  public listarPedidosQuienPrepara(rol: string): Observable<Pedido[]> {
+    return this.af
+      .collection<Pedido>('pedidos')
+      .snapshotChanges()
+      .pipe(
+        map((docPedidos) => {
+          return docPedidos
+            .filter((doc) => {
+              const estado = doc.payload.doc.data().estado;
+              const productos = doc.payload.doc
+                .data()
+                .productos.filter((prod) => {
+                  return prod.quienElabora === rol;
+                });
+              return (
+                productos.length > 0 &&
+                estado !== 'verificar' &&
+                estado !== 'cancelado' &&
+                estado !== 'listo'
+              );
+            })
+            .map((doc) => {
+              return doc.payload.doc.data() as Pedido;
+            });
+        })
+      );
+  }
 }

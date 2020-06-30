@@ -85,4 +85,20 @@ export class MesaService {
         })
       );
   }
+
+  public async traerMesaDelCliente(idCliente: string): Promise<Mesa> {
+    const mesaQue = await this.af
+      .collection('mesas', (ref) => ref.where('idCliente', '==', idCliente))
+      .get()
+      .toPromise();
+
+    const salida = mesaQue.docs[0].data() as Mesa;
+    salida.id = mesaQue.docs[0].id;
+
+    return salida;
+  }
+
+  public actualizarMesaConIdPedido(idMesa: string, idPedido: string) {
+    this.af.collection('mesas').doc(idMesa).update({ idPedido: idPedido });
+  }
 }
