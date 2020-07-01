@@ -8,12 +8,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { QuienElabora } from '../enum/quien-elabora.enum';
 import { EstadoPedido } from '../enum/estado-pedido.enum';
+import { Producto } from '../clases/producto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PedidoService {
-  constructor(private af: AngularFirestore) {}
+  constructor(private af: AngularFirestore) { }
 
   public calcularTotal(pedido: Pedido): number {
     let total: number;
@@ -66,9 +67,60 @@ export class PedidoService {
     });
   }
 
+  public agregarPropina(producto: Producto, pedidoID: string): void {
+    this.traerPorID(pedidoID).then((pedido) => {
+
+      const nombreUltimo = pedido.productos[pedido.productos.length - 1].nombre;
+      console.log(nombreUltimo);
+
+      if (nombreUltimo === "propina") {
+        pedido.productos.pop();
+        pedido.productos.push(producto);
+        pedido.total = this.calcularTotal(pedido);
+        this.actualizar(pedido);
+        // this.af.collection('pedidos').doc(pedido.id).update({
+        //   productos: pedido.productos,
+        //   total: pedido.total
+        // });
+      } else {
+        pedido.productos.push(producto);
+        pedido.total = this.calcularTotal(pedido);
+        console.log(pedido.productos);
+        console.log(pedido.total);
+        this.actualizar(pedido);
+        // this.af.collection('pedidos').doc(pedido.id).update({
+        //   productos: pedido.productos,
+        //   total: pedido.total
+        // });
+      }
+
+    });
+  }
+
+
   public traerPorID(pedidoID: string): Promise<Pedido> {
     const docs = this.af.collection('pedidos', (ref) =>
       ref.where('pedidoID', '==', pedidoID)
+    );
+    return docs
+      .get()
+      .toPromise()
+      .then((doc) => {
+        return new Promise((resolve, reject) => {
+          if (doc.docs[0]) {
+            const pedido = doc.docs[0].data() as Pedido;
+            pedido.id = doc.docs[0].id;
+            resolve(pedido);
+          } else {
+            reject('No se encontró el pedido.');
+          }
+        });
+      });
+  }
+
+  public traerPedidoPorIdDocumento(id: string): Promise<Pedido> {
+    const docs = this.af.collection('pedidos', (ref) =>
+      ref.where('id', '==', id)
     );
     return docs
       .get()
@@ -478,4 +530,38 @@ export class PedidoService {
         })
       );
   }
+
+  public traerPedidoObservable(id: string): Observable<Pedido> {
+    return this.af.collection<Pedido>('pedidos', (ref) => ref.where('id', '==', id)).snapshotChanges()
+      .pipe(
+        map((docPedidos) => {
+          const arraytmp = docPedidos.map((doc) => {
+            return doc.payload.doc.data() as Pedido;
+          });
+
+          return arraytmp[0];
+        })
+      )
+  };
+
+  public traerPorIdDocumento(id: string): Promise<Pedido> {
+    const docs = this.af.collection('pedidos', (ref) =>
+      ref.where('id', '==', id)
+    );
+    return docs
+      .get()
+      .toPromise()
+      .then((doc) => {
+        return new Promise((resolve, reject) => {
+          if (doc.docs[0]) {
+            const pedido = doc.docs[0].data() as Pedido;
+            pedido.id = doc.docs[0].id;
+            resolve(pedido);
+          } else {
+            reject('No se encontró el pedido.');
+          }
+        });
+      });
+  }
+
 }
