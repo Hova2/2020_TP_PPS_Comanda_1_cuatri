@@ -78,11 +78,27 @@ export class EscanearQRPage implements OnInit {
           this.pedidoService.agregarPropina(producto, this.pedido.pedidoID);
         }, 1000);
         break;
+        case '05':
+        producto.descripcion = '5%';
+        producto.nombre = 'propina';
+        setTimeout(() => {
+          producto.precio = this.acumulador * 0.05;
+          this.pedidoService.agregarPropina(producto, this.pedido.pedidoID);
+        }, 1000);
+        break;
       case '10':
         producto.descripcion = '10%';
         producto.nombre = 'propina';
         setTimeout(() => {
           producto.precio = this.acumulador * 0.1;
+          this.pedidoService.agregarPropina(producto, this.pedido.pedidoID);
+        }, 1000);
+        break;
+        case '15':
+        producto.descripcion = '15%';
+        producto.nombre = 'propina';
+        setTimeout(() => {
+          producto.precio = this.acumulador * 0.15;
           this.pedidoService.agregarPropina(producto, this.pedido.pedidoID);
         }, 1000);
         break;

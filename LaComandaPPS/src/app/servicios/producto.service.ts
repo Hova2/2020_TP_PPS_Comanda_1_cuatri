@@ -91,19 +91,19 @@ export class ProductoService {
         id = doc.id;
         this.productos.doc(doc.id).update({ id: doc.id });
 
-        if (producto.imagen1 !== '../../../assets/imagenes/imagenSubirProducto.png') {
+        if (producto.imagen1 !== 'https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imgDef.png?alt=media&token=062be3ee-2880-433f-8ad6-529ad8b8c8f1') {
           this.as.makeFileIntoBlob(producto.imagen1).then(blobInfo => {
 
             this.subirFotoProducto(blobInfo, doc.id, "imagen1");
           });
         }
-        if (producto.imagen2 !== '../../../assets/imagenes/imagenSubirProducto.png') {
+        if (producto.imagen2 !== 'https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imgDef.png?alt=media&token=062be3ee-2880-433f-8ad6-529ad8b8c8f1') {
           this.as.makeFileIntoBlob(producto.imagen2).then(blobInfo => {
 
             this.subirFotoProducto(blobInfo, doc.id, "imagen2");
           });
         }
-        if (producto.imagen3 !== '../../../assets/imagenes/imagenSubirProducto.png') {
+        if (producto.imagen3 !== 'https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imgDef.png?alt=media&token=062be3ee-2880-433f-8ad6-529ad8b8c8f1') {
           this.as.makeFileIntoBlob(producto.imagen3).then(blobInfo => {
 
             this.subirFotoProducto(blobInfo, doc.id, "imagen3");
