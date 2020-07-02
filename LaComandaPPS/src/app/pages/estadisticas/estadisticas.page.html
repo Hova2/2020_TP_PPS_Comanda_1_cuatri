@@ -1,14 +1,55 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>Estadisticas</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
 
-  <ion-label>Cocina: {{promedioCocinero}} de 5 </ion-label>
-  <ion-label>Mozo: {{promedioMozo}} de 5 </ion-label>
-  <ion-label>Mesa: {{promedioMesa}} de 5 </ion-label>
-  <ion-label>Restorant: {{promedioRestaurante}} de 5 </ion-label>
+  <ion-card color="dark">
+    <ion-card-header>
+      <ion-card-title>Calificaciones de nuestros Clientes</ion-card-title>
+
+     
+        <ion-card-content>
+          <strong>{{total}}</strong> comenzales han dejado reseña sobre nuestros servicios. <strong>{{atencion}}</strong> ha/han destacado nuesta atención, 
+          <strong>{{limpieza}}</strong> nuestro orden y limpieza, <strong>{{comida}}</strong>
+          nuestros variada y exquisita carta y por último <strong>{{nada}}</strong> no destacan nada.
+        </ion-card-content>
+        
+
+      <p-chart type="pie" [data]="graficotorta" [options]="OGT" width="300px" height="300px" ></p-chart> 
+      <ion-card-title>Que puntaje nos han dado:</ion-card-title>
+
+      <ion-card-subtitle>Cocina: {{promedioCocinero}} puntos sobre 5 posibles</ion-card-subtitle>
+        <ion-progress-bar [color]=a [value]=promedioCocinero100></ion-progress-bar>
+  
+        <ion-card-subtitle>Mozo: {{promedioMozo}} puntos sobre de 5 posibles</ion-card-subtitle>
+  
+        <ion-progress-bar [color]=b [value]=promedioMozo100></ion-progress-bar>
+  
+        <ion-card-subtitle>Mesa: {{promedioMesa}} puntos sobre de 5 posibles</ion-card-subtitle>
+  
+        <ion-progress-bar [color]=d [value]=promedioMesa100></ion-progress-bar>
+  
+        <ion-card-subtitle>Restaurant: {{promedioRestaurante }} puntos sobre de 5 posibles</ion-card-subtitle>
+  
+        <ion-progress-bar [color]=c [value]=promedioRestaurante100></ion-progress-bar>
+  
+    </ion-card-header>
+
+
+  </ion-card>
+
+
+
+
+
+
+
+
+
+
+
 
 </ion-content>

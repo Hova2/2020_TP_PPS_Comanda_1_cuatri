@@ -99,15 +99,18 @@ export class EncuestaService {
 
 
     public traerTodasLasEncuestas(): Observable<any[]> {
-      return this.encuestas.snapshotChanges().pipe(
-        map(actions => {
-          return actions.map(action => {
-            const datos = action.payload.doc.data() as EncuestaCliente;
-            const id = action.payload.doc.id;
-            return { id, ...datos };
-          });
-        })
-      );
-    }
+
+      return this.af.collection<EncuestaCliente>('encuestas', (ref) =>
+          ref.orderBy('horaAlta', 'desc')
+        ).snapshotChanges().pipe(
+          map(actions => {
+            return actions.map(action => {
+              const datos = action.payload.doc.data() as EncuestaCliente;
+              const id = action.payload.doc.id;
+              return { id, ...datos };
+            });
+          })
+        );
+      }
 
 }

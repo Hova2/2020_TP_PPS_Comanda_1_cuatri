@@ -1,10 +1,10 @@
 <ion-content fullscreen>
   <ion-item>
     <ion-label class="centrado"><strong>ENCUESTA DE SATISFACCIÓN</strong></ion-label>
-    </ion-item>
+  </ion-item>
 
 
-  <ion-label position="fixed"  class="centrado">Por favor, califica el estado de la mesa,</ion-label>
+  <ion-label position="fixed" class="centrado">Por favor, califica el estado de la mesa,</ion-label>
 
 
   <ion-label position="fixed" class="centrado">la atención del mozo y del cocinero:</ion-label>
@@ -63,14 +63,14 @@
     </ion-item>
     <ion-item>
       <ion-range formControlName="servicioGral" min="1" max="5" step="1" pin value="null" snaps color="secondary"
-        name="selectorUsuario" >
+        name="selectorUsuario">
         <ion-icon slot="start" color="primary" name="sad"></ion-icon>
         <ion-icon slot="end" color="primary" name="happy"></ion-icon>
       </ion-range>
     </ion-item>
 
 
-    <ion-item-group> 
+    <!-- <ion-item-group> 
     <ion-item>
       <ion-list>
         <ion-radio-group formControlName="queTeGusto" value="atencion">
@@ -109,31 +109,77 @@
         </ion-radio-group>
       </ion-list>
     </ion-item>
-  </ion-item-group> 
+  </ion-item-group>  -->
+
+    <ion-item>
+
+      <ion-radio-group formControlName="queTeGusto" value="atencion">
+        
+          <ion-label class="centrado"><strong>¿Qué fue lo que mas te gustó?</strong></ion-label>
+          <br>
+        
+        <ion-item>
+          <ion-chip outline color="tertiary">
+            <ion-icon name="thumbs-up"></ion-icon>
+            <ion-label>ATENCION</ion-label>
+          </ion-chip>
+          <ion-radio slot="start" color="secondary" value="Atencion"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-chip outline color="tertiary">
+            <ion-icon name="restaurant"></ion-icon>
+            <ion-label>COMIDA</ion-label>
+          </ion-chip>
+          <ion-radio slot="start" color="secondary" value="Comida"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-chip outline color="tertiary">
+            <ion-icon name="medical"></ion-icon>
+            <ion-label>LIMPIEZA</ion-label>
+          </ion-chip>
+          <ion-radio slot="start" color="secondary" value="Limpieza"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-chip outline color="tertiary">
+            <ion-icon name="sad"></ion-icon>
+            <ion-label>NADA</ion-label>
+          </ion-chip>
+          <ion-radio slot="start" color="secondary" value="Nada"></ion-radio>
+        </ion-item>
+
+      </ion-radio-group>
+
+    </ion-item>
+
+
     <ion-item>
       <ion-textarea formControlName="areaComentario" value="¿Querés comentarnos algo?. Este es el lugar!">
       </ion-textarea>
     </ion-item>
 
 
-    <ion-item><ion-label class="centrado"><strong>¿Querés adjuntar imágenes?</strong></ion-label></ion-item>
+    <ion-item>
+      <ion-label class="centrado"><strong>¿Querés adjuntar imágenes?</strong></ion-label>
+    </ion-item>
 
     <ion-item>
-      
+
       <ion-card (click)="sacarFoto('imagen1')" *ngIf="imagen1tmp == null" class="imagen">
         <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
       <ion-card (click)="sacarFoto('imagen1')" *ngIf="imagen1tmp != null" class="imagen">
         <img [src]="imagen1tmp" />
       </ion-card>
-  
+
       <ion-card (click)="sacarFoto('imagen2')" *ngIf="imagen2tmp == null" class="imagen">
         <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
       <ion-card (click)="sacarFoto('imagen2')" *ngIf="imagen2tmp != null" class="imagen">
         <img [src]="imagen2tmp" />
       </ion-card>
-  
+
       <ion-card (click)="sacarFoto('imagen3')" *ngIf="imagen3tmp == null" class="imagen">
         <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
@@ -141,11 +187,11 @@
         <img [src]="imagen3tmp" />
       </ion-card>
     </ion-item>
- 
 
-    <ion-button color="primary" expand="block" (click)="mostrarencuestas()">OPINIONES DE NUESTROS CLIENTES</ion-button>
-    
-    
+
+    <ion-button color="primary" expand="block" (click)="mostrarencuestas()">OPINIONES DE NUESTROS CLIENTES</ion-button> 
+
+
     <ion-button color="success" expand="block" [disabled]="!encuestaForm.valid" type="submit">
       SUBIR ENCUESTA
     </ion-button>

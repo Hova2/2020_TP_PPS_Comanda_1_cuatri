@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { PopoverComponent } from '../popover/popover.component';
 import { ScannerQRComponent } from '../scanner-qr/scanner-qr.component';
+import { PrimengModule } from './primeNG.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ScannerQRComponent } from '../scanner-qr/scanner-qr.component';
     PopoverComponent,
     ScannerQRComponent,
   ],
-  imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule, PrimengModule,
+  ],
   exports: [
     SpinnerComponent,
     LoginComponent,
