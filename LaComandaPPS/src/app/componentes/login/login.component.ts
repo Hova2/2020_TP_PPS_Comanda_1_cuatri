@@ -153,7 +153,7 @@ export class LoginComponent implements OnInit {
   }
 
   public anonimo() {
-    this.router.navigate(['/anonimo']);
+    this.router.navigate(['/entrar-mesa']);
   }
 
   public encuesta(){
