@@ -6,6 +6,8 @@ import { ListaEsperaService } from 'src/app/servicios/lista-espera.service';
 import { Observable } from 'rxjs';
 import { ServicioToastService } from 'src/app/servicios/servicio-toast.service';
 import { ColoresToast } from 'src/app/enum/colores-toast.enum';
+import { MesaService } from 'src/app/servicios/mesa.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entrar-mesa',
@@ -25,7 +27,9 @@ export class EntrarMesaPage implements OnInit {
     private as: AuthService,
     private qrs: QrService,
     private les: ListaEsperaService,
-    private toastr: ServicioToastService
+    private toastr: ServicioToastService,
+    private ms: MesaService,
+    private router: Router
   ) {
     this.titulo = 'Solicitar ingreso';
     this.esperando = 'Ingresar a la lista de espera';
@@ -70,13 +74,13 @@ export class EntrarMesaPage implements OnInit {
 
   public async escanearQRMesa() {
     const resultado = await this.qrs.escanear();
+    const usuario = await this.as.datosUsuarioLoguado();
+    const mesaUsuario = await this.ms.traerMesaDelCliente(usuario.id);
 
-    switch (resultado.text) {
-      case 'mesa':
-        break;
-      default:
-        this.toastr.mostrarToast('Codigo incorrecto', ColoresToast.danger);
-        break;
+    if (resultado.text === mesaUsuario.id) {
+      this.router.navigateByUrl('/principal/mi-pedido');
+    } else {
+      this.toastr.mostrarToast('Mesa incorrecta', ColoresToast.danger);
     }
   }
 
