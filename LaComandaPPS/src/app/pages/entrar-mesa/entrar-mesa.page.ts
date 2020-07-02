@@ -76,9 +76,8 @@ export class EntrarMesaPage implements OnInit {
     const resultado = await this.qrs.escanear();
     const usuario = await this.as.datosUsuarioLoguado();
     const leTmp = await this.les.existeUsuarioEnListaPromesa(usuario.id);
-    console.log(resultado.text === leTmp.mesa.toSting());
 
-    if (resultado.text === leTmp.mesa.toSting()) {
+    if (resultado.text === leTmp.mesa) {
       this.router.navigateByUrl('/principal/mi-pedido');
     } else {
       this.toastr.mostrarToast('Mesa incorrecta', ColoresToast.danger);
@@ -87,5 +86,6 @@ export class EntrarMesaPage implements OnInit {
 
   public desloguearse() {
     this.as.logout();
+    this.router.navigateByUrl('');
   }
 }

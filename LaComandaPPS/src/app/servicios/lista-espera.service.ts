@@ -80,20 +80,19 @@ export class ListaEsperaService {
 
   public existeUsuarioEnListaPromesa(idUsuario: string): Promise<any> {
     return this.af
-      .collection('listaespera')
-      .snapshotChanges()
+      .collection('listaespera', (ref) =>
+        ref.where('idUsuario', '==', idUsuario)
+      )
+      .get()
       .pipe(
         map((actions) => {
-          let salida: any = null;
+          let salida = new Array<any>();
           actions.forEach((action) => {
-            const datos = action.payload.doc.data() as ListaEspera;
-            const id = action.payload.doc.id;
-            if (datos.idUsuario === idUsuario) {
-              salida = { id, ...datos };
-            }
+            const datos = action.data() as ListaEspera;
+            const id = action.id;
+            salida.push({ id, ...datos });
           });
-
-          return salida;
+          return salida[0];
         })
       )
       .toPromise();
