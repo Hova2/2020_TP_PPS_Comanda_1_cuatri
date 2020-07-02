@@ -15,13 +15,11 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
   styleUrls: ['./anonimo.page.scss'],
 })
 export class AnonimoPage implements OnInit {
-
   public aF: FormGroup;
   public spinner: boolean = true;
   public fotocliente: string = 'assets/usuario.png';
   public imagenOriginal: string;
   public $rutaFotoAnonimo: Observable<string>;
-
 
   constructor(
     private uService: UsuarioService,
@@ -29,12 +27,11 @@ export class AnonimoPage implements OnInit {
     private authService: AuthService,
     private camaraS: CamaraService,
     private router: Router
-  ) { 
+  ) {
     this.$rutaFotoAnonimo = null;
   }
 
   ngOnInit() {
-
     timer(3000).subscribe(() => {
       this.spinner = false;
     });
@@ -43,7 +40,6 @@ export class AnonimoPage implements OnInit {
       name: new FormControl(null, [Validators.required]),
     });
   }
-
 
   sacarFotoCLiente() {
     this.camaraS.sacarFoto().then((foto) => {
@@ -56,7 +52,7 @@ export class AnonimoPage implements OnInit {
   }
 
   volver() {
-    this.router.navigate(['']);
+    this.router.navigate(['/entrar-mesa']);
   }
 
   onSubmit() {
@@ -70,33 +66,30 @@ export class AnonimoPage implements OnInit {
 
     let user: Usuario = Usuario.RegistroCliente(
       this.aF.get('name').value,
-      "",
-      "anonimo@anonimo.com",
-      "66666666",
+      '',
+      'anonimo@anonimo.com',
+      '66666666',
       0,
       this.fotocliente
     );
 
-    
-
-
-    this.authService.logueoConEmailAnonimo(user)
+    this.authService
+      .logueoConEmailAnonimo(user)
       .then(() => {
         this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);
-        console.log("logueado como: ", user.email, "---", user.password);
+        console.log('logueado como: ', user.email, '---', user.password);
         this.uService.updateUser(user);
+        this.volver();
       })
       .catch(() => {
-        this.toastr.mostrarToast('Usuario o contraseña incorrectos', ColoresToast.danger);
+        this.toastr.mostrarToast(
+          'Usuario o contraseña incorrectos',
+          ColoresToast.danger
+        );
       });
-
-      this.volver();
-
   }
 
   borrarCampos() {
     this.aF.get('name').setValue('');
-    
   }
-
 }
