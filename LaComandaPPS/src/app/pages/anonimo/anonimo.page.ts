@@ -74,7 +74,7 @@ export class AnonimoPage implements OnInit {
     );
 
     this.authService
-      .logueoConEmailAnonimo(user)
+      .logueoConEmail(user.email, user.password)
       .then(() => {
         this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);
         console.log('logueado como: ', user.email, '---', user.password);

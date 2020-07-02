@@ -75,9 +75,9 @@ export class EntrarMesaPage implements OnInit {
   public async escanearQRMesa() {
     const resultado = await this.qrs.escanear();
     const usuario = await this.as.datosUsuarioLoguado();
-    const mesaUsuario = await this.ms.traerMesaDelCliente(usuario.id);
+    const leTmp = await this.les.existeUsuarioEnListaPromesa(usuario.id);
 
-    if (resultado.text === mesaUsuario.id) {
+    if (resultado.text === leTmp.mesa) {
       this.router.navigateByUrl('/principal/mi-pedido');
     } else {
       this.toastr.mostrarToast('Mesa incorrecta', ColoresToast.danger);

@@ -11,10 +11,7 @@ export class PrincipalPage implements OnInit {
   paginaSeleccionada = '';
   rol: string;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.authService.datosUsuarioLoguado().then((doc) => {
@@ -42,6 +39,7 @@ export class PrincipalPage implements OnInit {
 
   desloguearse() {
     this.authService.logout();
+    this.router.navigateByUrl('/');
   }
 
   redireccion(parametro: string) {

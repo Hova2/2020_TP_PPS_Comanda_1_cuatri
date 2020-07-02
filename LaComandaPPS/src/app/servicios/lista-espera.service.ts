@@ -18,7 +18,10 @@ export class ListaEsperaService {
   }
 
   public actualizar(id: string, mesa: string) {
-    this.af.collection('listaespera').doc(id).update({ mesa: mesa });
+    this.af
+      .collection('listaespera')
+      .doc(id)
+      .update({ mesa: mesa, esperandoEntrar: false });
   }
 
   public listarEsperandoEntrar(): Observable<any[]> {
@@ -73,5 +76,26 @@ export class ListaEsperaService {
           return salida;
         })
       );
+  }
+
+  public existeUsuarioEnListaPromesa(idUsuario: string): Promise<any> {
+    return this.af
+      .collection('listaespera')
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          let salida: any = null;
+          actions.forEach((action) => {
+            const datos = action.payload.doc.data() as ListaEspera;
+            const id = action.payload.doc.id;
+            if (datos.idUsuario === idUsuario) {
+              salida = { id, ...datos };
+            }
+          });
+
+          return salida;
+        })
+      )
+      .toPromise();
   }
 }
