@@ -9,6 +9,7 @@ import { tap } from 'rxjs/internal/operators/tap';
 import { Platform, ToastController } from '@ionic/angular';
 import { Device } from '@ionic-native/device/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { MesaService } from 'src/app/servicios/mesa.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
     private platform: Platform,
     private tc: ToastController,
     private dv: Device,
-    private backgroundMode: BackgroundMode
+    private backgroundMode: BackgroundMode,
+    private ms: MesaService
   ) {
     this.formulario = new FormGroup({
       usuario: new FormControl(null, [Validators.required]),
@@ -89,7 +91,14 @@ export class LoginComponent implements OnInit {
         this.initializeApp();
         switch (rol) {
           case 'cliente':
-            this.router.navigate(['/entrar-mesa']);
+            const mesa = await this.ms.traerMesaDelCliente(
+              docUsuario.data().id
+            );
+            if (mesa !== null) {
+              this.router.navigateByUrl('/principal/mi-pedido');
+            } else {
+              this.router.navigate(['/entrar-mesa']);
+            }
             break;
           case 'metre':
             this.router.navigate(['/principal/lista-de-espera']);
@@ -152,11 +161,11 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/registro']);
   }
 
-  public anonimo() {
+  public async anonimo() {
     this.router.navigate(['/anonimo']);
   }
 
-  public encuesta(){
+  public encuesta() {
     this.router.navigate(['/ecuesta-cliente']);
   }
 

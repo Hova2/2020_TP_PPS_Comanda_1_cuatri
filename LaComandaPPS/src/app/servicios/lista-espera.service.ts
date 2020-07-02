@@ -24,6 +24,10 @@ export class ListaEsperaService {
       .update({ mesa: mesa, esperandoEntrar: false });
   }
 
+  public baja(id: string) {
+    this.af.collection('listaespera').doc(id).delete();
+  }
+
   public listarEsperandoEntrar(): Observable<any[]> {
     return this.af
       .collection('listaespera')

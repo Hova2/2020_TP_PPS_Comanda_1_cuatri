@@ -9,6 +9,7 @@ import { ServicioToastService } from './servicio-toast.service';
 import { CommonHelper } from '../clases/common-helper';
 import { ColoresToast } from '../enum/colores-toast.enum';
 import { Injectable } from '@angular/core';
+import { EstadoMesa } from '../enum/estado-mesa.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +67,22 @@ export class MesaService {
       });
   }
 
+  public actualizarIdUsuario(idMesa: string, idCliente: string): void {
+    this.af
+      .collection('mesas')
+      .doc(idMesa)
+      .update({
+        idCliente: idCliente,
+        estadoMesa: EstadoMesa.tomada,
+      })
+      .then(() => {
+        this.toast.mostrarToast(
+          'Se actualizó la mesa con éxito',
+          ColoresToast.success
+        );
+      });
+  }
+
   public listarDisponibles(): Observable<any[]> {
     return this.af
       .collection('mesas')
@@ -87,13 +104,16 @@ export class MesaService {
   }
 
   public async traerMesaDelCliente(idCliente: string): Promise<Mesa> {
-    const mesaQue = await this.af
-      .collection('mesas', (ref) => ref.where('idCliente', '==', idCliente))
-      .get()
-      .toPromise();
+    let salida = null;
 
-    const salida = mesaQue.docs[0].data() as Mesa;
-    salida.id = mesaQue.docs[0].id;
+    const mesaQue = await this.af
+      .collection('mesas')
+      .ref.where('idCliente', '==', idCliente)
+      .get();
+
+    if (!mesaQue.empty) {
+      salida = mesaQue.docs[0].data() as Mesa;
+    }
 
     return salida;
   }

@@ -43,7 +43,7 @@ export class EntrarMesaPage implements OnInit {
         return docUsuario.id;
       })
       .then((idUsuario) => {
-        this.les.existeUsuarioEnLista(idUsuario).subscribe((datos) => {
+        this.les.existeUsuarioEnLista(idUsuario).subscribe(async (datos) => {
           this.datosLista = datos;
           if (datos) {
             this.esperando = 'Aguarde para acceder al local';
@@ -78,6 +78,8 @@ export class EntrarMesaPage implements OnInit {
     const leTmp = await this.les.existeUsuarioEnListaPromesa(usuario.id);
 
     if (resultado.text === leTmp.mesa) {
+      this.ms.actualizarIdUsuario(leTmp.mesa, usuario.id);
+      this.les.baja(leTmp.id);
       this.router.navigateByUrl('/principal/mi-pedido');
     } else {
       this.toastr.mostrarToast('Mesa incorrecta', ColoresToast.danger);
