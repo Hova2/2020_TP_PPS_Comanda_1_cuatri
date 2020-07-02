@@ -104,13 +104,13 @@ export class GestionDeProductosPage implements OnInit {
     }).then(() => {
 
       if (this.imagen1 === null) {
-        this.imagen1 = '../../../assets/imagenes/imagenSubirProducto.png';
+        this.imagen1 = 'https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imgDef.png?alt=media&token=062be3ee-2880-433f-8ad6-529ad8b8c8f1';
       }
       if (this.imagen2 === null) {
-        this.imagen2 = '../../../assets/imagenes/imagenSubirProducto.png';
+        this.imagen2 = 'https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imgDef.png?alt=media&token=062be3ee-2880-433f-8ad6-529ad8b8c8f1';
       }
       if (this.imagen3 === null) {
-        this.imagen3 = '../../../assets/imagenes/imagenSubirProducto.png';
+        this.imagen3 = 'https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imgDef.png?alt=media&token=062be3ee-2880-433f-8ad6-529ad8b8c8f1';
       }
 
       producto = Producto.crear(

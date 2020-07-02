@@ -16,6 +16,11 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { MesaService } from 'src/app/servicios/mesa.service';
 import { Mesa } from 'src/app/clases/mesa';
+import { Router } from '@angular/router';
+import { QrService } from 'src/app/servicios/qr.service';
+import { ColoresToast } from 'src/app/enum/colores-toast.enum';
+import { ServicioToastService } from 'src/app/servicios/servicio-toast.service';
+import { EstadoPedido } from 'src/app/enum/estado-pedido.enum';
 
 @Component({
   selector: 'app-mi-pedido',
@@ -23,12 +28,28 @@ import { Mesa } from 'src/app/clases/mesa';
   styleUrls: ['./mi-pedido.page.scss'],
 })
 export class MiPedidoPage implements OnInit {
-  private pedido: Pedido = null;
-  public algoPedido: boolean;
+
+  /*private cliente: Usuario = {
+    id: 'bcU1E3fkW3stoumKeZdu',
+    nombre: 'NomCliente',
+    apellido: 'ApeCliente',
+    password: null,
+    dni: null,
+    email: null,
+    rol: Rol.cliente,
+    imagen: null,
+    eliminado: false,
+    estado: null
+  }*/
+
+
+  private pedido: Pedido = new Pedido();
+  public algoPedido: boolean = false;
   public existePedido = false;
   private esCliente: boolean = true;
 
   public productos: Observable<any[]> = null;
+  public pedidoObservable: Observable<Pedido> = null;
 
   sliderConfig = {
     spaceBetween: 10,
@@ -42,20 +63,76 @@ export class MiPedidoPage implements OnInit {
     private pedidoService: PedidoService,
     private usuarioService: UsuarioService,
     private as: AuthService,
-    private ms: MesaService
-  ) {}
+    private ms: MesaService,
+    private router: Router,
+    private qrs: QrService,
+    private toastr: ServicioToastService
+  ) { }
 
   ngOnInit() {
     this.productos = this.productoService.traerProductosActivos();
     this.inicializarPedido();
   }
 
+  /*private async inicializarPedido(): Promise<void> {
+    const docTmp = await this.as.datosUsuarioLoguado();
+    const mesa = await this.ms.traerMesaDelCliente(docTmp.id);
+
+    console.log(mesa.idPedido);
+    
+    this.pedido = Pedido.crear(mesa.id);
+    this.algoPedido = false;
+  }*/
+
   private async inicializarPedido(): Promise<void> {
     const docTmp = await this.as.datosUsuarioLoguado();
     const mesa = await this.ms.traerMesaDelCliente(docTmp.id);
-    this.pedido = Pedido.crear(mesa.id);
-    this.algoPedido = false;
+    
+      if (mesa.idPedido == null) {
+        this.pedido = Pedido.crear(mesa.id);
+        this.algoPedido = false;
+      } else if (mesa.idPedido != null) {
+        this.algoPedido = true;
+        /*this.pedidoService.traerPorIdDocumento(mesa.idPedido).then(elPedido => {
+          //this.pedido = elPedido;             
+          this.pedidoService.traerPedidoPorIdDocumento(elPedido.id).then(pedidoDeAca => {
+            this.pedido = pedidoDeAca;
+          });
+        });*/
+      }
+    
   }
+
+
+  //esto es de prueba usuario hardcodeado
+  /*private inicializarPedidoPrueba() {
+    const docTmp = this.as.datosUsuarioLoguado();
+    //const mesa = this.ms.traerMesaDelCliente(this.cliente.id);
+
+    // this.pedidoService.traerPedidoObservable(this.pedido.pedidoID).subscribe(pedido =>{
+    //   console.log(pedido);
+    // });
+
+    mesa.then(mesa => {
+
+      if (mesa.idPedido == null) {
+        this.pedido = Pedido.crear(mesa.id);
+        this.algoPedido = false;
+      } else if (mesa.idPedido != null) {
+        this.algoPedido = true;
+        this.pedidoService.traerPorIdDocumento(mesa.idPedido).then(elPedido => {
+          //this.pedido = elPedido;             
+          this.pedidoService.traerPedidoPorIdDocumento(elPedido.id).then(pedidoDeAca => {
+            this.pedido = pedidoDeAca;
+          });
+        });
+      }
+    });
+
+    setTimeout(() => {
+      console.log(this.pedido);
+    }, 2000);
+  }*/
 
   private inicializarPedidoDesdeMozo(): void {
     this.pedido = Pedido.crearDesdeMozo();
@@ -96,6 +173,7 @@ export class MiPedidoPage implements OnInit {
         this.ms.actualizarMesaConIdPedido(this.pedido.mesaID, idPedido);
         this.pedidoService.actualizarPedidoConIdPedido(idPedido);
         this.existePedido = true;
+
       } else {
       }
     }
@@ -116,4 +194,12 @@ export class MiPedidoPage implements OnInit {
       return mozos[random];
     });
   }
+
+  hacerConsulta() {
+    this.router.navigateByUrl('/principal/consultas');
+  }
+
+
+
+  
 }

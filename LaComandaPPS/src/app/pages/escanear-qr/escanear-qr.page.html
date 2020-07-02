@@ -4,9 +4,64 @@
       <ion-menu-button></ion-menu-button>
       <ion-title>Escanear QR</ion-title>
     </ion-buttons>
+    <ion-buttons slot="end">      
+      <ion-button color="secondary" expand="full" [disabled]="pedido.estado == 'pagado'" (click)="hacerConsulta()">
+        <ion-icon name="chatbubble-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-button color="success" expand="full" (click)="escanearQRMesa()">
+    <ion-icon name="qr-code"></ion-icon> Escanear mesa
+  </ion-button>
+
+  <ion-card [hidden]="!algoPedido">   
+
+    <ion-card-header>
+      <ion-card-title>Su pedido se encuentra {{ pedido.estado }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>  
+
+      <ion-grid>
+        <ion-row *ngFor="let prod of pedido.productos">
+          <ion-col size="9" *ngIf="prod.nombre != 'propina'">
+            {{ prod.nombre }}
+          </ion-col>
+          <ion-col size="9" *ngIf="prod.nombre == 'propina'">
+            {{ prod.nombre }} {{ prod.descripcion }}
+          </ion-col>
+          <ion-col size="3">
+            {{ prod.precio }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+            Total
+          </ion-col>
+          <ion-col size="4">
+            {{ pedido.total }}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button color="success" expand="full" [class.ion-hide]="pedido.estado != 'servido sin confirmar'" (click)="confirmarRecepcion()">
+        <ion-icon name="checkbox-outline"></ion-icon> Confirmar recepción
+      </ion-button>
+
+      <ion-button color="primary" expand="full" [disabled]="pedido.estado != 'servido'">Realizar encuesta
+      </ion-button>
+
+      <ion-button color="secondary" expand="full" [disabled]="pedido.estado != 'servido'" (click)="asignarPropina()">
+        <ion-icon name="qr-code"></ion-icon> Asignar propina
+      </ion-button>
+      
+      <ion-button color="primary" expand="full" [disabled]="pedido.estado != 'servido'">Pedir cuenta
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
