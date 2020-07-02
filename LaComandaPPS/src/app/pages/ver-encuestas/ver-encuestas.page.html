@@ -1,12 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-      <ion-title>Encuestas</ion-title>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
+
+  
+
+
+    <ion-card *ngFor="let encuesta of listadoEncuestasObserver | async" color="secondary">
+
+      <ion-card-header>
+        <ion-card-title>{{encuesta.cliente}}</ion-card-title>
+        <ion-card-subtitle>Fecha: {{encuesta.horaAlta | date:'dd/MM/yyyy'}}</ion-card-subtitle>
+        <ion-card-subtitle>Hora: {{encuesta.horaAlta | date:'HH:mm:ss'}}</ion-card-subtitle>
+      </ion-card-header>
+      <img [src]="encuesta.imagen1" height="20%" width="20%" />
+      <img [src]="encuesta.imagen2" height="20%" width="20%" />
+      <img [src]="encuesta.imagen3" height="20%" width="20%" />
+      <ion-card-content>Puntaje Mesa: {{encuesta.puntajeMesa}} <br>
+        Puntaje Mozo: {{encuesta.puntajeMozo}} <br>
+        Puntaje Cocina: {{encuesta.puntajeCocina}} <br>
+        Puntaje Restaurant: {{encuesta.puntajeRestaurant}} <br>
+        Lo Que Más Gustó: {{encuesta.loQueMasGusto}} <br>
+      </ion-card-content>
+
+      <ion-card-content> Breve reseña de nustro cliente:
+        {{encuesta.comentario}}
+      </ion-card-content>
+    </ion-card>
+
 
 </ion-content>

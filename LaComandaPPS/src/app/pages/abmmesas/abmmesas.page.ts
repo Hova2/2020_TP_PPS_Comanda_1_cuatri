@@ -65,10 +65,7 @@ export class ABMmesasPage implements OnInit {
     this.mesaModificacionForm.get('deshabilitarModificacion').setValue(false);
   }
 
-  volver() {
-    this.router.navigate(['']);
-  }
-
+ 
   mesaSeleccionada(m: Mesa){
 
     this.idMesaSel = m.id;

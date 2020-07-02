@@ -156,6 +156,10 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/anonimo']);
   }
 
+  public encuesta(){
+    this.router.navigate(['/ecuesta-cliente']);
+  }
+
   private initializeApp() {
     this.platform.ready().then(() => {
       this.np.getToken();

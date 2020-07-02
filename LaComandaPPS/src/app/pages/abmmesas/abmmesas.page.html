@@ -20,34 +20,24 @@
 
       <ion-item>
         <ion-label class="radio">MODIFICACION</ion-label>
-        <ion-radio
-          slot="start"
-          color="tertiary"
-          value="modificacion"
-        ></ion-radio>
+        <ion-radio slot="start" color="tertiary" value="modificacion"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>
 
   <!---ALTA DE MESAS-->
   <div *ngIf="altaradio">
-    <ion-label color="primary" class="titulo"
-      ><strong>ALTA DE MESA</strong></ion-label
-    >
+    <ion-label color="primary" class="titulo"><strong>ALTA DE MESA</strong></ion-label>
     <br />
 
     <form [formGroup]="mesaForm" (ngSubmit)="onSubmit()">
       <ion-item>
-        <ion-label class="labelSelect" position="floating"
-          ><strong>CODIGO DE MESA</strong></ion-label
-        >
+        <ion-label class="labelSelect" position="floating"><strong>CODIGO DE MESA</strong></ion-label>
         <ion-input type="text" formControlName="numero"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label class="labelSelect" position="floating"
-          ><strong>CANTIDAD MÁXIMA DE COMENSALES</strong></ion-label
-        >
+        <ion-label class="labelSelect" position="floating"><strong>CANTIDAD MÁXIMA DE COMENSALES</strong></ion-label>
         <ion-select value="null" formControlName="cantidad">
           <ion-select-option value="2">2</ion-select-option>
           <ion-select-option value="4">4</ion-select-option>
@@ -57,75 +47,55 @@
       </ion-item>
 
       <ion-item>
-        <ion-label class="labelSelect" position="floating"
-          ><strong>TIPO DE MESA</strong></ion-label
-        >
+        <ion-label class="labelSelect" position="floating"><strong>TIPO DE MESA</strong></ion-label>
         <ion-select value="null" formControlName="tipoMesa">
           <ion-select-option value="normal">Mesa normal</ion-select-option>
           <ion-select-option value="vip">Mesa Vip</ion-select-option>
-          <ion-select-option value="discapacitad"
-            >Discapacidad</ion-select-option
-          >
+          <ion-select-option value="discapacitad">Discapacidad</ion-select-option>
         </ion-select>
       </ion-item>
 
       <br /><br /><br />
 
-      <button class="botonRegistro" [disabled]="!mesaForm.valid" type="submit">
+      <ion-button expand="full" color="primary" [disabled]="!mesaForm.valid" type="submit">
         DAR DE ALTA
-      </button>
+      </ion-button>
 
-      <br />
+ 
     </form>
 
-    <ion-button class="mitad" (click)="borrarCampos()" color="danger"
-      ><ion-icon name="trash-bin"></ion-icon>LIMPIAR CAMPOS</ion-button
-    >
+    <ion-button expand="full" color="danger" (click)="borrarCampos()" color="danger">
+      <ion-icon name="trash-bin"></ion-icon>LIMPIAR CAMPOS
+    </ion-button>
 
-    <ion-button class="mitad" (click)="volver()" color="warning"
-      ><ion-icon name="return-up-back"></ion-icon>VOLVER</ion-button
-    >
+    
   </div>
 
   <!--PARTE DE MODIFICACION -->
   <div *ngIf="!altaradio">
     <br />
-    <ion-label color="primary" class="titulo"
-      ><strong>MODIFICACION DE MESA</strong></ion-label
-    >
+    <ion-label color="primary" class="titulo"><strong>MODIFICACION DE MESA</strong></ion-label>
 
     <ion-item>
-      <ion-label class="selectMesas" position="floating"
-        ><strong>LISTADO DE MESAS</strong></ion-label
-      >
+      <ion-label class="selectMesas" position="floating"><strong>LISTADO DE MESAS</strong></ion-label>
       <ion-select #mesa (ionChange)="mesaSeleccionada(mesa.value)">
-        <ion-select-option
-          *ngFor="let mesa of listadoMesasOrserver | async"
-          [value]="mesa"
-          >{{mesa.numero}}
+        <ion-select-option *ngFor="let mesa of listadoMesasOrserver | async" [value]="mesa">{{mesa.numero}}
         </ion-select-option>
       </ion-select>
     </ion-item>
 
     <!--FORM DE MODIFICACION -->
 
-    <form
-      [formGroup]="mesaModificacionForm"
-      (ngSubmit)="onSubmitModificacion()"
-    >
+    <form [formGroup]="mesaModificacionForm" (ngSubmit)="onSubmitModificacion()">
       <ion-item>
-        <ion-label class="labelSelect" position="floating"
-          ><strong>CODIGO DE MESA</strong></ion-label
-        >
+        <ion-label class="labelSelect" position="floating"><strong>CODIGO DE MESA</strong></ion-label>
         <ion-input type="text" formControlName="numeroModificacion"></ion-input>
       </ion-item>
 
       <!-- placeholder="Escriba el código de la mesa aquí" -->
 
       <ion-item>
-        <ion-label class="labelSelect" position="floating"
-          ><strong>CANTIDAD MÁXIMA DE COMENSALES</strong></ion-label
-        >
+        <ion-label class="labelSelect" position="floating"><strong>CANTIDAD MÁXIMA DE COMENSALES</strong></ion-label>
         <ion-select value="null" formControlName="cantidadModificacion">
           <ion-select-option value="2">2</ion-select-option>
           <ion-select-option value="4">4</ion-select-option>
@@ -135,50 +105,31 @@
       </ion-item>
 
       <ion-item>
-        <ion-label class="labelSelect" position="floating"
-          ><strong>TIPO DE MESA</strong></ion-label
-        >
+        <ion-label class="labelSelect" position="floating"><strong>TIPO DE MESA</strong></ion-label>
         <ion-select value="null" formControlName="tipoMesaModificacion">
           <ion-select-option value="normal">Mesa normal</ion-select-option>
           <ion-select-option value="vip">Mesa Vip</ion-select-option>
-          <ion-select-option value="discapacitad"
-            >Discapacidad</ion-select-option
-          >
+          <ion-select-option value="discapacitad">Discapacidad</ion-select-option>
         </ion-select>
       </ion-item>
       <br />
 
-      <ion-label class="labelSelect2"
-        ><strong> MESA DESHABILITADA</strong></ion-label
-      >
-      <ion-checkbox
-        formControlName="deshabilitarModificacion"
-        color="danger"
-        slot="start"
-      ></ion-checkbox>
+      <ion-label class="labelSelect2"><strong> MESA DESHABILITADA</strong></ion-label>
+      <ion-checkbox formControlName="deshabilitarModificacion" color="danger" slot="start"></ion-checkbox>
 
       <br /><br />
 
-      <button
-        class="botonRegistro"
-        [disabled]="!mesaModificacionForm.valid"
-        type="submit"
-      >
-        ACTUALIZAR
-      </button>
+      <ion-button  expand="full" color="primary"[disabled]="!mesaModificacionForm.valid" type="submit">
+        ACTUALIZAR MESA
+      </ion-button>
 
-      <br />
+
     </form>
 
-    <ion-button
-      class="mitad"
-      (click)="borrarCamposModificacion()"
-      color="danger"
-      ><ion-icon name="trash-bin"></ion-icon>LIMPIAR CAMPOS</ion-button
-    >
+    <ion-button expand="full" (click)="borrarCamposModificacion()" color="danger">
+      <ion-icon name="trash-bin"></ion-icon>LIMPIAR CAMPOS
+    </ion-button>
 
-    <ion-button class="mitad" (click)="volver()" color="warning"
-      ><ion-icon name="return-up-back"></ion-icon>VOLVER</ion-button
-    >
+
   </div>
 </ion-content>
