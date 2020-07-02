@@ -17,6 +17,7 @@ export class EntrarMesaPage implements OnInit {
   public fotoUsuario: string;
   public idUsuario: string;
   public esperando: string;
+  public estadoUsuario: string;
   public datosLista: any;
   public esperandoEntrada: boolean;
 
@@ -34,6 +35,7 @@ export class EntrarMesaPage implements OnInit {
       .then((docUsuario) => {
         this.fotoUsuario = docUsuario.data().imagen;
         this.idUsuario = docUsuario.id;
+        this.estadoUsuario = docUsuario.data().estado;
         return docUsuario.id;
       })
       .then((idUsuario) => {

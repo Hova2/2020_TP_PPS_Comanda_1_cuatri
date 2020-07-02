@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Router } from '@angular/router';
-import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @Component({
   selector: 'app-principal',
@@ -15,11 +14,9 @@ export class PrincipalPage implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private backgroundMode: BackgroundMode
   ) {}
 
   ngOnInit() {
-    this.backgroundMode.enable();
     this.authService.datosUsuarioLoguado().then((doc) => {
       this.rol = doc.data().rol;
       switch (this.rol) {

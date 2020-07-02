@@ -6,7 +6,31 @@
 
 <ion-content>
   <div class="centrado">
-    <ion-card class="ion-text-center">
+    <ion-card class="ion-text-center" *ngIf="estadoUsuario === 'parAprobar'">
+      <ion-card-header>
+        <ion-card-subtitle
+          ><ion-label color="danger"
+            >Usuario no autorizado</ion-label
+          ></ion-card-subtitle
+        >
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label>Aguarde mientras se procesa su registro</ion-label>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="ion-text-center" *ngIf="estadoUsuario === 'deshabilitado'">
+      <ion-card-header>
+        <ion-card-subtitle
+          ><ion-label color="danger"
+            >Usuario no autorizado</ion-label
+          ></ion-card-subtitle
+        >
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label>Su solicitud fue rechazada</ion-label>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="ion-text-center" *ngIf="estadoUsuario === 'habilitado'">
       <img class="fotocentrada" src="{{fotoUsuario}}" width="48" height="48" />
       <ion-card-header>
         <ion-card-subtitle>{{esperando}}</ion-card-subtitle>

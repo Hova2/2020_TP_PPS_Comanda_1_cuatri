@@ -6,6 +6,8 @@ import {
 } from '@angular/fire/firestore';
 import { CommonHelper } from '../clases/common-helper';
 import { CamaraService } from './camara.service';
+import { map } from 'rxjs/internal/operators/map';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +65,13 @@ export class UsuarioService {
     }
   }
 
+  public actualizarUsuario(usuario: Usuario) {
+    this.db
+      .collection('usuarios')
+      .doc(usuario.id)
+      .update(CommonHelper.ConvertToObject(usuario));
+  }
+
   public traerTodosLosMozos(): Promise<Usuario[]> {
     const docs = this.db.collection('usuarios', (ref) =>
       ref.where('rol', '==', 'mozo')
@@ -90,18 +99,33 @@ export class UsuarioService {
       .toPromise();
   }
 
-  public traerUsuarioLoguado(
-    email: string): Promise<Usuario> {
-    const docRef = this.db.collection('productos', ref =>
+  public traerUsuarioLoguado(email: string): Promise<Usuario> {
+    const docRef = this.db.collection('productos', (ref) =>
       ref.where('email', '==', email)
     );
     return docRef
       .get()
       .toPromise()
-      .then(doc => {
+      .then((doc) => {
         const usuario = doc.docs[0].data() as Usuario;
         usuario.id = doc.docs[0].id;
         return usuario;
       });
-    }
+  }
+
+  public listarEsperandoAutorizacionRegistro(): Observable<Usuario[]> {
+    return this.db
+      .collection<Usuario>('usuarios', (ref) =>
+        ref.where('estado', '==', 'parAprobar')
+      )
+      .snapshotChanges()
+      .pipe(
+        map((results) => {
+          return results.map((result) => {
+            const datos = result.payload.doc.data() as Usuario;
+            return datos;
+          });
+        })
+      );
+  }
 }

@@ -7,6 +7,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotificacionesPushService } from 'src/app/servicios/notificaciones-push.service';
 import { tap } from 'rxjs/internal/operators/tap';
 import { Platform, ToastController } from '@ionic/angular';
+import { Device } from '@ionic-native/device/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +24,9 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private np: NotificacionesPushService,
     private platform: Platform,
-    private tc: ToastController
+    private tc: ToastController,
+    private dv: Device,
+    private backgroundMode: BackgroundMode
   ) {
     this.formulario = new FormGroup({
       usuario: new FormControl(null, [Validators.required]),
@@ -29,7 +34,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const version = this.dv.version;
+    if (
+      version === '7' ||
+      version === '7.1' ||
+      version === '7.1.1' ||
+      version === '7.1.2'
+    ) {
+      this.backgroundMode.enable();
+    }
+  }
 
   public completarUsuario(parametro: string) {
     switch (parametro) {

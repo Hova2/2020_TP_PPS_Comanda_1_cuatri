@@ -23,9 +23,11 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
-import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
+import { Device } from '@ionic-native/device/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { NotificacionesPushService } from './servicios/notificaciones-push.service';
+import { ListaEsperaService } from './servicios/lista-espera.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,9 +53,11 @@ import { NotificacionesPushService } from './servicios/notificaciones-push.servi
     BarcodeScanner,
     Camera,
     File,
-    BackgroundMode,
     FCM,
+    Device,
+    BackgroundMode,
     NotificacionesPushService,
+    ListaEsperaService,
   ],
   bootstrap: [AppComponent],
 })

@@ -47,6 +47,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/anonimo/anonimo.module').then((m) => m.AnonimoPageModule),
   },
+  
 ];
 
 @NgModule({
