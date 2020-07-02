@@ -173,7 +173,6 @@ export class MiPedidoPage implements OnInit {
         this.ms.actualizarMesaConIdPedido(this.pedido.mesaID, idPedido);
         this.pedidoService.actualizarPedidoConIdPedido(idPedido);
         this.existePedido = true;
-
       } else {
       }
     }
