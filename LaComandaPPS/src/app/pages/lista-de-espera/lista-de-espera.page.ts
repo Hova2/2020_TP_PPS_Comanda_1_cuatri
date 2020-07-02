@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListaEsperaService } from 'src/app/servicios/lista-espera.service';
 import { Observable } from 'rxjs';
 import { MesaService } from 'src/app/servicios/mesa.service';
+import { ListaEspera } from 'src/app/clases/lista-espera';
 
 @Component({
   selector: 'app-lista-de-espera',
@@ -19,4 +20,9 @@ export class ListaDeEsperaPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  public async aceptar(mesa: any, listaE: any){
+    const mesaTmp = await this.ms.traerIdMesaConNumero(mesa);
+    this.le.actualizar(listaE.id, mesaTmp.id);
+  }
 }

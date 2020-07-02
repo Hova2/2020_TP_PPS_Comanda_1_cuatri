@@ -17,6 +17,10 @@ export class ListaEsperaService {
       .add(CommonHelper.ConvertToObject(listaEspera));
   }
 
+  public actualizar(id: string, mesa: string) {
+    this.af.collection('listaespera').doc(id).update({ mesa: mesa });
+  }
+
   public listarEsperandoEntrar(): Observable<any[]> {
     return this.af
       .collection('listaespera')

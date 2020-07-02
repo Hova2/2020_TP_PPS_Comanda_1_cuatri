@@ -98,6 +98,18 @@ export class MesaService {
     return salida;
   }
 
+  public async traerIdMesaConNumero(numero: string): Promise<Mesa> {
+    const mesaQue = await this.af
+      .collection('mesas', (ref) => ref.where('numero', '==', numero))
+      .get()
+      .toPromise();
+
+    const salida = mesaQue.docs[0].data() as Mesa;
+    salida.id = mesaQue.docs[0].id;
+
+    return salida;
+  }
+
   public actualizarMesaConIdPedido(idMesa: string, idPedido: string) {
     this.af.collection('mesas').doc(idMesa).update({ idPedido: idPedido });
   }
