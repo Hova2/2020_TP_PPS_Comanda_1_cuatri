@@ -7,6 +7,10 @@ import { ServicioToastService } from 'src/app/servicios/servicio-toast.service';
 import { ColoresToast } from 'src/app/enum/colores-toast.enum';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Pedido } from 'src/app/clases/pedido';
+import { PedidoService } from 'src/app/servicios/pedido.service';
+import { MesaService } from 'src/app/servicios/mesa.service';
 
 @Component({
   selector: 'app-ecuesta-cliente',
@@ -24,11 +28,16 @@ export class EcuestaClientePage implements OnInit {
 
   public encuestaForm: FormGroup;
 
+  public pedidoObservable: Observable<Pedido>;
+  public hayEncuesta: boolean = false;
+
   constructor(private encuestaService: EncuestaService,
     private cs:CamaraService,
     private toast: ServicioToastService,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private pedidoService: PedidoService,
+    private mesaService: MesaService) { }
 
   ngOnInit() {
 
@@ -39,11 +48,18 @@ export class EcuestaClientePage implements OnInit {
       cocinero: new FormControl(null, [Validators.required]),
       servicioGral: new FormControl(null, [Validators.required]),
       queTeGusto: new FormControl(null, [Validators.required]),
-      areaComentario: new FormControl(null),     
+      areaComentario: new FormControl(null),   
      
     });
 
-
+    this.authService.datosUsuarioLoguado().then(usuario =>{
+      this.mesaService.traerMesaDelCliente(usuario.id).then(mesa =>{
+        this.pedidoService.traerPedidoObservable(mesa.idPedido).subscribe(ped=>{
+          this.hayEncuesta = ped.encuestaCompleta;
+        });               
+      });
+    });
+    
   }
 
   sacarFoto(imagen: string) {
@@ -132,6 +148,10 @@ export class EcuestaClientePage implements OnInit {
 
   mostrarencuestas() {
     this.router.navigate(['/estadisticas']);
+  }
+
+  volverAlPedido(){
+    this.router.navigate(['/principal/escanear-qr'])
   }
   
 }

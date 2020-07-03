@@ -1,5 +1,10 @@
 <ion-content fullscreen>
   <ion-item>
+    <ion-buttons>
+      <ion-button (click)="volverAlPedido()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-label class="centrado"><strong>ENCUESTA DE SATISFACCIÓN</strong></ion-label>
   </ion-item>
 
@@ -17,7 +22,7 @@
         <ion-col>
           <ion-item>
             <ion-label class="seleccion" position="floating"><strong>MESA</strong></ion-label>
-            <ion-select value="null" formControlName="estadoMesa">
+            <ion-select value="null" formControlName="estadoMesa" [disabled]="this.hayEncuesta">
               <ion-select-option value="1">1</ion-select-option>
               <ion-select-option value="2">2</ion-select-option>
               <ion-select-option value="3">3</ion-select-option>
@@ -29,7 +34,7 @@
         <ion-col>
           <ion-item>
             <ion-label class="seleccion" position="floating"><strong>MOZO</strong></ion-label>
-            <ion-select value="null" formControlName="mozo">
+            <ion-select value="null" formControlName="mozo" [disabled]="this.hayEncuesta">
               <ion-select-option value="1">1</ion-select-option>
               <ion-select-option value="2">2</ion-select-option>
               <ion-select-option value="3">3</ion-select-option>
@@ -41,7 +46,7 @@
         <ion-col>
           <ion-item>
             <ion-label class="seleccion" position="floating"><strong>COCINERO</strong></ion-label>
-            <ion-select value="null" formControlName="cocinero">
+            <ion-select value="null" formControlName="cocinero" [disabled]="this.hayEncuesta">
               <ion-select-option value="1">1</ion-select-option>
               <ion-select-option value="2">2</ion-select-option>
               <ion-select-option value="3">3</ion-select-option>
@@ -63,7 +68,7 @@
     </ion-item>
     <ion-item>
       <ion-range formControlName="servicioGral" min="1" max="5" step="1" pin value="null" snaps color="secondary"
-        name="selectorUsuario">
+        name="selectorUsuario" [disabled]="this.hayEncuesta">
         <ion-icon slot="start" color="primary" name="sad"></ion-icon>
         <ion-icon slot="end" color="primary" name="happy"></ion-icon>
       </ion-range>
@@ -111,7 +116,7 @@
     </ion-item>
   </ion-item-group>  -->
 
-    <ion-item>
+    <ion-item [disabled]="this.hayEncuesta">
 
       <ion-radio-group formControlName="queTeGusto" value="atencion">
         
@@ -155,7 +160,7 @@
 
 
     <ion-item>
-      <ion-textarea formControlName="areaComentario" value="¿Querés comentarnos algo?. Este es el lugar!">
+      <ion-textarea formControlName="areaComentario" value="¿Querés comentarnos algo?. Este es el lugar!" [disabled]="this.hayEncuesta">
       </ion-textarea>
     </ion-item>
 
@@ -166,24 +171,24 @@
 
     <ion-item>
 
-      <ion-card (click)="sacarFoto('imagen1')" *ngIf="imagen1tmp == null" class="imagen">
+      <ion-card (click)="sacarFoto('imagen1')" *ngIf="imagen1tmp == null" class="imagen" [disabled]="this.hayEncuesta">
         <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
-      <ion-card (click)="sacarFoto('imagen1')" *ngIf="imagen1tmp != null" class="imagen">
+      <ion-card (click)="sacarFoto('imagen1')" *ngIf="imagen1tmp != null" class="imagen" [disabled]="this.hayEncuesta">
         <img [src]="imagen1tmp" />
       </ion-card>
 
-      <ion-card (click)="sacarFoto('imagen2')" *ngIf="imagen2tmp == null" class="imagen">
+      <ion-card (click)="sacarFoto('imagen2')" *ngIf="imagen2tmp == null" class="imagen" [disabled]="this.hayEncuesta">
         <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
-      <ion-card (click)="sacarFoto('imagen2')" *ngIf="imagen2tmp != null" class="imagen">
+      <ion-card (click)="sacarFoto('imagen2')" *ngIf="imagen2tmp != null" class="imagen" [disabled]="this.hayEncuesta">
         <img [src]="imagen2tmp" />
       </ion-card>
 
-      <ion-card (click)="sacarFoto('imagen3')" *ngIf="imagen3tmp == null" class="imagen">
+      <ion-card (click)="sacarFoto('imagen3')" *ngIf="imagen3tmp == null" class="imagen" [disabled]="this.hayEncuesta">
         <img src="../../../assets/imagenes/imagenSubirProducto.png" />
       </ion-card>
-      <ion-card (click)="sacarFoto('imagen3')" *ngIf="imagen3tmp != null" class="imagen">
+      <ion-card (click)="sacarFoto('imagen3')" *ngIf="imagen3tmp != null" class="imagen" [disabled]="this.hayEncuesta">
         <img [src]="imagen3tmp" />
       </ion-card>
     </ion-item>
@@ -192,7 +197,7 @@
     <ion-button color="primary" expand="block" (click)="mostrarencuestas()">OPINIONES DE NUESTROS CLIENTES</ion-button> 
 
 
-    <ion-button color="success" expand="block" [disabled]="!encuestaForm.valid" type="submit">
+    <ion-button color="success" expand="block" [disabled]="!encuestaForm.valid || this.hayEncuesta" type="submit">
       SUBIR ENCUESTA
     </ion-button>
 

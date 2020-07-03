@@ -538,7 +538,6 @@ export class PedidoService {
           const arraytmp = docPedidos.map((doc) => {
             return doc.payload.doc.data() as Pedido;
           });
-
           return arraytmp[0];
         })
       )

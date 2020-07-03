@@ -129,6 +129,13 @@ const routes: Routes = [
             '../lista-mesas-disponibles/lista-mesas-disponibles.module'
           ).then((m) => m.ListaMesasDisponiblesPageModule),
       },
+      {
+        path: 'ecuesta-cliente',
+        loadChildren: () =>
+          import('../ecuesta-cliente/ecuesta-cliente.module').then(
+            (m) => m.EcuestaClientePageModule
+          ),
+      }
     ],
   },
 ];

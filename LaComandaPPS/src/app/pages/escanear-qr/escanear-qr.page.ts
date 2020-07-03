@@ -34,26 +34,22 @@ export class EscanearQRPage implements OnInit {
   }
 
   async escanearQRMesa() {
-    //const mesa = this.ms.traerMesaDelCliente(this.cliente.id);
+
+    this.actualizarPedido("P8juuoqK6qkgGXxZ6xOe");
+    /*
     const docTmp = await this.authService.datosUsuarioLoguado();
     const mesa = await this.mesaService.traerMesaDelCliente(docTmp.id);
     const resultado = await this.qrs.escanear();
 
+    
+    
 
-    /*mesa.then(miMesa => {
-      if (miMesa.id == resultado.text) {*/
     if (mesa.id == resultado.text) {
 
-      // this.pedidoService.traerPorIdDocumento(miMesa.idPedido).then(elPedido => {
-      //   this.pedidoService.traerPedidoPorIdDocumento(elPedido.id).then(pedidoDeAca => {
-      //     this.pedido = pedidoDeAca;
-      //   });
-      // });
       this.actualizarPedido(mesa.idPedido);
     } else {
       this.toastr.mostrarToast('Codigo incorrecto', ColoresToast.danger);
-    }
-
+    }*/
   }
 
   actualizarPedido(idPedido: string) {
@@ -132,7 +128,7 @@ export class EscanearQRPage implements OnInit {
   }
 
   hacerEncuesta() {
-    this.router.navigateByUrl('/principal/consultas');
+    this.router.navigateByUrl('/principal/ecuesta-cliente');
   }
 
   confirmarRecepcion() {

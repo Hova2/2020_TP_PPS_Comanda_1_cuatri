@@ -47,13 +47,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/anonimo/anonimo.module').then((m) => m.AnonimoPageModule),
   },
-  {
-    path: 'ecuesta-cliente',
-    loadChildren: () =>
-      import('./pages/ecuesta-cliente/ecuesta-cliente.module').then(
-        (m) => m.EcuestaClientePageModule
-      ),
-  },
 
   {
     path: 'ver-encuestas',
