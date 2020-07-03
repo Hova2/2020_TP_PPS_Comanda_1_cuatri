@@ -82,10 +82,12 @@ export class MensajeService {
       );
   }
 
-  public traerMisMensajesParaResponder(nombre: string): Observable<any[]> {
-    return this.af.collection('mensajes', (ref) =>
-      ref.where('nombreMozo', '==', nombre).where('respuesta', '==', null)).snapshotChanges().pipe(
-        map(actions => {
+  public traerMisMensajesParaResponder(): Observable<any[]> {
+    //public traerMisMensajesParaResponder(nombre: string): Observable<any[]> {
+      return this.af.collection('mensajes', (ref) =>
+      ref.where('respuesta', '==', null)).snapshotChanges().pipe(
+        //ref.where('nombreMozo', '==', nombre).where('respuesta', '==', null)).snapshotChanges().pipe(
+          map(actions => {
           return actions.map(action => {
             const datos = action.payload.doc.data() as Mensaje;
             const id = action.payload.doc.id;

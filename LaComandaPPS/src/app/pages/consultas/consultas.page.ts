@@ -10,6 +10,9 @@ import { Mensaje } from 'src/app/clases/mensaje';
 import { MensajeService } from 'src/app/servicios/mensaje.service';
 import { Observable } from 'rxjs';
 import { ColoresToast } from 'src/app/enum/colores-toast.enum';
+import { MesaService } from 'src/app/servicios/mesa.service';
+import { AuthService } from 'src/app/servicios/auth.service';
+import { Mesa } from 'src/app/clases/mesa';
 
 @Component({
   selector: 'app-consultas',
@@ -18,33 +21,36 @@ import { ColoresToast } from 'src/app/enum/colores-toast.enum';
 })
 export class ConsultasPage implements OnInit {
 
-  private usuarioActivo: Usuario = {
-    id: 'id',
-    dni: 0,
-    nombre: 'Mozo',
-    apellido: 'apellido',
-    password: '',
-    email: '',
-    rol: Rol.mozo,
-    imagen: '',
-    eliminado: false,
-    estado: Estados.habilitado,
-  };
+  // private usuarioActivo: Usuario = {
+  //   id: 'id',
+  //   dni: 0,
+  //   nombre: 'Mozo',
+  //   apellido: 'apellido',
+  //   password: '',
+  //   email: '',
+  //   rol: Rol.mozo,
+  //   imagen: '',
+  //   eliminado: false,
+  //   estado: Estados.habilitado,
+  // };
 
-  private empleadoActivo: Usuario = {
-    id: 'id',
-    dni: 0,
-    nombre: 'Mozo',
-    apellido: 'apellido',
-    password: '',
-    email: '',
-    rol: Rol.mozo,
-    imagen: '',
-    eliminado: false,
-    estado: Estados.habilitado,
-  };
+  private usuarioActivo: Usuario = new Usuario;
+  private mesa: Mesa;
 
-  private pedido: Pedido;
+  // private empleadoActivo: Usuario = {
+  //   id: 'id',
+  //   dni: 0,
+  //   nombre: 'Mozo',
+  //   apellido: 'apellido',
+  //   password: '',
+  //   email: '',
+  //   rol: Rol.mozo,
+  //   imagen: '',
+  //   eliminado: false,
+  //   estado: Estados.habilitado,
+  // };
+
+  //private pedido: Pedido;
   private form: FormGroup;
   private formSelect: FormGroup;
   private hayConsultasCliente: boolean = false;
@@ -54,10 +60,12 @@ export class ConsultasPage implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private toast: ServicioToastService,
-    private mensajeService: MensajeService) {
-    this.pedido = new Pedido();
-    this.pedido.empleado = this.empleadoActivo;
-    this.pedido.mesaID = "numeroDeMesa";
+    private mensajeService: MensajeService,
+    private mesaService: MesaService,
+    private authService: AuthService) {
+    // this.pedido = new Pedido();
+    // this.pedido.empleado = this.empleadoActivo;
+    // this.pedido.mesaID = "numeroDeMesa";
   }
 
   sliderConfig = {
@@ -78,35 +86,44 @@ export class ConsultasPage implements OnInit {
       select: [null]
     });
 
-    if (this.usuarioActivo.rol == Rol.cliente) {
-      this.mensajes = this.mensajeService.traerMisMensajes(this.usuarioActivo.nombre);
-      setTimeout(() => {
-        this.mensajes.subscribe(mensajeria => {
-          console.log(mensajeria.length);
-          if (mensajeria.length > 0) {
-            this.hayConsultasCliente = true;
-            mensajeria.forEach(element => {
-              console.log(element);
-            });
-          }
-        })
-      }, 1000);
-    } else if (this.usuarioActivo.rol == Rol.mozo) {
-      this.mensajes = this.mensajeService.traerMisMensajesParaResponder(this.usuarioActivo.nombre);
-      setTimeout(() => {
-        this.mensajes.subscribe(mensajeria => {
-          console.log(mensajeria.length);
-          if (mensajeria.length > 0) {
-            this.hayConsultasCliente = true;
-            mensajeria.forEach(element => {
-              console.log(element);
-            });
-          }else if(mensajeria.length == 0){
-            this.hayConsultasCliente = false;
-          }
-        })
-      }, 1000);
-    }
+    this.authService.datosUsuarioLoguado().then(usuario =>{
+      this.usuarioActivo = usuario.data() as Usuario;
+    }).then(()=>{
+      if (this.usuarioActivo.rol == Rol.cliente) {
+        this.mensajes = this.mensajeService.traerMisMensajes(this.usuarioActivo.nombre);
+        setTimeout(() => {
+          this.mensajes.subscribe(mensajeria => {
+            console.log(mensajeria.length);
+            if (mensajeria.length > 0) {
+              this.hayConsultasCliente = true;
+              mensajeria.forEach(element => {
+                console.log(element);
+              });
+            }
+          })
+        }, 1000);
+      } else if (this.usuarioActivo.rol == Rol.mozo) {
+        //this.mensajes = this.mensajeService.traerMisMensajesParaResponder(this.usuarioActivo.nombre);
+        this.mensajes = this.mensajeService.traerMisMensajesParaResponder();
+        setTimeout(() => {
+          this.mensajes.subscribe(mensajeria => {
+            console.log(mensajeria.length);
+            if (mensajeria.length > 0) {
+              this.hayConsultasCliente = true;
+              mensajeria.forEach(element => {
+                console.log(element);
+              });
+            }else if(mensajeria.length == 0){
+              this.hayConsultasCliente = false;
+            }
+          })
+        }, 1000);
+      }
+
+      this.mesaService.traerMesaDelCliente(this.usuarioActivo.id).then(mesaDU=>{
+        this.mesa = mesaDU;
+      });
+    });
   }
 
   logForm() {
@@ -128,16 +145,19 @@ export class ConsultasPage implements OnInit {
     });
   }
 
-  hacerConsulta() {
+  async hacerConsulta() {
+    
+    const mesa = await this.mesaService.traerMesaDelCliente(this.usuarioActivo.id);
 
     let mensaje: Mensaje;
 
     mensaje = Mensaje.crear(
       '',
       this.usuarioActivo.nombre,
-      this.empleadoActivo.nombre,
+      "this.empleadoActivo.nombre",
       this.form.value.pregunta,
-      this.pedido.mesaID
+      this.mesa.numero
+      //this.pedido.mesaID
     )
 
     this.mensajeService.persistirMensaje(mensaje).then(valor => {
