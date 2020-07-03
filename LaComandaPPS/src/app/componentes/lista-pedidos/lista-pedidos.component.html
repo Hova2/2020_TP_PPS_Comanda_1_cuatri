@@ -29,19 +29,19 @@
     >
     <ion-button
       [class.ion-hide]="rol !== 'mozo'"
-      color="primary"
-      expand="full"
-      [disabled]="doc.estado != 'listo'"
-      (click)="servir(doc)"
-      >Servir</ion-button
-    >
-    <ion-button
-      [class.ion-hide]="rol !== 'mozo'"
       color="danger"
       expand="full"
       [disabled]="doc.estado != 'pagado sin confirmar'"
       (click)="confirmarPago(doc)"
       >Confirmar pago</ion-button
+    >
+    <ion-button
+      [class.ion-hide]="rol !== 'mozo'"
+      color="danger"
+      expand="full"
+      [disabled]="doc.estado != 'verificar'"
+      (click)="mozoCancelar(doc)"
+      >Cancelar</ion-button
     >
     <ion-button color="primary" expand="full" (click)="verPedido(doc)"
       >Ver</ion-button
