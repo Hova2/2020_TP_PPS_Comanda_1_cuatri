@@ -91,6 +91,7 @@ export class LoginComponent implements OnInit {
         this.initializeApp();
         switch (rol) {
           case 'cliente':
+            this.np.borrarClienteDeLista();
             const mesa = await this.ms.traerMesaDelCliente(
               docUsuario.data().id
             );
@@ -161,7 +162,8 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/registro']);
   }
 
-  public async anonimo() {
+  public anonimo() {
+    this.np.borrarClienteDeLista();
     this.router.navigate(['/anonimo']);
   }
 

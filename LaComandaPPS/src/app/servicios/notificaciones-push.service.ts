@@ -23,6 +23,17 @@ export class NotificacionesPushService {
     return this.fcm.onNotification();
   }
 
+  public async borrarClienteDeLista() {
+    const token = await this.fcm.getToken();
+    const docUsuario = await this.as.datosUsuarioLoguado();
+    const dispositivosRef = this.afs.collection('dispositivos');
+    const doc = await dispositivosRef.doc(token).get().toPromise();
+    const rol = docUsuario.data().rol;
+    if (doc.exists && rol === 'cliente') {
+      dispositivosRef.doc(token).delete();
+    }
+  }
+
   private async guardarTokenEnLaBD(token: string) {
     let salida = null;
     const docUsuario = await this.as.datosUsuarioLoguado();
