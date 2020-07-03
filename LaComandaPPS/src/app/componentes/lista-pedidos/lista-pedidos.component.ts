@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
 import { EstadoPedido } from 'src/app/enum/estado-pedido.enum';
 import { ModalController } from '@ionic/angular';
 import { EstadoPedidoComponent } from '../estado-pedido/estado-pedido.component';
+import { MesaService } from 'src/app/servicios/mesa.service';
 
 @Component({
   selector: 'app-lista-pedidos',
@@ -19,7 +20,8 @@ export class ListaPedidosComponent implements OnInit {
   constructor(
     private ps: PedidoService,
     private as: AuthService,
-    public modcon: ModalController
+    public modcon: ModalController,
+    public ms: MesaService
   ) {}
 
   ngOnInit() {
@@ -45,6 +47,17 @@ export class ListaPedidosComponent implements OnInit {
   public mozoAprueba(pedido: Pedido) {
     pedido.estado = EstadoPedido.pendiente;
     this.ps.actualizar(pedido);
+  }
+
+  public servir(pedido: Pedido) {
+    pedido.estado = EstadoPedido.servido;
+    this.ps.actualizar(pedido);
+  }
+
+  public confirmarPago(pedido: Pedido) {
+    pedido.estado = EstadoPedido.pagado;
+    this.ps.actualizar(pedido);
+    this.ms.liberarMesa(pedido.mesaID);
   }
 
   public async verPedido(pedido: Pedido) {

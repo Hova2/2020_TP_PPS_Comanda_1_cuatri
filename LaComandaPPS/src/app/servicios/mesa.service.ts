@@ -133,4 +133,15 @@ export class MesaService {
   public actualizarMesaConIdPedido(idMesa: string, idPedido: string) {
     this.af.collection('mesas').doc(idMesa).update({ idPedido: idPedido });
   }
+
+  public liberarMesa(id: string) {
+    this.af
+      .collection('mesas')
+      .doc(id)
+      .update({
+        idPedido: '',
+        idCliente: '',
+        estadoMesa: EstadoMesa.disponible,
+      });
+  }
 }
