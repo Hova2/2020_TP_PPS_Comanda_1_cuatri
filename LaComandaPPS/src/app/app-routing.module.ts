@@ -55,13 +55,13 @@ const routes: Routes = [
         (m) => m.VerEncuestasPageModule
       ),
   },
-  {
-    path: 'estadisticas',
-    loadChildren: () =>
-      import('./pages/estadisticas/estadisticas.module').then(
-        (m) => m.EstadisticasPageModule
-      ),
-  },
+  // {
+  //   path: 'estadisticas',
+  //   loadChildren: () =>
+  //     import('./pages/estadisticas/estadisticas.module').then(
+  //       (m) => m.EstadisticasPageModule
+  //     ),
+  // },
 ];
 
 @NgModule({
