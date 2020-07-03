@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/clases/usuario';
 import { ColoresToast } from 'src/app/enum/colores-toast.enum';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { MesaService } from 'src/app/servicios/mesa.service';
 
 @Component({
   selector: 'app-anonimo',
@@ -26,7 +27,8 @@ export class AnonimoPage implements OnInit {
     private toastr: ServicioToastService,
     private authService: AuthService,
     private camaraS: CamaraService,
-    private router: Router
+    private router: Router,
+    private ms: MesaService
   ) {
     this.$rutaFotoAnonimo = null;
   }
@@ -51,8 +53,14 @@ export class AnonimoPage implements OnInit {
     });
   }
 
-  volver() {
-    this.router.navigate(['/entrar-mesa']);
+  async volver() {
+    const docUsuario = await this.authService.datosUsuarioLoguado();
+    const mesa = await this.ms.traerMesaDelCliente(docUsuario.data().id);
+    if (mesa !== null) {
+      this.router.navigateByUrl('/principal/mi-pedido');
+    } else {
+      this.router.navigate(['/entrar-mesa']);
+    }
   }
 
   onSubmit() {

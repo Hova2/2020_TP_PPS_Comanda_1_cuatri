@@ -58,6 +58,87 @@ exports.notificacionRegistroUsuario = functions.firestore
     }
     return salida;
 });
+exports.notificacionConsultaMozo = functions.firestore
+    .document('/mensajes/{mensajeID}')
+    .onCreate(async (doc, context) => {
+    let salida = null;
+    const notificacion = {
+        notification: {
+            title: 'Notificacion mozo',
+            body: 'Un cliente realizo una consulta',
+        },
+    };
+    const dispositivos = await admin
+        .firestore()
+        .collection('dispositivos')
+        .where('rol', '==', 'mozo')
+        .get();
+    const tokens = new Array();
+    dispositivos.forEach((el) => {
+        const tokenTmp = el.data().token;
+        tokens.push(tokenTmp);
+    });
+    salida = admin.messaging().sendToDevice(tokens, notificacion);
+    return salida;
+});
+exports.notificacionMozoPedidoListo = functions.firestore
+    .document('/pedidos/{pedidosID}')
+    .onUpdate(async (change, context) => {
+    let salida = null;
+    if (change.after.data().estado === 'listo') {
+        const notificacion = {
+            notification: {
+                title: 'Notificacion mozo',
+                body: 'Un pedido esta listo para servir',
+            },
+        };
+        const dispositivos = await admin
+            .firestore()
+            .collection('dispositivos')
+            .where('rol', '==', 'mozo')
+            .get();
+        const tokens = new Array();
+        dispositivos.forEach((el) => {
+            const tokenTmp = el.data().token;
+            tokens.push(tokenTmp);
+        });
+        salida = admin.messaging().sendToDevice(tokens, notificacion);
+    }
+    return salida;
+});
+exports.notificacionCocinero = functions.firestore
+    .document('/pedidos/{pedidosID}')
+    .onUpdate(async (change, context) => {
+    let salida = null;
+    if (change.after.data().estado === 'pendiente') {
+        let contProductos = 0;
+        change.after.data().productos.forEach((prod) => {
+            if (prod.quienElabora === 'bartender') {
+                contProductos++;
+            }
+        });
+        if (contProductos > 0) {
+            const notificacion = {
+                notification: {
+                    title: 'Notificacion bartender',
+                    body: 'Pedido nuevo',
+                },
+            };
+            const dispositivos = await admin
+                .firestore()
+                .collection('dispositivos')
+                .where('rol', '==', 'bartender')
+                .get();
+            const tokens = new Array();
+            dispositivos.forEach((el) => {
+                const tokenTmp = el.data().token;
+                tokens.push(tokenTmp);
+            });
+            salida = admin.messaging().sendToDevice(tokens, notificacion);
+        }
+    }
+    return salida;
+});
 exports.enviarEmailRegistro = functions.firestore
     .document('/usuarios/{usuarioID}')
     .onUpdate((change, context) => {

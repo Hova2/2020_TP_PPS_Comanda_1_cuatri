@@ -29,20 +29,6 @@ import { EstadoPedido } from 'src/app/enum/estado-pedido.enum';
 })
 export class MiPedidoPage implements OnInit {
 
-  /*private cliente: Usuario = {
-    id: 'bcU1E3fkW3stoumKeZdu',
-    nombre: 'NomCliente',
-    apellido: 'ApeCliente',
-    password: null,
-    dni: null,
-    email: null,
-    rol: Rol.cliente,
-    imagen: null,
-    eliminado: false,
-    estado: null
-  }*/
-
-
   private pedido: Pedido = new Pedido();
   public algoPedido: boolean = false;
   public existePedido = false;
@@ -79,7 +65,7 @@ export class MiPedidoPage implements OnInit {
     const mesa = await this.ms.traerMesaDelCliente(docTmp.id);
 
     console.log(mesa.idPedido);
-    
+
     this.pedido = Pedido.crear(mesa.id);
     this.algoPedido = false;
   }*/
@@ -87,52 +73,23 @@ export class MiPedidoPage implements OnInit {
   private async inicializarPedido(): Promise<void> {
     const docTmp = await this.as.datosUsuarioLoguado();
     const mesa = await this.ms.traerMesaDelCliente(docTmp.id);
-    
-      if (mesa.idPedido == null) {
+
+    console.log(mesa)
+
+      if (mesa.idPedido === '') {
         this.pedido = Pedido.crear(mesa.id);
         this.algoPedido = false;
-      } else if (mesa.idPedido != null) {
+      } else if (mesa.idPedido !== '') {
         this.algoPedido = true;
         /*this.pedidoService.traerPorIdDocumento(mesa.idPedido).then(elPedido => {
-          //this.pedido = elPedido;             
+          //this.pedido = elPedido;
           this.pedidoService.traerPedidoPorIdDocumento(elPedido.id).then(pedidoDeAca => {
             this.pedido = pedidoDeAca;
           });
         });*/
       }
-    
+
   }
-
-
-  //esto es de prueba usuario hardcodeado
-  /*private inicializarPedidoPrueba() {
-    const docTmp = this.as.datosUsuarioLoguado();
-    //const mesa = this.ms.traerMesaDelCliente(this.cliente.id);
-
-    // this.pedidoService.traerPedidoObservable(this.pedido.pedidoID).subscribe(pedido =>{
-    //   console.log(pedido);
-    // });
-
-    mesa.then(mesa => {
-
-      if (mesa.idPedido == null) {
-        this.pedido = Pedido.crear(mesa.id);
-        this.algoPedido = false;
-      } else if (mesa.idPedido != null) {
-        this.algoPedido = true;
-        this.pedidoService.traerPorIdDocumento(mesa.idPedido).then(elPedido => {
-          //this.pedido = elPedido;             
-          this.pedidoService.traerPedidoPorIdDocumento(elPedido.id).then(pedidoDeAca => {
-            this.pedido = pedidoDeAca;
-          });
-        });
-      }
-    });
-
-    setTimeout(() => {
-      console.log(this.pedido);
-    }, 2000);
-  }*/
 
   private inicializarPedidoDesdeMozo(): void {
     this.pedido = Pedido.crearDesdeMozo();
@@ -200,5 +157,5 @@ export class MiPedidoPage implements OnInit {
 
 
 
-  
+
 }

@@ -151,10 +151,10 @@ export class ConsultasPage implements OnInit {
   }
 
   public cancelar(): void {
-    this.form.reset();    
+    this.form.reset();
     this.formSelect.controls.select.setValue(null);
     setTimeout(() => {
-      
+
     this.mensajeSeleccionado = null;
     }, 500  );
 
