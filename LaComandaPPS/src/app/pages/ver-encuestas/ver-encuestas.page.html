@@ -1,10 +1,17 @@
 
 <ion-content>
 
-  
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+        <ion-title>Opiniones de nuestros clientes</ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header> 
 
 
-    <ion-card *ngFor="let encuesta of listadoEncuestasObserver | async" color="secondary">
+    <ion-card *ngFor="let encuesta of listadoEncuestasObserver | async" color="dark">
 
       <ion-card-header>
         <ion-card-title>{{encuesta.cliente}}</ion-card-title>
@@ -21,7 +28,7 @@
         Lo Que Más Gustó: {{encuesta.loQueMasGusto}} <br>
       </ion-card-content>
 
-      <ion-card-content> Breve reseña de nustro cliente:
+      <ion-card-content> Breve reseña de nuestro cliente:
         {{encuesta.comentario}}
       </ion-card-content>
     </ion-card>

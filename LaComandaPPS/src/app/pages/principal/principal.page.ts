@@ -72,6 +72,12 @@ export class PrincipalPage implements OnInit {
       case 'gestionmesas':
         this.router.navigateByUrl('/principal/abmmesas');
         break;
+      case 'estadisticas':
+        this.router.navigateByUrl('/principal/estadisticas');
+        break;
+      case 'ver-encuestas':
+        this.router.navigateByUrl('/principal/ver-encuestas');
+        break;
       case 'listamesasdisponibles':
         this.router.navigateByUrl('/principal/lista-mesas-disponibles');
         break;

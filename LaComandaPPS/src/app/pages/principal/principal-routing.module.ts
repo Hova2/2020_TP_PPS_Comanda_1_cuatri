@@ -109,6 +109,20 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'estadisticas',
+        loadChildren: () =>
+          import('../estadisticas/estadisticas.module').then(
+            (m) => m.EstadisticasPageModule
+          ),
+      },
+      {
+        path: 'ver-encuestas',
+        loadChildren: () =>
+          import('../ver-encuestas/ver-encuestas.module').then(
+            (m) => m.VerEncuestasPageModule
+          ),
+      },
+      {
         path: 'lista-mesas-disponibles',
         loadChildren: () =>
           import(
