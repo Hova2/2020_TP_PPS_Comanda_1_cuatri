@@ -20,6 +20,7 @@ export class EscanearQRPage implements OnInit {
   private pedido: Pedido = new Pedido();
   private algoPedido: boolean = false;
   private acumulador: number;
+  private pidioCuenta: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -130,10 +131,22 @@ export class EscanearQRPage implements OnInit {
     this.router.navigateByUrl('/principal/consultas');
   }
 
+  hacerEncuesta() {
+    this.router.navigateByUrl('/principal/consultas');
+  }
+
   confirmarRecepcion() {
     this.pedidoService.actualizarEstado(EstadoPedido.servido, this.pedido.pedidoID);
     setTimeout(() => {
       this.actualizarPedido(this.pedido.id);
     }, 1000);
+  }
+
+  pedirCuenta(){
+    this.pidioCuenta = true;
+  }
+
+  pagar(){
+    this.pedidoService.actualizarEstado(EstadoPedido.pagadoSinConfirmar, this.pedido.pedidoID);
   }
 }
