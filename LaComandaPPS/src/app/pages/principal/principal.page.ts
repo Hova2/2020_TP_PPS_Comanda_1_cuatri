@@ -72,6 +72,9 @@ export class PrincipalPage implements OnInit {
       case 'gestionmesas':
         this.router.navigateByUrl('/principal/abmmesas');
         break;
+      case 'listamesasdisponibles':
+        this.router.navigateByUrl('/principal/lista-mesas-disponibles');
+        break;
     }
   }
 }

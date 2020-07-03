@@ -18,6 +18,9 @@ export class EntrarMesaPage implements OnInit {
   public titulo: string;
   public fotoUsuario: string;
   public idUsuario: string;
+  public nombreUsuario: string;
+  public apellidoUsuario: string;
+  public email: string;
   public esperando: string;
   public estadoUsuario: string;
   public datosLista: any;
@@ -38,8 +41,11 @@ export class EntrarMesaPage implements OnInit {
       .datosUsuarioLoguado()
       .then((docUsuario) => {
         this.fotoUsuario = docUsuario.data().imagen;
-        this.idUsuario = docUsuario.id;
         this.estadoUsuario = docUsuario.data().estado;
+        this.idUsuario = docUsuario.id;
+        this.nombreUsuario = docUsuario.data().nombre;
+        this.apellidoUsuario = docUsuario.data().apellido;
+        this.email = docUsuario.data().email;
         return docUsuario.id;
       })
       .then((idUsuario) => {
@@ -60,10 +66,16 @@ export class EntrarMesaPage implements OnInit {
 
   public async escanearQREntrada() {
     const resultado = await this.qrs.escanear();
+    console.log(this.nombreUsuario);
 
     switch (resultado.text) {
       case 'entrada':
-        const listaEspera = new ListaEspera(this.idUsuario);
+        const listaEspera = new ListaEspera(
+          this.idUsuario,
+          this.nombreUsuario,
+          this.apellidoUsuario,
+          this.email
+        );
         this.les.alta(listaEspera);
         break;
       default:
@@ -78,9 +90,10 @@ export class EntrarMesaPage implements OnInit {
     const leTmp = await this.les.existeUsuarioEnListaPromesa(usuario.id);
 
     if (resultado.text === leTmp.mesa) {
-      this.ms.actualizarIdUsuario(leTmp.mesa, usuario.id);
-      this.les.baja(leTmp.id);
-      this.router.navigateByUrl('/principal/mi-pedido');
+      this.ms.actualizarIdUsuario(leTmp.mesa, usuario.id).then(() => {
+        this.les.baja(leTmp.id);
+        this.router.navigateByUrl('/principal/mi-pedido');
+      });
     } else {
       this.toastr.mostrarToast('Mesa incorrecta', ColoresToast.danger);
     }

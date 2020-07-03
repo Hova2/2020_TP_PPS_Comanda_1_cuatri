@@ -107,7 +107,6 @@ exports.notificacionMozoPedidoListo = functions.firestore
     let salida = null;
 
     if (change.after.data().estado === 'listo') {
-
       const notificacion = {
         notification: {
           title: 'Notificacion mozo',
@@ -134,7 +133,7 @@ exports.notificacionMozoPedidoListo = functions.firestore
     return salida;
   });
 
-exports.notificacionCocinero = functions.firestore
+exports.notificacionBartender = functions.firestore
   .document('/pedidos/{pedidosID}')
   .onUpdate(async (change, context) => {
     let salida = null;
@@ -160,6 +159,48 @@ exports.notificacionCocinero = functions.firestore
           .firestore()
           .collection('dispositivos')
           .where('rol', '==', 'bartender')
+          .get();
+
+        const tokens = new Array<string>();
+
+        dispositivos.forEach((el) => {
+          const tokenTmp = el.data().token;
+          tokens.push(tokenTmp);
+        });
+
+        salida = admin.messaging().sendToDevice(tokens, notificacion);
+      }
+    }
+
+    return salida;
+  });
+
+exports.notificacionCocinero = functions.firestore
+  .document('/pedidos/{pedidosID}')
+  .onUpdate(async (change, context) => {
+    let salida = null;
+
+    if (change.after.data().estado === 'pendiente') {
+      let contProductos = 0;
+
+      change.after.data().productos.forEach((prod: any) => {
+        if (prod.quienElabora === 'cocinero') {
+          contProductos++;
+        }
+      });
+
+      if (contProductos > 0) {
+        const notificacion = {
+          notification: {
+            title: 'Notificacion cocinero',
+            body: 'Pedido nuevo',
+          },
+        };
+
+        const dispositivos = await admin
+          .firestore()
+          .collection('dispositivos')
+          .where('rol', '==', 'cocinero')
           .get();
 
         const tokens = new Array<string>();

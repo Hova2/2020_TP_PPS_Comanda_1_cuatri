@@ -67,8 +67,8 @@ export class MesaService {
       });
   }
 
-  public actualizarIdUsuario(idMesa: string, idCliente: string): void {
-    this.af
+  public actualizarIdUsuario(idMesa: string, idCliente: string): Promise<void> {
+    return this.af
       .collection('mesas')
       .doc(idMesa)
       .update({

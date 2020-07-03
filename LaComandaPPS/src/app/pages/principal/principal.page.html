@@ -52,6 +52,14 @@
             <ion-label>Lista de espera</ion-label>
           </ion-item>
           <ion-item
+            (click)="redireccion('listamesasdisponibles')"
+            routerDirection="root"
+            [class.item-activo]="paginaSeleccionada === 'listamesasdisponibles'"
+            [class.ion-hide]="rol !== 'metre'"
+          >
+            <ion-label>Lista de mesas disponibles</ion-label>
+          </ion-item>
+          <ion-item
             (click)="redireccion('pedidosempleado')"
             routerDirection="root"
             [class.item-activo]="paginaSeleccionada === 'pedidosempleado'"

@@ -108,6 +108,13 @@ const routes: Routes = [
             (m) => m.ABMmesasPageModule
           ),
       },
+      {
+        path: 'lista-mesas-disponibles',
+        loadChildren: () =>
+          import(
+            '../lista-mesas-disponibles/lista-mesas-disponibles.module'
+          ).then((m) => m.ListaMesasDisponiblesPageModule),
+      },
     ],
   },
 ];
