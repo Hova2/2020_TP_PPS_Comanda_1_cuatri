@@ -50,7 +50,7 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   public servir(pedido: Pedido) {
-    pedido.estado = EstadoPedido.servido;
+    pedido.estado = EstadoPedido.servidoSinConfirmar;
     this.ps.actualizar(pedido);
   }
 
