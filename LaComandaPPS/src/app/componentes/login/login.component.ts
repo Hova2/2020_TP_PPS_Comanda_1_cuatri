@@ -129,34 +129,6 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  public loginSinMetre() {
-    //this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);
-
-    this.authService
-      .logueoConEmail(
-        this.formulario.controls.usuario.value,
-        this.formulario.controls.clave.value
-      )
-      .then(async (datosUsuario) => {
-        const docUsuario = await this.authService.datosUsuarioLoguado();
-        const rol = docUsuario.data().rol;
-        this.initializeApp();
-        switch (rol) {
-          case 'cliente':
-            this.router.navigate(['/principal/mi-pedido']);
-            break;
-        }
-        this.toastr.mostrarToast('¡Bienvenido!', ColoresToast.success);
-      })
-      .catch((error) => {
-        console.log(error);
-        this.toastr.mostrarToast(
-          'Usuario o contraseña incorrectos',
-          ColoresToast.danger
-        );
-      });
-  }
-
   public register() {
     //this.toastr.mostrarToast('Registro de nuevo usuario', ColoresToast.tertiary);
     this.router.navigate(['/registro']);
@@ -165,10 +137,6 @@ export class LoginComponent implements OnInit {
   public anonimo() {
     this.np.borrarClienteDeLista();
     this.router.navigate(['/anonimo']);
-  }
-
-  public encuesta() {
-    this.router.navigate(['/ecuesta-cliente']);
   }
 
   private initializeApp() {
