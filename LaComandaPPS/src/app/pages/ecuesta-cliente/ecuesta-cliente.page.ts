@@ -124,6 +124,7 @@ export class EcuestaClientePage implements OnInit {
         if (valor) {
           this.cancelar();
           this.toast.mostrarToast('Alta exitosa', ColoresToast.success);
+          this.hayEncuesta = true;
         } else {
           this.toast.mostrarToast('Error', ColoresToast.danger);
         }
