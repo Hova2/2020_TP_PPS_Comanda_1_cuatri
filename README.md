@@ -27,3 +27,9 @@ Juan Ignacio Guglielmone: Notificaciones Email. Notificaciones Push.
 Ariel Briñoli: Registro de usuario anónimo, ABM Mesa. <br>
 Trevor Fernández: Chat con el mozo. <br>
 Juan Ignacio Guglielmone: Ingreso al local y solicitud de mesa.
+
+<strong>Sprint 5: 28/06/2020 - 04/07/2020</strong>
+
+Ariel Briñoli: Encuesta del cliente, pagina de estadísticas, historial de encuestas. <br>
+Trevor Fernández: QR propinas, estado del pedido, sonido de la app. <br>
+Juan Ignacio Guglielmone: Pantalla de pedidos de cocinero/bartender, lista del metre, lista del mozo.
