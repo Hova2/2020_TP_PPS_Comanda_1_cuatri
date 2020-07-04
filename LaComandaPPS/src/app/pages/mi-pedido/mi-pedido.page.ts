@@ -79,8 +79,10 @@ export class MiPedidoPage implements OnInit {
       if (mesa.idPedido === '') {
         this.pedido = Pedido.crear(mesa.id);
         this.algoPedido = false;
+        
       } else if (mesa.idPedido !== '') {
         this.algoPedido = true;
+        this.existePedido = true;
         /*this.pedidoService.traerPorIdDocumento(mesa.idPedido).then(elPedido => {
           //this.pedido = elPedido;
           this.pedidoService.traerPedidoPorIdDocumento(elPedido.id).then(pedidoDeAca => {
@@ -137,7 +139,7 @@ export class MiPedidoPage implements OnInit {
 
   cancelarPedido() {
     this.pedido.productos = new Array<Producto>();
-
+    this.existePedido = false;
     this.algoPedido = false;
     this.pedido.productos = [];
     this.pedido.total = this.pedidoService.calcularTotal(this.pedido);
