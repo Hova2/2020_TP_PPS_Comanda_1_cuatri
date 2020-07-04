@@ -174,9 +174,8 @@ export class ConsultasPage implements OnInit {
     this.form.reset();
     this.formSelect.controls.select.setValue(null);
     setTimeout(() => {
-
     this.mensajeSeleccionado = null;
-    }, 500  );
+    }, 1000  );
 
   }
 
