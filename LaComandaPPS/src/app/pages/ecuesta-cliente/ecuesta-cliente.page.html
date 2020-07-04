@@ -160,7 +160,8 @@
 
 
     <ion-item>
-      <ion-textarea formControlName="areaComentario" value="¿Querés comentarnos algo?. Este es el lugar!" [disabled]="this.hayEncuesta">
+      <ion-label class="centrado"><strong>Tu comentario nos interesa!</strong></ion-label>
+      <ion-textarea formControlName="areaComentario" value="" [disabled]="this.hayEncuesta">
       </ion-textarea>
     </ion-item>
 
