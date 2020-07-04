@@ -493,7 +493,8 @@ export class PedidoService {
               const docDatos = doc.payload.doc.data();
               return (
                 docDatos.empleado.id === idMozo &&
-                docDatos.estado !== 'cancelado'
+                docDatos.estado !== 'cancelado' &&
+                docDatos.estado !== 'pagado'
               );
             })
             .map((doc) => {
@@ -519,9 +520,7 @@ export class PedidoService {
                 });
               return (
                 productos.length > 0 &&
-                estado !== 'verificar' &&
-                estado !== 'cancelado' &&
-                estado !== 'listo'
+                (estado === 'cocinando' || estado === 'pendiente')
               );
             })
             .map((doc) => {

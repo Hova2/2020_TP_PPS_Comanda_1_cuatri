@@ -16,7 +16,7 @@
       [class.ion-hide]="rol !== 'mozo'"
       color="primary"
       expand="full"
-      [disabled]="doc.estado != 'verificar'"
+      [disabled]="doc.estado !== 'verificar'"
       (click)="mozoAprueba(doc)"
       >Aprobar</ion-button
     >
@@ -24,7 +24,7 @@
       [class.ion-hide]="rol !== 'mozo'"
       color="primary"
       expand="full"
-      [disabled]="doc.estado != 'listo'"
+      [disabled]="doc.estado !== 'listo'"
       (click)="servir(doc)"
       >Servir</ion-button
     >
@@ -32,7 +32,7 @@
       [class.ion-hide]="rol !== 'mozo'"
       color="danger"
       expand="full"
-      [disabled]="doc.estado != 'pagado sin confirmar'"
+      [disabled]="doc.estado !== 'pagado sin confirmar'"
       (click)="confirmarPago(doc)"
       >Confirmar pago</ion-button
     >
@@ -40,7 +40,7 @@
       [class.ion-hide]="rol !== 'mozo'"
       color="danger"
       expand="full"
-      [disabled]="doc.estado != 'verificar'"
+      [disabled]="doc.estado !== 'verificar'"
       (click)="mozoCancelar(doc)"
       >Cancelar</ion-button
     >
