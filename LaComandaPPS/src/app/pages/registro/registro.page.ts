@@ -70,13 +70,13 @@ export class RegistroPage implements OnInit {
       //alert("dni juan")
       this.registerForm.get('name').setValue(codigoEscaneado[2]);
       this.registerForm.get('lastname').setValue(codigoEscaneado[1]);
-      this.registerForm.get('dni').setValue(codigoEscaneado[4]);
+      this.registerForm.get('dni').setValue(Number(codigoEscaneado[4]));
 
       }else{
         //alert("dni ariel");
         this.registerForm.get('name').setValue(codigoEscaneado[5]);
         this.registerForm.get('lastname').setValue(codigoEscaneado[4]);
-        this.registerForm.get('dni').setValue(codigoEscaneado[1]);
+        this.registerForm.get('dni').setValue(Number(codigoEscaneado[1]));
 
       }
     });
