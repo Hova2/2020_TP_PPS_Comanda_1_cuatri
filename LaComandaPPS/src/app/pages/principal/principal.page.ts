@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Router } from '@angular/router';
+import { SonidoService } from 'src/app/servicios/sonido.service';
 
 @Component({
   selector: 'app-principal',
@@ -11,7 +12,9 @@ export class PrincipalPage implements OnInit {
   paginaSeleccionada = '';
   rol: string;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  sonidoActivado: boolean = null;
+
+  constructor(private authService: AuthService, private router: Router, private sonidoService: SonidoService) {}
 
   ngOnInit() {
     this.authService.datosUsuarioLoguado().then((doc) => {
@@ -35,6 +38,7 @@ export class PrincipalPage implements OnInit {
           break;
       }
     });
+    this.sonidoActivado = this.sonidoService.sonidoActivado;
   }
 
   desloguearse() {
@@ -43,6 +47,7 @@ export class PrincipalPage implements OnInit {
   }
 
   redireccion(parametro: string) {
+    this.sonidoService.start(this.sonidoService.playlist[0]);
     this.paginaSeleccionada = parametro;
     switch (parametro) {
       case 'lista-de-espera':
@@ -82,5 +87,10 @@ export class PrincipalPage implements OnInit {
         this.router.navigateByUrl('/principal/lista-mesas-disponibles');
         break;
     }
+  }
+
+  onOffSonido(){
+    this.sonidoService.sonidoActivado = !this.sonidoService.sonidoActivado;
+    this.sonidoActivado = this.sonidoService.sonidoActivado;
   }
 }
