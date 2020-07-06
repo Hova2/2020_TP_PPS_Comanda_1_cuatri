@@ -36,9 +36,9 @@ export class EscanearQRPage implements OnInit {
 
   async escanearQRMesa() {
 
-    this.actualizarPedido("5PlV0pGeSOx9WnqgabNl");
+    //this.actualizarPedido("5PlV0pGeSOx9WnqgabNl");
     
-    /*
+    
     const docTmp = await this.authService.datosUsuarioLoguado();
     const mesa = await this.mesaService.traerMesaDelCliente(docTmp.id);
     const resultado = await this.qrs.escanear();
@@ -52,7 +52,7 @@ export class EscanearQRPage implements OnInit {
     } else {
       this.toastr.mostrarToast('Codigo incorrecto', ColoresToast.danger);      
     }
-    */
+    
   }
 
   actualizarPedido(idPedido: string) {
