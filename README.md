@@ -25,9 +25,9 @@ Juan Ignacio Guglielmone: Notificaciones Email. Notificaciones Push.
 
 ![Pantalla Login](https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imagenesReadme%2FpantallaLogin.jpg?alt=media&token=afbd9857-d5ab-4e13-b073-309008a2cd5c)
 
-![abm producto](https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imagenesReadme/abm%20producto.jpeg?alt=media&token=bb9f84f8-52c9-4489-92b7-e023e46b55b2)
+![abm producto](https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imagenesReadme%2Fabm%20producto.jpeg?alt=media&token=bb9f84f8-52c9-4489-92b7-e023e46b55b2)
 
-![Email de registro](https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imagenesReadme/mail.jpeg?alt=media&token=77634acb-adc5-4213-ad05-084bc72f11e5)
+![Email de registro](https://firebasestorage.googleapis.com/v0/b/tpfinalpps-3f07f.appspot.com/o/imagenesReadme%2Fmail.jpeg?alt=media&token=77634acb-adc5-4213-ad05-084bc72f11e5)
 
 <strong>Sprint 4: 21/06/2020 - 27/06/2020</strong>
 
