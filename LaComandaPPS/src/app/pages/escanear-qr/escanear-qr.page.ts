@@ -16,12 +16,10 @@ import { EstadoPedido } from 'src/app/enum/estado-pedido.enum';
   styleUrls: ['./escanear-qr.page.scss'],
 })
 export class EscanearQRPage implements OnInit {
-
   private pedido: Pedido = new Pedido();
   private algoPedido: boolean = false;
   private acumulador: number;
   private pidioCuenta: boolean = false;
-  
 
   constructor(
     private authService: AuthService,
@@ -29,46 +27,55 @@ export class EscanearQRPage implements OnInit {
     private pedidoService: PedidoService,
     private router: Router,
     private qrs: QrService,
-    private toastr: ServicioToastService) { }
+    private toastr: ServicioToastService
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   async escanearQRMesa() {
-
     //this.actualizarPedido("5PlV0pGeSOx9WnqgabNl");
-    
-    
+
     const docTmp = await this.authService.datosUsuarioLoguado();
     const mesa = await this.mesaService.traerMesaDelCliente(docTmp.id);
     const resultado = await this.qrs.escanear();
 
-    
-    
+    console.log(mesa);
 
-    if (mesa.id == resultado.text) {
-
-      this.actualizarPedido(mesa.idPedido);
+    if (mesa === null) {
+      this.router.navigateByUrl('/entrar-mesa');
     } else {
-      this.toastr.mostrarToast('Codigo incorrecto', ColoresToast.danger);      
+      if (mesa.id === resultado.text) {
+        this.actualizarPedido(mesa.idPedido);
+      } else {
+        this.toastr.mostrarToast('Codigo incorrecto', ColoresToast.danger);
+      }
     }
-    
   }
 
   actualizarPedido(idPedido: string) {
-    this.pedidoService.traerPedidoPorIdDocumento(idPedido).then(pedidoDeAca => {
-      this.algoPedido = true;
-      this.pedido = pedidoDeAca;
-      if(pedidoDeAca.estado == EstadoPedido.pagado){
-        this.router.navigateByUrl("/entrar-mesa");
-      }
-    }).catch(() => {
-      this.toastr.mostrarToast("No hay pedidos", ColoresToast.danger);      
-    });
+    this.pedidoService
+      .traerPedidoPorIdDocumento(idPedido)
+      .then((pedidoDeAca) => {
+        this.algoPedido = true;
+        this.pedido = pedidoDeAca;
+      })
+      .catch(() => {
+        this.toastr.mostrarToast('No hay pedidos', ColoresToast.danger);
+      });
   }
 
   async asignarPropina() {
-    let producto = Producto.crear(null, null, null, null, null, null, null, null, null);
+    let producto = Producto.crear(
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
     const resultado = await this.qrs.escanear();
     this.sumarSinPropina();
 
@@ -81,7 +88,7 @@ export class EscanearQRPage implements OnInit {
           this.pedidoService.agregarPropina(producto, this.pedido.pedidoID);
         }, 1000);
         break;
-        case '05':
+      case '05':
         producto.descripcion = '5%';
         producto.nombre = 'propina';
         setTimeout(() => {
@@ -97,7 +104,7 @@ export class EscanearQRPage implements OnInit {
           this.pedidoService.agregarPropina(producto, this.pedido.pedidoID);
         }, 1000);
         break;
-        case '15':
+      case '15':
         producto.descripcion = '15%';
         producto.nombre = 'propina';
         setTimeout(() => {
@@ -122,7 +129,7 @@ export class EscanearQRPage implements OnInit {
   sumarSinPropina() {
     this.acumulador = 0;
 
-    this.pedido.productos.forEach(elemento => {
+    this.pedido.productos.forEach((elemento) => {
       if (elemento.nombre != 'propina') {
         this.acumulador = this.acumulador + elemento.precio;
       }
@@ -138,18 +145,24 @@ export class EscanearQRPage implements OnInit {
   }
 
   confirmarRecepcion() {
-    this.pedidoService.actualizarEstado(EstadoPedido.servido, this.pedido.pedidoID);
+    this.pedidoService.actualizarEstado(
+      EstadoPedido.servido,
+      this.pedido.pedidoID
+    );
     setTimeout(() => {
       this.actualizarPedido(this.pedido.id);
     }, 1000);
   }
 
-  pedirCuenta(){
+  pedirCuenta() {
     this.pidioCuenta = true;
   }
 
-  pagar(){
-    this.pedidoService.actualizarEstado(EstadoPedido.pagadoSinConfirmar, this.pedido.pedidoID);
+  pagar() {
+    this.pedidoService.actualizarEstado(
+      EstadoPedido.pagadoSinConfirmar,
+      this.pedido.pedidoID
+    );
     setTimeout(() => {
       this.actualizarPedido(this.pedido.id);
     }, 1000);
