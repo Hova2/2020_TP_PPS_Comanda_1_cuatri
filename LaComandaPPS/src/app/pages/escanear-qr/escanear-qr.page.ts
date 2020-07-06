@@ -21,6 +21,7 @@ export class EscanearQRPage implements OnInit {
   private algoPedido: boolean = false;
   private acumulador: number;
   private pidioCuenta: boolean = false;
+  
 
   constructor(
     private authService: AuthService,
@@ -35,8 +36,9 @@ export class EscanearQRPage implements OnInit {
 
   async escanearQRMesa() {
 
-    //this.actualizarPedido("P8juuoqK6qkgGXxZ6xOe");
+    this.actualizarPedido("5PlV0pGeSOx9WnqgabNl");
     
+    /*
     const docTmp = await this.authService.datosUsuarioLoguado();
     const mesa = await this.mesaService.traerMesaDelCliente(docTmp.id);
     const resultado = await this.qrs.escanear();
@@ -48,16 +50,20 @@ export class EscanearQRPage implements OnInit {
 
       this.actualizarPedido(mesa.idPedido);
     } else {
-      this.toastr.mostrarToast('Codigo incorrecto', ColoresToast.danger);
+      this.toastr.mostrarToast('Codigo incorrecto', ColoresToast.danger);      
     }
+    */
   }
 
   actualizarPedido(idPedido: string) {
     this.pedidoService.traerPedidoPorIdDocumento(idPedido).then(pedidoDeAca => {
       this.algoPedido = true;
       this.pedido = pedidoDeAca;
+      if(pedidoDeAca.estado == EstadoPedido.pagado){
+        this.router.navigateByUrl("/entrar-mesa");
+      }
     }).catch(() => {
-      this.toastr.mostrarToast("No hay pedidos", ColoresToast.danger);
+      this.toastr.mostrarToast("No hay pedidos", ColoresToast.danger);      
     });
   }
 
@@ -144,5 +150,8 @@ export class EscanearQRPage implements OnInit {
 
   pagar(){
     this.pedidoService.actualizarEstado(EstadoPedido.pagadoSinConfirmar, this.pedido.pedidoID);
+    setTimeout(() => {
+      this.actualizarPedido(this.pedido.id);
+    }, 1000);
   }
 }
